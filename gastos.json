@@ -1,0 +1,50 @@
+[
+  {
+    "fecha": "2026-04-12",
+    "tipo": "nomina",
+    "nombre": "avena",
+    "valor": 1
+  },
+  {
+    "fecha": "2026-04-13",
+    "tipo": "gasto",
+    "nombre": "registromercantiljotary",
+    "valor": 49
+  },
+  {
+    "fecha": "2026-04-13",
+    "tipo": "nomina",
+    "nombre": "arrozconleche",
+    "valor": 5
+  },
+  {
+    "fecha": "2026-04-13",
+    "tipo": "gasto",
+    "nombre": "edinsonxcuidado",
+    "valor": 2
+  },
+  {
+    "fecha": "2026-04-13",
+    "tipo": "gasto",
+    "nombre": "cadenasexhibir",
+    "valor": 12
+  },
+  {
+    "fecha": "2026-04-13",
+    "tipo": "gasto",
+    "nombre": "exhibidor",
+    "valor": 60
+  },
+  {
+    "fecha": "2026-04-14",
+    "tipo": "anuncio",
+    "nombre": "ads",
+    "valor": 100
+  },
+  {
+    "fecha": "2026-04-16",
+    "tipo": "gasto",
+    "nombre": "parqueadero",
+    "valor": 30
+  }
+]

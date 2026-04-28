@@ -1,0 +1,93 @@
+[
+  {
+    "id": 1776010923232,
+    "fecha": "2026-04-12",
+    "hora": "18:22:03",
+    "producto": "cargador4.5a",
+    "cantidad": 1,
+    "precio": 23,
+    "ganancia": 15.2
+  },
+  {
+    "id": 1776010939313,
+    "fecha": "2026-04-12",
+    "hora": "18:22:19",
+    "producto": "cargador67w",
+    "cantidad": 1,
+    "precio": 40,
+    "ganancia": 24
+  },
+  {
+    "id": 1776102503740,
+    "fecha": "2026-04-13",
+    "hora": "19:48:23",
+    "producto": "p6000t41",
+    "cantidad": 1,
+    "precio": 70,
+    "ganancia": 15
+  },
+  {
+    "id": 1776102716523,
+    "fecha": "2026-04-13",
+    "hora": "19:51:56",
+    "producto": "pparklineaazult39",
+    "cantidad": 1,
+    "precio": 50,
+    "ganancia": 8
+  },
+  {
+    "id": 1776102800081,
+    "fecha": "2026-04-13",
+    "hora": "19:53:20",
+    "producto": "revendi",
+    "cantidad": 1,
+    "precio": 30,
+    "ganancia": 30
+  },
+  {
+    "id": 1776108311743,
+    "fecha": "2026-04-13",
+    "hora": "21:25:11",
+    "producto": "cargador120",
+    "cantidad": 1,
+    "precio": 45,
+    "ganancia": 29
+  },
+  {
+    "id": 1776191612191,
+    "fecha": "2026-04-14",
+    "hora": "20:33:32",
+    "producto": "af1",
+    "cantidad": 1,
+    "precio": 48,
+    "ganancia": 15
+  },
+  {
+    "id": 1776191642824,
+    "fecha": "2026-04-14",
+    "hora": "20:34:02",
+    "producto": "af1",
+    "cantidad": 1,
+    "precio": 50,
+    "ganancia": 17
+  },
+  {
+    "id": 1776191660135,
+    "fecha": "2026-04-14",
+    "hora": "20:34:20",
+    "producto": "cargador67w",
+    "cantidad": 1,
+    "precio": 45,
+    "ganancia": 29
+  },
+  {
+    "id": 1776192190870,
+    "fecha": "2026-04-14",
+    "hora": "20:43:10",
+    "producto": "af1",
+    "cantidad": 1,
+    "precio": 50,
+    "ganancia": 17,
+    "tipo": "anuncio"
+  }
+]

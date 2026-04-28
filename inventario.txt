@@ -1,0 +1,51 @@
+{
+  "af1b": 0,
+  "c120": 0,
+  "zapatilla": 0,
+  "tecnologia": 0,
+  "cargador120": {
+    "nombre": "cargador120",
+    "stock": -15,
+    "costo": 16
+  },
+  "cargador4.5a": {
+    "nombre": "cargador4.5a",
+    "stock": -1,
+    "costo": 7.8
+  },
+  "cargador67w": {
+    "nombre": "cargador67w",
+    "stock": -2,
+    "costo": 16
+  },
+  "p6000t41": {
+    "nombre": "p6000t41",
+    "stock": -1,
+    "costo": 55
+  },
+  "pparklineaazult39": {
+    "nombre": "pparklineaazult39",
+    "stock": -1,
+    "costo": 42
+  },
+  "revendi": {
+    "nombre": "revendi",
+    "stock": -1,
+    "costo": 0
+  },
+  "af1": {
+    "nombre": "af1",
+    "stock": -4,
+    "costo": 33
+  },
+  "nsbt37": {
+    "nombre": "nsbt37",
+    "stock": 0,
+    "costo": 45
+  },
+  "af1bt37": {
+    "nombre": "af1bt37",
+    "stock": 0,
+    "costo": 33
+  }
+}
