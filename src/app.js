@@ -1289,7 +1289,14 @@ const flowCiudades = addKeyword([
 
         const ciudad = ctx.body.toLowerCase().trim()
         const nombre = ctx.pushName || 'parcero'
-        const hora = new Date().getHours()
+
+        // 🔥 HORA COLOMBIA (ARREGLADO)
+        const hora = new Date().toLocaleString('es-CO', {
+            timeZone: 'America/Bogota',
+            hour: 'numeric',
+            hour12: false
+        })
+        const horaNumero = parseInt(hora)
 
         // =========================
         // 🔥 PALMIRA EXACTO
@@ -1299,19 +1306,19 @@ const flowCiudades = addKeyword([
             ciudad === 'soy de palmira' ||
             ciudad === 'estoy en palmira' ||
             ciudad === 'vivo en palmira' ||
-			ciudad === 'palmira valle del cauca' ||
+            ciudad === 'palmira valle del cauca' ||
             ciudad === 'para palmira'
 
         if (esPalmira) {
 
-            if (hora >= 5 && hora <= 19) {
+            if (horaNumero >= 5 && horaNumero <= 19) {
                 return flowDynamic(`Perfecto ${nombre} 👍 Te llega en 15 minutos y pagas al recibir.
                 
 Para enviarlo necesito:
 nombre + dirección`)
             }
 
-            if (hora > 19 && hora <= 23) {
+            if (horaNumero > 19 && horaNumero <= 23) {
                 return flowDynamic(`Perfecto ${nombre} 👍 Te llega mañana tipo 9:30am y pagas al recibir.
                 
 Para enviarlo necesito:
@@ -1331,8 +1338,8 @@ nombre + dirección`)
             ciudad === 'cali' ||
             ciudad === 'soy de cali' ||
             ciudad === 'estoy en cali' ||
-			
-			ciudad === 'rozo' ||
+            
+            ciudad === 'rozo' ||
             ciudad === 'soy de rozo' ||
             ciudad === 'estoy en rozo' ||
 
@@ -1378,7 +1385,6 @@ nombre + dirección + teléfono`)
         }
     }
 )
-
 
 // =====================================================
 // 🚀 INIT
