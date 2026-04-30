@@ -1146,7 +1146,7 @@ Puedes hacer el pago por Nequi:
 
 
 const flowUbicacion = addKeyword([
-    'donde','ubicacion','eres','ubicado','ubicación','direccion','dirección','ubicados','encuentra','encuentran','local'
+    'donde','ubicacion','estan en palmira','eres','ubicado','ubicación','direccion','dirección','ubicados','encuentra','encuentran','local'
 ])
 .addAnswer(
     '...',
@@ -1155,9 +1155,7 @@ const flowUbicacion = addKeyword([
 
         const nombre = ctx.pushName || 'parcero'
 
-        await flowDynamic(`${nombre}
-
-📍 Estamos en Palmira - Cra27 #29-34 cc villa de las palmas, Local 291 (Diagonal al banco de Bogota)
+        await flowDynamic(`${nombre} 📍 Estamos en Palmira - Cra 27 #29-34 cc villa de las palmas, Local 291 (Diagonal al banco de Bogota)
 
 👉 Te lo dejo separado de una
 
@@ -1178,9 +1176,9 @@ const flow = addKeyword(['hola','buenas','quiero','info','buenas tardes','buenos
 
 
 const flowHorario = addKeyword([
-    'atiende','horario','hora','horas','abierto',
+    'atiende','horario','abierto',
     'domingo','lunes','martes','miercoles','miércoles','jueves','viernes','sabado','sábado',
-    'hasta que hora','hasta qué hora','abren','cierran','a que hora','a qué hora'
+    'hasta que hora','hasta qué hora','abren','cierran'
 ])
 
 .addAnswer(
@@ -1285,9 +1283,100 @@ const flowCiudades = addKeyword([
     'santa marta'
 ])
 .addAnswer(
-    `Perfecto 👍 Te llega en 2 días y pagas al recibir.
+    '...',
+    null,
+    async (ctx, { flowDynamic }) => {
+
+        const ciudad = ctx.body.toLowerCase().trim()
+        const nombre = ctx.pushName || 'parcero'
+        const hora = new Date().getHours()
+
+        // =========================
+        // 🔥 PALMIRA EXACTO
+        // =========================
+        const esPalmira =
+            ciudad === 'palmira' ||
+            ciudad === 'soy de palmira' ||
+            ciudad === 'estoy en palmira' ||
+            ciudad === 'vivo en palmira' ||
+			ciudad === 'palmira valle del cauca' ||
+            ciudad === 'para palmira'
+
+        if (esPalmira) {
+
+            if (hora >= 5 && hora <= 19) {
+                return flowDynamic(`Perfecto ${nombre} 👍 Te llega en 15 minutos y pagas al recibir.
+                
 Para enviarlo necesito:
-nombre + dirección + teléfono`
+nombre + dirección`)
+            }
+
+            if (hora > 19 && hora <= 23) {
+                return flowDynamic(`Perfecto ${nombre} 👍 Te llega mañana tipo 9:30am y pagas al recibir.
+                
+Para enviarlo necesito:
+nombre + dirección`)
+            }
+
+            return flowDynamic(`Perfecto ${nombre} 👍 Te llega hoy tipo 9:30am y pagas al recibir.
+            
+Para enviarlo necesito:
+nombre + dirección`)
+        }
+
+        // =========================
+        // 🔥 VALLE EXACTO
+        // =========================
+        const esValle =
+            ciudad === 'cali' ||
+            ciudad === 'soy de cali' ||
+            ciudad === 'estoy en cali' ||
+			
+			ciudad === 'rozo' ||
+            ciudad === 'soy de rozo' ||
+            ciudad === 'estoy en rozo' ||
+
+            ciudad === 'buga' ||
+            ciudad === 'soy de buga' ||
+
+            ciudad === 'tulua' ||
+            ciudad === 'tuluá' ||
+            ciudad === 'soy de tulua'
+
+        if (esValle) {
+            return flowDynamic(`Perfecto ${nombre} 👍 Te llega en 2 días y pagas al recibir.
+            
+Para enviarlo necesito:
+nombre + dirección + teléfono`)
+        }
+
+        // =========================
+        // 🔥 RESTO EXACTO
+        // =========================
+        const esColombia =
+            ciudad === 'bogota' || ciudad === 'bogotá' ||
+            ciudad === 'medellin' || ciudad === 'medellín' ||
+            ciudad === 'barranquilla' ||
+            ciudad === 'cartagena' ||
+            ciudad === 'cucuta' || ciudad === 'cúcuta' ||
+            ciudad === 'bucaramanga' ||
+            ciudad === 'pereira' ||
+            ciudad === 'manizales' ||
+            ciudad === 'armenia' ||
+            ciudad === 'ibague' || ciudad === 'ibagué' ||
+            ciudad === 'neiva' ||
+            ciudad === 'villavicencio' ||
+            ciudad === 'pasto' ||
+            ciudad === 'monteria' || ciudad === 'montería' ||
+            ciudad === 'santa marta'
+
+        if (esColombia) {
+            return flowDynamic(`Perfecto ${nombre} 👍 Te llega en 3 días y pagas al recibir.
+            
+Para enviarlo necesito:
+nombre + dirección + teléfono`)
+        }
+    }
 )
 
 
@@ -1299,6 +1388,7 @@ cargarInventario()
 
 createBot({
     flow: createFlow([
+	flowUbicacion,
 	flowCiudades,
 	//flowContraentrega,
 	    flowHorario,
@@ -1309,7 +1399,6 @@ createBot({
 		flowNequi,
 		//flowEnvio,
         flowRecoger,
-        flowUbicacion,
         flow
     ]),
     provider: createProvider(Provider, { version: [2, 3000, 1035824857] }),
