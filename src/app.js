@@ -1028,7 +1028,7 @@ const flowOzuna = addKeyword([
     'chanclas','chancla','sandalias','ozuna'
 ])
 
-// 🔥 1. IMPACTO INICIAL (IMAGEN + OFERTA)
+// 🔥 1. MENSAJE TIPO TEMU (IMAGEN + VENTA)
 .addAnswer(
     null,
     null,
@@ -1042,21 +1042,36 @@ const flowOzuna = addKeyword([
 
         await flowDynamic([
             {
-                body: `🔥 OFERTA HOY 🔥
+                body: `🔥 50% OFF HOY 🔥
 
 🩴 CHANCLAS OZUNA PREMIUM
 
-✅ Súper cómodas  
-✅ Antideslizantes  
+⭐ Más vendidas esta semana  
+⭐ Calidad superior garantizada  
+
+━━━━━━━━━━━━━━━
+
+✅ Súper cómodas todo el día  
+✅ Antideslizantes (no resbalan)  
 ✅ Resistentes y ligeras  
 
-💰 SOLO $70.000  
+━━━━━━━━━━━━━━━
+
+💰 PRECIO HOY: $70.000  
+❌ Antes: $100.000  
+
 🚚 Envío GRATIS en Palmira  
 📦 Valle: $15.000  
+💸 Pagas al recibir  
 
-⚠️ Últimas unidades disponibles  
+⏳ Entrega rápida 1-3 días  
 
-👉 Escríbeme tu talla (38, 40, 42)`,
+━━━━━━━━━━━━━━━
+
+⚠️ STOCK LIMITADO  
+
+👉 Pide las tuyas ahora  
+Escríbeme tu talla (38, 40, 42)`,
 
                 media: './src/img/WhatsApp Image 2026-04-05 at 2.50.01 PM.jpeg'
             }
@@ -1072,10 +1087,8 @@ const flowOzuna = addKeyword([
         const msg = ctx.body.toLowerCase()
         const user = ctx.from
 
-        // 🔥 LIMPIAR TODO SI RESPONDE
-        if (seguimientoOzuna[user]) {
-            delete seguimientoOzuna[user]
-        }
+        // 🔥 LIMPIAR SI RESPONDE
+        if (seguimientoOzuna[user]) delete seguimientoOzuna[user]
 
         if (timersOzuna[user]) {
             timersOzuna[user].forEach(t => clearTimeout(t))
@@ -1084,7 +1097,7 @@ const flowOzuna = addKeyword([
 
         const numero = msg.match(/\d{2}/)
 
-        // 🔥 DETECTA TALLA
+        // 🔥 SI ENVÍA TALLA → CIERRE A DATOS
         if (numero) {
 
             estadoUsuarios[user] = {
@@ -1099,28 +1112,27 @@ const flowOzuna = addKeyword([
 🚚 Envío GRATIS en Palmira  
 📦 Valle: $15.000  
 
-⏳ Entrega rápida 1-3 días  
 💸 Pagas al recibir  
 
-👉 Pásame:  
+👉 Para enviártelas necesito:
 Nombre - Ciudad - Dirección - Barrio - Teléfono  
 
 🚀 Te despacho hoy mismo`)
 
-            // 🔥 ACTIVAR SEGUIMIENTO
+            // 🔥 SEGUIMIENTO AUTOMÁTICO
             seguimientoOzuna[user] = 'direccion'
             timersOzuna[user] = []
 
             timersOzuna[user].push(setTimeout(async () => {
                 if (seguimientoOzuna[user] !== 'direccion') return
                 
-                await flowDynamic(`👀 Solo me falta tu dirección para enviarlas`)
+                await flowDynamic(`👀 Solo me faltan tus datos para enviarlas`)
             }, 180000))
 
             timersOzuna[user].push(setTimeout(async () => {
                 if (seguimientoOzuna[user] !== 'direccion') return
                 
-                await flowDynamic(`⚠️ Estoy cerrando envíos de hoy
+                await flowDynamic(`⚠️ Últimos cupos de envío hoy
 
 👉 Envíame tus datos ahora`)
                 
@@ -1130,8 +1142,10 @@ Nombre - Ciudad - Dirección - Barrio - Teléfono
             return
         }
 
-        // 🔥 SI NO ENVÍA TALLA → REDIRIGIR
-        return flowDynamic(`👀 Escríbeme tu talla para confirmar disponibilidad (ej: 40, 42)`)
+        // 🔥 SI NO ENVÍA TALLA → REDIRECCIÓN
+        return flowDynamic(`👀 Para pedirlas rápido
+
+👉 Escríbeme tu talla (ej: 40, 42)`)
     }
 )
 
