@@ -1030,7 +1030,18 @@ const flowOzuna = addKeyword([
 
 // 🔥 1. PRIMER MENSAJE (SIEMPRE SE ENVÍA)
 .addAnswer(
-    '...', // ⚠️ ESTO ES CLAVE (NO LO DEJES NULL)
+    `🔥 50% OFF HOY 🔥
+
+🩴 CHANCLAS OZUNA PREMIUM
+
+⭐ Más vendidas esta semana  
+⭐ Calidad superior garantizada  
+
+━━━━━━━━━━━━━━━
+
+✅ Súper cómodas todo el día  
+✅ Antideslizantes (no resbalan)  
+✅ Resistentes y ligeras`, // ⚠️ ESTO ES CLAVE (NO LO DEJES NULL)
     null,
     async (ctx, { flowDynamic }) => {
 
@@ -1044,21 +1055,7 @@ const flowOzuna = addKeyword([
 
         await flowDynamic([
             {
-                body: `🔥 50% OFF HOY 🔥
-
-🩴 CHANCLAS OZUNA PREMIUM
-
-⭐ Más vendidas esta semana  
-⭐ Calidad superior garantizada  
-
-━━━━━━━━━━━━━━━
-
-✅ Súper cómodas todo el día  
-✅ Antideslizantes (no resbalan)  
-✅ Resistentes y ligeras  
-
-━━━━━━━━━━━━━━━
-
+                body: `
 💰 PRECIO HOY: $70.000  
 ❌ Antes: $100.000  
 
@@ -1066,9 +1063,7 @@ const flowOzuna = addKeyword([
 📦 Valle: $15.000  
 💸 Pagas al recibir  
 
-⏳ Entrega rápida 1-3 días  
-
-━━━━━━━━━━━━━━━`,
+⏳ Entrega rápida 1-3 días`,
 
                 media: './src/img/WhatsApp Image 2026-04-05 at 2.50.01 PM.jpeg'
             }
