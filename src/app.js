@@ -1078,10 +1078,13 @@ const flowOzuna = addKeyword([
 
 // 🔥 2. CAPTURA (SOLO DESPUÉS DEL PRIMER MENSAJE)
 .addAnswer(
-    '⚠️ STOCK LIMITADO  
+    `⚠️ STOCK LIMITADO
 
-👉 Pide las tuyas ahora  
-Escríbeme tu talla (38, 40, 42)', // ⚠️ TAMBIÉN IMPORTANTE
+🔥 Últimas unidades disponibles
+
+👉 Pide las tuyas ahora
+
+Escríbeme tu talla (38, 40, 42)`, // ⚠️ TAMBIÉN IMPORTANTE
     { capture: true },
     async (ctx, { flowDynamic }) => {
 
