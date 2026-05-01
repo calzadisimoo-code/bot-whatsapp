@@ -1480,17 +1480,15 @@ const flowAf111 = addKeyword([
         return flowDynamic(`💰 Las AF1 blancas 1.1 están en $110.000
 
 🔥 Me quedan pocas en promocion hoy
-
-📦 Tengo disponibles hoy
-
-👉 ¿Para qué ciudad serían ${nombre}?`)
+👉 ¿Me regalas la direccion exacta para enviartelas de una?`)
     }
 
     // 🔥 SI SOLO MUESTRA INTERÉS (NO PRESIONES DURO)
     await delay()
-    return flowDynamic(`🔥 Las AF1 blancas 1.1 están disponibles ahora mismo
+    return flowDynamic(`💰 Las AF1 blancas 1.1 están en $110.000
 
-👉 ¿Quieres que te pase precio y envío?`)
+🔥 Me quedan pocas en promocion hoy
+👉 ¿Me regalas la direccion exacta para enviartelas de una?`)
 })
 
 
