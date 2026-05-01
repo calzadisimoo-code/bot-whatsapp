@@ -1020,18 +1020,19 @@ Puedes hacer el pago por Nequi:
 
 
 
-// 🔥 CONTROL DE SEGUIMIENTO POR ETAPAS
+// 🔥 CONTROL DE SEGUIMIENTO
 const seguimientoOzuna = {}
 const timersOzuna = {}
 
 const flowOzuna = addKeyword([
-    'Chanclas','chanclas','sandalias','ozuna'
+    'chanclas','chancla','sandalias','ozuna'
 ])
 
+// 🔥 1. IMPACTO INICIAL (IMAGEN + OFERTA)
 .addAnswer(
     null,
     null,
-    async (ctx) => {
+    async (ctx, { flowDynamic }) => {
 
         const user = ctx.from
 
@@ -1039,19 +1040,39 @@ const flowOzuna = addKeyword([
             producto: 'chanclas_ozuna'
         }
 
-        // 🔥 NO RESPONDE NADA
+        await flowDynamic([
+            {
+                body: `🔥 OFERTA HOY 🔥
+
+🩴 CHANCLAS OZUNA PREMIUM
+
+✅ Súper cómodas  
+✅ Antideslizantes  
+✅ Resistentes y ligeras  
+
+💰 SOLO $70.000  
+🚚 Envío GRATIS en Palmira  
+📦 Valle: $15.000  
+
+⚠️ Últimas unidades disponibles  
+
+👉 Escríbeme tu talla (38, 40, 42)`,
+
+                media: './src/img/WhatsApp Image 2026-04-05 at 2.50.01 PM.jpeg'
+            }
+        ])
     }
 )
 
+// 🔥 2. CAPTURA RESPUESTA
 .addAnswer(
-    null,
     { capture: true },
     async (ctx, { flowDynamic }) => {
 
         const msg = ctx.body.toLowerCase()
         const user = ctx.from
 
-        // 🔥 CANCELAR TODO SIEMPRE QUE RESPONDA
+        // 🔥 LIMPIAR TODO SI RESPONDE
         if (seguimientoOzuna[user]) {
             delete seguimientoOzuna[user]
         }
@@ -1066,48 +1087,51 @@ const flowOzuna = addKeyword([
         // 🔥 DETECTA TALLA
         if (numero) {
 
-            const PRECIO = '$70.000'
-            
-			await delay()
-            await flowDynamic(`🔥 Perfecto, disponible en talla ${numero[0]}
+            estadoUsuarios[user] = {
+                producto: 'chanclas_ozuna',
+                talla: numero[0]
+            }
 
-💰 Te queda en ${PRECIO}  
+            await delay()
+            await flowDynamic(`🔥 Perfecto, talla ${numero[0]} disponible
+
+💰 $70.000  
 🚚 Envío GRATIS en Palmira  
-📦 A otras ciudades valle: solo 15.000
+📦 Valle: $15.000  
 
-👉 Pásame: Ciudad - Dirección - Barrio - Nombre
+⏳ Entrega rápida 1-3 días  
+💸 Pagas al recibir  
 
-🚀 Te la despacho hoy mismo`)
+👉 Pásame:  
+Nombre - Ciudad - Dirección - Barrio - Teléfono  
 
-            // 🔥 ACTIVAR ETAPA DIRECCIÓN
+🚀 Te despacho hoy mismo`)
+
+            // 🔥 ACTIVAR SEGUIMIENTO
             seguimientoOzuna[user] = 'direccion'
             timersOzuna[user] = []
 
             timersOzuna[user].push(setTimeout(async () => {
                 if (seguimientoOzuna[user] !== 'direccion') return
                 
-				await delay()
-                await flowDynamic(`👀 Solo me falta tu dirección para enviártelas`)
+                await flowDynamic(`👀 Solo me falta tu dirección para enviarlas`)
             }, 180000))
 
             timersOzuna[user].push(setTimeout(async () => {
                 if (seguimientoOzuna[user] !== 'direccion') return
                 
-				await delay()
-                await flowDynamic(`⚠️ Estoy cerrando envíos
+                await flowDynamic(`⚠️ Estoy cerrando envíos de hoy
 
 👉 Envíame tus datos ahora`)
-
+                
                 delete seguimientoOzuna[user]
             }, 600000))
 
             return
         }
 
-        // 🔥 SI NO ES TALLA → ASUMIMOS DIRECCIÓN → CERRAR
-        return flowDynamic(`🔥 Perfecto, pedido recibido
-
-📦 Te confirmo envío en un momento`)
+        // 🔥 SI NO ENVÍA TALLA → REDIRIGIR
+        return flowDynamic(`👀 Escríbeme tu talla para confirmar disponibilidad (ej: 40, 42)`)
     }
 )
 
@@ -1121,7 +1145,14 @@ const flowCatalogo = addKeyword(['catalogo','catálogo','modelo','modelos'])
         const nombre = ctx.pushName || 'parcero'
         
 		await delay()
-        await flowDynamic(`🔥 ${nombre} 👉 dime que producto te interesa https://wa.me/c/573217204017`)
+        await flowDynamic(`📲 Aquí puedes ver el catálogo completo:
+
+👉 https://wa.me/c/573217204017
+
+🔥 Producto más vendido:
+Nike Air Force 1 Blanca
+
+¿Te interesa Nike Air Force 1 Blanca?`)
     }
 )
 
