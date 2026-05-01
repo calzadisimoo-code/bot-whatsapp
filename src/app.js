@@ -9,19 +9,6 @@ const ABTest = {
 
 const usuariosAB = {}
 //
-
-const esDireccion = (msg) => {
-    return (
-        msg.includes('#') ||
-        msg.includes('calle') ||
-        msg.includes('cll') ||
-        msg.includes('cra') ||
-        msg.includes('carrera') ||
-        /\d{2,}/.test(msg) // detecta números tipo direcciones
-    )
-}
-
-//
 const mostrarAB = () => {
     const totalA = ABTest.A.enviados || 1
     const totalB = ABTest.B.enviados || 1
@@ -987,6 +974,7 @@ const flowCargador = addKeyword([
 )
 
 
+
 // 🔥 CONTROL
 const seguimientoAF1AA = {}
 const timersAF1AA = {}
@@ -1009,11 +997,6 @@ const flowAF1 = addKeyword([
 ✅ Resistentes y duraderas`,
     null,
     async (ctx, { flowDynamic }) => {
-
-        const msg = ctx.body.toLowerCase()
-
-        // 🔥 SI ES DIRECCIÓN → NO RESPONDE
-        if (esDireccion(msg)) return
 
         const user = ctx.from
 
@@ -1054,10 +1037,6 @@ Escríbeme tu talla (38, 40, 42)`,
     async (ctx, { flowDynamic }) => {
 
         const msg = ctx.body.toLowerCase()
-
-        // 🔥 SI ES DIRECCIÓN → NO RESPONDE
-        if (esDireccion(msg)) return
-
         const user = ctx.from
 
         // limpiar
@@ -1119,6 +1098,7 @@ Nombre - Ciudad - Dirección - Barrio - Teléfono
 )
 
 
+
 // 🔥 CONTROL
 const seguimientoOzuna = {}
 const timersOzuna = {}
@@ -1138,14 +1118,9 @@ const flowOzuna = addKeyword([
 
 ✅ Súper cómodas todo el día  
 ✅ Antideslizantes (no resbalan)  
-✅ Resistentes y ligeras`,
+✅ Resistentes y ligeras`, // ⚠️ ESTO ES CLAVE (NO LO DEJES NULL)
     null,
     async (ctx, { flowDynamic }) => {
-
-        const msg = ctx.body.toLowerCase()
-
-        // 🔥 SI ES DIRECCIÓN → NO RESPONDE
-        if (esDireccion(msg)) return
 
         const user = ctx.from
 
@@ -1181,15 +1156,11 @@ const flowOzuna = addKeyword([
 
 👉 Pide las tuyas ahora
 
-Escríbeme tu talla (38, 40, 42)`,
+Escríbeme tu talla (38, 40, 42)`, // ⚠️ TAMBIÉN IMPORTANTE
     { capture: true },
     async (ctx, { flowDynamic }) => {
 
         const msg = ctx.body.toLowerCase()
-
-        // 🔥 SI ES DIRECCIÓN → NO RESPONDE
-        if (esDireccion(msg)) return
-
         const user = ctx.from
 
         // limpiar
