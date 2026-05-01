@@ -1,6 +1,30 @@
 const estadoUsuarios = {}
 const seguimiento = {}
 const clientesActivos = {}
+
+//
+const ABTest = {
+    A: { enviados: 0, respuestas: 0 },
+    B: { enviados: 0, respuestas: 0 }
+}
+//
+const mostrarAB = () => {
+    const totalA = ABTest.A.enviados || 1
+    const totalB = ABTest.B.enviados || 1
+
+    const ratioA = (ABTest.A.respuestas / totalA * 100).toFixed(1)
+    const ratioB = (ABTest.B.respuestas / totalB * 100).toFixed(1)
+
+    console.log(`
+📊 TEST A/B
+
+A → enviados: ${ABTest.A.enviados} | respuestas: ${ABTest.A.respuestas} | ${ratioA}%
+B → enviados: ${ABTest.B.enviados} | respuestas: ${ABTest.B.respuestas} | ${ratioB}%
+
+🏆 GANADOR: ${ratioA > ratioB ? 'A' : 'B'}
+`)
+}
+
 // =====================================================
 // 🧠 UTILIDADES (FECHA Y HORA)
 // =====================================================
@@ -1166,12 +1190,66 @@ const flowUbicacion = addKeyword([
 
 
 const flow = addKeyword(['hola','buenas','quiero','info','buenas tardes','buenos dias'])
+
 .addAnswer(
-    `¡Hola! 👋 Este producto está disponible con entrega inmediata 🚚
+    '...',
+    null,
+    async (ctx, { flowDynamic }) => {
+
+        const user = ctx.from
+
+        // 🔥 calcular rendimiento
+        const ratioA = ABTest.A.respuestas / (ABTest.A.enviados || 1)
+        const ratioB = ABTest.B.respuestas / (ABTest.B.enviados || 1)
+
+        let opcion
+
+        // 🔥 70% mejor / 30% peor
+        if (ratioA > ratioB) {
+    opcion = Math.random() < 0.8 ? 'A' : 'B'
+} else {
+    opcion = Math.random() < 0.8 ? 'B' : 'A'
+}
+
+        // 🔥 guardar usuario
+        usuariosAB[user] = opcion
+        ABTest[opcion].enviados++
+
+        let mensaje = ''
+
+        if (opcion === 'A') {
+            mensaje = `¡Hola! 👋 Este producto está disponible con entrega inmediata 🚚
 
 🔥 Hoy lo tenemos en promoción
 
 👉 ¿Para qué ciudad sería el envío?`
+        } else {
+            mensaje = `Hola, en que ciudad te encuentras?`
+        }
+
+        await flowDynamic(mensaje)
+    }
+)
+
+
+// 🔥 AQUÍ DETECTA SI RESPONDE
+.addAnswer(
+    null,
+    { capture: true },
+    async (ctx, { flowDynamic }) => {
+
+        const user = ctx.from
+
+        if (usuariosAB[user]) {
+    const opcion = usuariosAB[user]
+    ABTest[opcion].respuestas++
+    delete usuariosAB[user]
+
+    mostrarAB()
+}
+
+        // aquí sigue tu flujo normal
+    }
 )
 
 
@@ -1196,7 +1274,7 @@ const flowHorario = addKeyword([
 📅 Lunes a sabados: 9:00am - 7:00pm  
 📅 Domingo: 9:00am - 2:00pm  
 
-📍 Palmira - Cra 27 #29-34  
+📍 Palmira - Calle 29 #27-34  
 CC Villa de las Palmas, Local 291 (Diagonal al banco de Bogota)
 
 🚀 Puedes venir ahora mismo y te atiendo de una  
@@ -1213,7 +1291,7 @@ CC Villa de las Palmas, Local 291 (Diagonal al banco de Bogota)
 📅 Lunes a sabados: 9:00am - 7:00pm  
 📅 Domingo: 9:00am - 2:00pm  
 
-📍 Palmira - Cra 27 #29-34  
+📍 Palmira - Calle 29 #27-34  
 CC Villa de las Palmas, Local 291 (Diagonal al banco de Bogota)
 
 🚀 Si quieres, te dejo el pedido listo desde ya  
