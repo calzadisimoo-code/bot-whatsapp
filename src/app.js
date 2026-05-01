@@ -975,46 +975,125 @@ const flowCargador = addKeyword([
 
 
 
-const flowZapatillas = addKeyword([
-    'zapatillas','zapatilla','calzado','air force','af1','tenis','zapatos'
+// 🔥 CONTROL
+const seguimientoAF1AA = {}
+const timersAF1AA = {}
+
+const flowAF1AA = addKeyword([
+    'af1','air force','af1 50 mil','af1 baratas','af1 economicas','air force economicas'
 ])
 
+// 🔥 1. PRIMER MENSAJE (SIEMPRE SE ENVÍA)
 .addAnswer(
-    '...',
+    `🔥 50% OFF HOY 🔥
+
+👟 AIR FORCE 1 DOBLE A
+
+⭐ Más vendidas esta semana  
+⭐ Excelente calidad por el precio  
+
+✅ Cocidas (no se despegan fácil)  
+✅ Súper cómodas todo el día  
+✅ Resistentes y duraderas`,
     null,
-    async (ctx, ctxFn) => {
+    async (ctx, { flowDynamic }) => {
 
-        const nombre = ctx.pushName || 'parcero'
+        const user = ctx.from
 
-        // 🔥 BUSCAR PRODUCTO AUTOMÁTICO
-        const producto = productos.find(p =>
-            p.nombre.includes('zapatillas')
-        )
+        estadoUsuarios[user] = {
+            producto: 'af1_doble_a'
+        }
 
-        await ctxFn.flowDynamic([
+        await delay()
+
+        await flowDynamic([
             {
-                body: `Hola ${nombre} en que talla? te quedan en ${producto.precio} HOY 🔥
+                body: `
+💰 PRECIO HOY: $50.000  
+❌ Antes: $80.000  
 
-Puedes hacer el pago por Nequi:
-📱 3217204017  
-👤 Juan Galarraga
+🚚 Envío RAPIDO en Palmira  
+📦 Valle: $15.000  
+💸 Pagas al recibir  
 
-👉 Me envias el comprobante y te despacho de una 🚀`,
-                media: producto.imagen
+⏳ Entrega rápida 1-3 días`,
+
+                media: './src/img/WhatsApp Image 2026-04-05 at 2.50.01 PM.jpeg'
             }
         ])
-
-        estadoUsuarios[ctx.from] = {
-            producto: 'zapatillas'
-        }
     }
 )
 
+// 🔥 2. CAPTURA (SOLO DESPUÉS DEL PRIMER MENSAJE)
 .addAnswer(
-    null,
+    `⚠️ STOCK LIMITADO
+
+🔥 Últimas unidades disponibles
+
+👉 Pide las tuyas ahora
+
+Escríbeme tu talla (38, 40, 42)`,
     { capture: true },
-    async (ctx, ctxFn) => {
-        return manejarRespuesta(ctx, ctxFn)
+    async (ctx, { flowDynamic }) => {
+
+        const msg = ctx.body.toLowerCase()
+        const user = ctx.from
+
+        // limpiar
+        if (seguimientoAF1AA[user]) delete seguimientoAF1AA[user]
+
+        if (timersAF1AA[user]) {
+            timersAF1AA[user].forEach(t => clearTimeout(t))
+            delete timersAF1AA[user]
+        }
+
+        const numero = msg.match(/\d{2}/)
+
+        // 🔥 SI ENVÍA TALLA
+        if (numero) {
+
+            estadoUsuarios[user] = {
+                producto: 'af1_doble_a',
+                talla: numero[0]
+            }
+
+            await delay()
+            await flowDynamic(`🔥 Perfecto, talla ${numero[0]} disponible
+
+💰 $50.000  
+🚚 Envío RAPIDO en Palmira  
+📦 Valle: $15.000  
+
+💸 Pagas al recibir  
+
+👉 Para enviártelas necesito:
+Nombre - Ciudad - Dirección - Barrio - Teléfono  
+
+🚀 Te despacho hoy mismo`)
+
+            seguimientoAF1AA[user] = 'direccion'
+            timersAF1AA[user] = []
+
+            timersAF1AA[user].push(setTimeout(async () => {
+                if (seguimientoAF1AA[user] !== 'direccion') return
+                await flowDynamic(`👀 Solo me faltan tus datos para enviarlas`)
+            }, 180000))
+
+            timersAF1AA[user].push(setTimeout(async () => {
+                if (seguimientoAF1AA[user] !== 'direccion') return
+                await flowDynamic(`⚠️ Últimos cupos de envío hoy
+
+👉 Envíame tus datos ahora`)
+                delete seguimientoAF1AA[user]
+            }, 600000))
+
+            return
+        }
+
+        // 🔥 SI NO ENVÍA TALLA
+        return flowDynamic(`👀 Para pedirlas rápido
+
+👉 Escríbeme tu talla (ej: 40, 42)`)
     }
 )
 
