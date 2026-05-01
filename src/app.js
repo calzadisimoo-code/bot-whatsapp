@@ -1020,7 +1020,7 @@ Puedes hacer el pago por Nequi:
 
 
 
-// 🔥 CONTROL DE SEGUIMIENTO
+// 🔥 CONTROL
 const seguimientoOzuna = {}
 const timersOzuna = {}
 
@@ -1028,9 +1028,9 @@ const flowOzuna = addKeyword([
     'chanclas','chancla','sandalias','ozuna'
 ])
 
-// 🔥 1. MENSAJE TIPO TEMU (IMAGEN + VENTA)
+// 🔥 1. PRIMER MENSAJE (SIEMPRE SE ENVÍA)
 .addAnswer(
-    null,
+    '...', // ⚠️ ESTO ES CLAVE (NO LO DEJES NULL)
     null,
     async (ctx, { flowDynamic }) => {
 
@@ -1039,6 +1039,8 @@ const flowOzuna = addKeyword([
         estadoUsuarios[user] = {
             producto: 'chanclas_ozuna'
         }
+
+        await delay()
 
         await flowDynamic([
             {
@@ -1079,15 +1081,16 @@ Escríbeme tu talla (38, 40, 42)`,
     }
 )
 
-// 🔥 2. CAPTURA RESPUESTA
+// 🔥 2. CAPTURA (SOLO DESPUÉS DEL PRIMER MENSAJE)
 .addAnswer(
+    '...', // ⚠️ TAMBIÉN IMPORTANTE
     { capture: true },
     async (ctx, { flowDynamic }) => {
 
         const msg = ctx.body.toLowerCase()
         const user = ctx.from
 
-        // 🔥 LIMPIAR SI RESPONDE
+        // limpiar
         if (seguimientoOzuna[user]) delete seguimientoOzuna[user]
 
         if (timersOzuna[user]) {
@@ -1097,7 +1100,7 @@ Escríbeme tu talla (38, 40, 42)`,
 
         const numero = msg.match(/\d{2}/)
 
-        // 🔥 SI ENVÍA TALLA → CIERRE A DATOS
+        // 🔥 SI ENVÍA TALLA
         if (numero) {
 
             estadoUsuarios[user] = {
@@ -1119,30 +1122,26 @@ Nombre - Ciudad - Dirección - Barrio - Teléfono
 
 🚀 Te despacho hoy mismo`)
 
-            // 🔥 SEGUIMIENTO AUTOMÁTICO
             seguimientoOzuna[user] = 'direccion'
             timersOzuna[user] = []
 
             timersOzuna[user].push(setTimeout(async () => {
                 if (seguimientoOzuna[user] !== 'direccion') return
-                
                 await flowDynamic(`👀 Solo me faltan tus datos para enviarlas`)
             }, 180000))
 
             timersOzuna[user].push(setTimeout(async () => {
                 if (seguimientoOzuna[user] !== 'direccion') return
-                
                 await flowDynamic(`⚠️ Últimos cupos de envío hoy
 
 👉 Envíame tus datos ahora`)
-                
                 delete seguimientoOzuna[user]
             }, 600000))
 
             return
         }
 
-        // 🔥 SI NO ENVÍA TALLA → REDIRECCIÓN
+        // 🔥 SI NO ENVÍA TALLA
         return flowDynamic(`👀 Para pedirlas rápido
 
 👉 Escríbeme tu talla (ej: 40, 42)`)
