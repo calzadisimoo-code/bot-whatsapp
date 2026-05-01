@@ -25,6 +25,11 @@ B → enviados: ${ABTest.B.enviados} | respuestas: ${ABTest.B.respuestas} | ${ra
 🏆 GANADOR: ${ratioA > ratioB ? 'A' : 'B'}
 `)
 }
+//
+const delay = async () => {
+    const tiempo = Math.floor(Math.random() * 1000) + 1000
+    return new Promise(resolve => setTimeout(resolve, tiempo))
+}
 
 // =====================================================
 // 🧠 UTILIDADES (FECHA Y HORA)
@@ -888,7 +893,8 @@ const flowRecoger = addKeyword([
     async (ctx, { flowDynamic }) => {
 
         const nombre = ctx.pushName || 'parcero'
-
+        
+		await delay()
         await flowDynamic(`🔥 Perfecto ${nombre}
 
 📍 Estamos en Palmira - Cra27 #29-34 cc villa de las palmas, Local 291
@@ -913,6 +919,7 @@ const flowEnvio = addKeyword([
 
         const nombre = ctx.pushName || 'parcero'
 
+        await delay()
         await flowDynamic(`Perfecto ${nombre}, te lo envío hoy mismo
 
 👉 Solo necesito:
@@ -1093,7 +1100,8 @@ const flowOzuna = addKeyword([
         if (numero) {
 
             const PRECIO = '$70.000'
-
+            
+			await delay()
             await flowDynamic(`🔥 Perfecto, disponible en talla ${numero[0]}
 
 💰 Te queda en ${PRECIO}  
@@ -1110,13 +1118,15 @@ const flowOzuna = addKeyword([
 
             timersOzuna[user].push(setTimeout(async () => {
                 if (seguimientoOzuna[user] !== 'direccion') return
-
+                
+				await delay()
                 await flowDynamic(`👀 Solo me falta tu dirección para enviártelas`)
             }, 180000))
 
             timersOzuna[user].push(setTimeout(async () => {
                 if (seguimientoOzuna[user] !== 'direccion') return
-
+                
+				await delay()
                 await flowDynamic(`⚠️ Estoy cerrando envíos
 
 👉 Envíame tus datos ahora`)
@@ -1142,7 +1152,8 @@ const flowCatalogo = addKeyword(['catalogo','catálogo','modelo','modelos'])
     async (ctx, { flowDynamic }) => {
 
         const nombre = ctx.pushName || 'parcero'
-
+        
+		await delay()
         await flowDynamic(`🔥 ${nombre} 👉 dime que producto te interesa https://wa.me/c/573217204017`)
     }
 )
@@ -1158,7 +1169,8 @@ const flowNequi = addKeyword([
     async (ctx, { flowDynamic }) => {
 
         const nombre = ctx.pushName || 'parcero'
-
+        
+		await delay()
         await flowDynamic(`💰 Perfecto ${nombre}
 
 Puedes hacer el pago por Nequi:
@@ -1179,7 +1191,8 @@ const flowUbicacion = addKeyword([
     async (ctx, { flowDynamic }) => {
 
         const nombre = ctx.pushName || 'parcero'
-
+        
+		await delay()
         await flowDynamic(`${nombre} 📍 Estamos en Palmira - Calle 29 #26-34 cc villa de las palmas, Local 291 (Diagonal al banco de Bogota)
 
 👉 Te lo dejo separado de una
@@ -1200,16 +1213,22 @@ const flow = addKeyword(['hola','buenas','quiero','info','buenas tardes','buenos
         const user = ctx.from
 
         // 🔥 calcular rendimiento
-        const ratioA = ABTest.A.respuestas / (ABTest.A.enviados || 1)
-        const ratioB = ABTest.B.respuestas / (ABTest.B.enviados || 1)
-
         let opcion
 
-        // 🔥 70% mejor / 30% peor
-        if (ratioA > ratioB) {
-    opcion = Math.random() < 0.8 ? 'A' : 'B'
+const total = ABTest.A.enviados + ABTest.B.enviados
+
+// 🔥 PRIMEROS MENSAJES → 50/50 REAL
+if (total < 20) {
+    opcion = Math.random() < 0.5 ? 'A' : 'B'
 } else {
-    opcion = Math.random() < 0.8 ? 'B' : 'A'
+    const ratioA = ABTest.A.respuestas / (ABTest.A.enviados || 1)
+    const ratioB = ABTest.B.respuestas / (ABTest.B.enviados || 1)
+
+    if (ratioA > ratioB) {
+        opcion = Math.random() < 0.8 ? 'A' : 'B'
+    } else {
+        opcion = Math.random() < 0.8 ? 'B' : 'A'
+    }
 }
 
         // 🔥 guardar usuario
@@ -1227,7 +1246,8 @@ const flow = addKeyword(['hola','buenas','quiero','info','buenas tardes','buenos
         } else {
             mensaje = `Hola, en que ciudad te encuentras?`
         }
-
+        
+		await delay()
         await flowDynamic(mensaje)
     }
 )
@@ -1269,7 +1289,8 @@ const flowHorario = addKeyword([
         const hora = new Date().getHours()
 
         if (hora >= 9 && hora < 19) {
-
+            
+			await delay()
             await flowDynamic(`${nombre}, estamos atendiendo HOY 🔥
 
 📅 Lunes a sabados: 9:00am - 7:00pm  
@@ -1286,7 +1307,8 @@ CC Villa de las Palmas, Local 291 (Diagonal al banco de Bogota)
 ¿vienes ahora o prefieres que te lo envíe hoy mismo?`)
         
         } else {
-
+            
+			await delay()
             await flowDynamic(`${nombre}, el horario es:
 
 📅 Lunes a sabados: 9:00am - 7:00pm  
@@ -1317,6 +1339,7 @@ const flowContraentrega = addKeyword([
     null,
     async (ctx, { flowDynamic }) => {
 
+        await delay()
         await flowDynamic(`Te explico 👇
 
 💰 Pagas SOLO el producto por adelantado  
