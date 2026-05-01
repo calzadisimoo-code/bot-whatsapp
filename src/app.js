@@ -1020,31 +1020,31 @@ Puedes hacer el pago por Nequi:
 
 
 
+// 🔥 CONTROL
+const seguimientoOzuna = {}
+const timersOzuna = {}
+
 const flowOzuna = addKeyword([
     'chanclas','chancla','sandalias','ozuna'
 ])
 
+// 🔥 1. PRIMER MENSAJE (SIEMPRE SE ENVÍA)
 .addAnswer(
+    '...', // ⚠️ ESTO ES CLAVE (NO LO DEJES NULL)
     null,
-    { capture: true },
     async (ctx, { flowDynamic }) => {
 
         const user = ctx.from
-        const msg = ctx.body.toLowerCase()
 
-        // 🔥 PRIMER CONTACTO (si no hay estado)
-        if (!estadoUsuarios[user]) {
+        estadoUsuarios[user] = {
+            producto: 'chanclas_ozuna'
+        }
 
-            estadoUsuarios[user] = {
-                producto: 'chanclas_ozuna',
-                paso: 'inicio'
-            }
+        await delay()
 
-            await delay()
-
-            return flowDynamic([
-                {
-                    body: `🔥 50% OFF HOY 🔥
+        await flowDynamic([
+            {
+                body: `🔥 50% OFF HOY 🔥
 
 🩴 CHANCLAS OZUNA PREMIUM
 
@@ -1054,7 +1054,7 @@ const flowOzuna = addKeyword([
 ━━━━━━━━━━━━━━━
 
 ✅ Súper cómodas todo el día  
-✅ Antideslizantes  
+✅ Antideslizantes (no resbalan)  
 ✅ Resistentes y ligeras  
 
 ━━━━━━━━━━━━━━━
@@ -1068,27 +1068,46 @@ const flowOzuna = addKeyword([
 
 ⏳ Entrega rápida 1-3 días  
 
-━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━`,
 
-⚠️ STOCK LIMITADO  
+                media: './src/img/WhatsApp Image 2026-04-05 at 2.50.01 PM.jpeg'
+            }
+        ])
+    }
+)
 
-👉 Pide la tuya ahora (ej: 40)`,
+// 🔥 2. CAPTURA (SOLO DESPUÉS DEL PRIMER MENSAJE)
+.addAnswer(
+    '⚠️ STOCK LIMITADO  
 
-                    media: './src/img/WhatsApp Image 2026-04-05 at 2.50.01 PM.jpeg'
-                }
-            ])
+👉 Pide las tuyas ahora  
+Escríbeme tu talla (38, 40, 42)', // ⚠️ TAMBIÉN IMPORTANTE
+    { capture: true },
+    async (ctx, { flowDynamic }) => {
+
+        const msg = ctx.body.toLowerCase()
+        const user = ctx.from
+
+        // limpiar
+        if (seguimientoOzuna[user]) delete seguimientoOzuna[user]
+
+        if (timersOzuna[user]) {
+            timersOzuna[user].forEach(t => clearTimeout(t))
+            delete timersOzuna[user]
         }
 
-        // 🔥 DETECTAR TALLA
         const numero = msg.match(/\d{2}/)
 
+        // 🔥 SI ENVÍA TALLA
         if (numero) {
 
-            estadoUsuarios[user].talla = numero[0]
+            estadoUsuarios[user] = {
+                producto: 'chanclas_ozuna',
+                talla: numero[0]
+            }
 
             await delay()
-
-            return flowDynamic(`🔥 Perfecto, talla ${numero[0]} disponible
+            await flowDynamic(`🔥 Perfecto, talla ${numero[0]} disponible
 
 💰 $70.000  
 🚚 Envío GRATIS en Palmira  
@@ -1096,16 +1115,34 @@ const flowOzuna = addKeyword([
 
 💸 Pagas al recibir  
 
-👉 Envíame:
+👉 Para enviártelas necesito:
 Nombre - Ciudad - Dirección - Barrio - Teléfono  
 
 🚀 Te despacho hoy mismo`)
+
+            seguimientoOzuna[user] = 'direccion'
+            timersOzuna[user] = []
+
+            timersOzuna[user].push(setTimeout(async () => {
+                if (seguimientoOzuna[user] !== 'direccion') return
+                await flowDynamic(`👀 Solo me faltan tus datos para enviarlas`)
+            }, 180000))
+
+            timersOzuna[user].push(setTimeout(async () => {
+                if (seguimientoOzuna[user] !== 'direccion') return
+                await flowDynamic(`⚠️ Últimos cupos de envío hoy
+
+👉 Envíame tus datos ahora`)
+                delete seguimientoOzuna[user]
+            }, 600000))
+
+            return
         }
 
         // 🔥 SI NO ENVÍA TALLA
         return flowDynamic(`👀 Para pedirlas rápido
 
-👉 Escríbeme tu talla (ej: 40)`)
+👉 Escríbeme tu talla (ej: 40, 42)`)
     }
 )
 
