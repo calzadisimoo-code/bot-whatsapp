@@ -979,7 +979,7 @@ const flowCargador = addKeyword([
 const seguimientoAF1AA = {}
 const timersAF1AA = {}
 
-const flowAF1AA = addKeyword([
+const flowAF1 = addKeyword([
     'af1','air force','af1 50 mil','af1 baratas','af1 economicas','air force economicas'
 ])
 
@@ -1673,7 +1673,7 @@ createBot({
 	    flowHorario,
         flowCatalogo,
 		flowAf111,
-       // flowZapatillas,
+        flowAF1,
 	    flowOzuna,
       //  flowCargador,
 		flowNequi,
