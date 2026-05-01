@@ -1201,7 +1201,7 @@ const flowUbicacion = addKeyword([
 
 
 
-const flow = addKeyword(['hola','buenas','quiero','info','buenas tardes','buenos dias'])
+const flow = addKeyword(['hola','buenas','info','buenas tardes','buenos dias'])
 
 .addAnswer(
     '...',
@@ -1588,7 +1588,7 @@ createBot({
         flowCatalogo,
 		flowAf111,
        // flowZapatillas,
-		//flowOzuna,
+	    flowOzuna,
       //  flowCargador,
 		flowNequi,
 		//flowEnvio,
