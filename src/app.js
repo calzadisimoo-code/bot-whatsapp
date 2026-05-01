@@ -2,11 +2,12 @@ const estadoUsuarios = {}
 const seguimiento = {}
 const clientesActivos = {}
 
-//
 const ABTest = {
     A: { enviados: 0, respuestas: 0 },
     B: { enviados: 0, respuestas: 0 }
 }
+
+const usuariosAB = {}
 //
 const mostrarAB = () => {
     const totalA = ABTest.A.enviados || 1
