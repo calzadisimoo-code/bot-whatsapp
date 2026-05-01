@@ -1489,7 +1489,7 @@ nombre + dirección + teléfono`)
 )
 //
 const flowAf111 = addKeyword([
-    'af1 1.1','air force 1.1','airforce 1.1','af1 blanca 1.1','air force 1 blanca 1.1'
+    'af1 1.1','air force 1.1','Hola quiero las AF1 blancas 1.1','airforce 1.1','af1 blanca 1.1','air force 1 blanca 1.1'
 ])
 .addAnswer('...', null, async (ctx, { flowDynamic }) => {
 

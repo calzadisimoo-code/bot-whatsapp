@@ -1,6 +1,7 @@
 git add .
-git commit -m "actualizacion"
+git commit -m "af111"
 git push
 
+cd bot-whatsapp
 git pull
 pm2 restart bot
