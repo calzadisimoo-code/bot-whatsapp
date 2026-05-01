@@ -1487,6 +1487,36 @@ nombre + dirección + teléfono`)
         }
     }
 )
+//
+const flowAf111 = addKeyword([
+    'af1 1.1','air force 1.1','airforce 1.1','af1 blanca 1.1','air force 1 blanca 1.1'
+])
+.addAnswer('...', null, async (ctx, { flowDynamic }) => {
+
+    const mensaje = ctx.body.toLowerCase()
+    const nombre = ctx.pushName || 'parcero'
+
+    // 🔥 SI PIDE PRECIO
+    if (
+        mensaje.includes('precio') ||
+        mensaje.includes('cuanto') ||
+        mensaje.includes('valor')
+    ) {
+
+        return flowDynamic(`💰 Las AF1 blancas 1.1 están en $110.000
+
+🔥 Me quedan pocas en promocion hoy
+
+📦 Tengo disponibles hoy
+
+👉 ¿Me regalas la dirección exacta para enviartelas de una?`)
+    }
+
+    // 🔥 SI SOLO MUESTRA INTERÉS
+    return flowDynamic(`🔥 Las AF1 blancas 1.1 están disponibles ahora mismo
+
+👉 ¿Te paso precio y envío?`)
+})
 
 // =====================================================
 // 🚀 INIT
@@ -1501,6 +1531,7 @@ createBot({
 	//flowContraentrega,
 	    flowHorario,
         flowCatalogo,
+		flowAf111,
        // flowZapatillas,
 		//flowOzuna,
       //  flowCargador,
