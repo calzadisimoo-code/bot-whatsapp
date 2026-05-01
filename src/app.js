@@ -1029,50 +1029,17 @@ const flowOzuna = addKeyword([
 ])
 
 .addAnswer(
-    '...',
     null,
-    async (ctx, ctxFn) => {
+    null,
+    async (ctx) => {
 
-        const nombre = ctx.pushName || 'parcero'
         const user = ctx.from
 
-        await ctxFn.flowDynamic(`Hola ${nombre}, ¿en qué talla las quieres?`)
-
-        seguimientoOzuna[user] = 'talla'
-
-        // 🔥 LIMPIAR timers anteriores si existen
-        if (timersOzuna[user]) {
-            timersOzuna[user].forEach(t => clearTimeout(t))
+        estadoUsuarios[user] = {
+            producto: 'chanclas_ozuna'
         }
 
-        timersOzuna[user] = []
-
-        // ⏱️ SEGUIMIENTOS TALLA
-        timersOzuna[user].push(setTimeout(async () => {
-            if (seguimientoOzuna[user] !== 'talla') return
-
-            await ctxFn.flowDynamic(`👀 ¿Qué talla usas normalmente?
-
-👉 Tengo desde la 26 a la 45 disponibles`)
-        }, 120000))
-
-        timersOzuna[user].push(setTimeout(async () => {
-            if (seguimientoOzuna[user] !== 'talla') return
-
-            await ctxFn.flowDynamic(`🔥 Hoy ya he vendido varias
-
-👉 Dime tu talla y te confirmo disponibilidad`)
-        }, 360000))
-
-        timersOzuna[user].push(setTimeout(async () => {
-            if (seguimientoOzuna[user] !== 'talla') return
-
-            await ctxFn.flowDynamic(`⚠️ Últimas unidades
-
-👉 Dime tu talla YA`)
-
-            delete seguimientoOzuna[user]
-        }, 900000))
+        // 🔥 NO RESPONDE NADA
     }
 )
 
@@ -1489,12 +1456,18 @@ nombre + dirección + teléfono`)
 )
 //
 const flowAf111 = addKeyword([
-    'af1 1.1','air force 1.1','Hola quiero las AF1 blancas 1.1','airforce 1.1','af1 blanca 1.1','air force 1 blanca 1.1'
+    'af1 1.1','air force 1.1','airforce 1.1','af1 blanca 1.1','air force 1 blanca 1.1'
 ])
 .addAnswer('...', null, async (ctx, { flowDynamic }) => {
 
     const mensaje = ctx.body.toLowerCase()
     const nombre = ctx.pushName || 'parcero'
+    const user = ctx.from
+
+    // 🔥 GUARDAR PRODUCTO (CLAVE)
+    estadoUsuarios[user] = {
+        producto: 'af1_11'
+    }
 
     // 🔥 SI PIDE PRECIO
     if (
@@ -1503,24 +1476,73 @@ const flowAf111 = addKeyword([
         mensaje.includes('valor')
     ) {
 
+        await delay()
         return flowDynamic(`💰 Las AF1 blancas 1.1 están en $110.000
 
 🔥 Me quedan pocas en promocion hoy
 
 📦 Tengo disponibles hoy
 
-👉 ¿Me regalas la dirección exacta para enviartelas de una?`)
+👉 ¿Para qué ciudad serían ${nombre}?`)
     }
 
-    // 🔥 SI SOLO MUESTRA INTERÉS
-    return flowDynamic(`💰 Las AF1 blancas 1.1 están en $110.000
+    // 🔥 SI SOLO MUESTRA INTERÉS (NO PRESIONES DURO)
+    await delay()
+    return flowDynamic(`🔥 Las AF1 blancas 1.1 están disponibles ahora mismo
 
-🔥 Me quedan pocas en promocion hoy
-
-📦 Tengo disponibles hoy
-
-👉 ¿Me regalas la dirección exacta para enviartelas de una?`)
+👉 ¿Quieres que te pase precio y envío?`)
 })
+
+
+//
+const flowFoto = addKeyword(['foto','fotos','imagen','muestrame','manda foto'])
+.addAnswer(
+    null,
+    null,
+    async (ctx, { flowDynamic }) => {
+
+        const user = ctx.from
+        const estado = estadoUsuarios[user]
+
+        if (!estado) return
+
+        // 🔥 CHANCLAS
+        if (estado.producto === 'chanclas_ozuna') {
+            await delay()
+            return flowDynamic([
+                {
+                    body: `🔥 Estas son las chanclas Ozuna
+
+💰 Están en $70.000
+
+📦 Disponibles hoy
+
+👉 ¿Para qué ciudad serían?`,
+                    media: './src/img/WhatsApp Image 2026-04-05 at 2.50.01 PM.jpeg'
+                }
+            ])
+        }
+
+        // 🔥 AF1
+        if (estado.producto === 'af1_11') {
+            await delay()
+            return flowDynamic([
+                {
+                    body: `🔥 Estas son las AF1 blancas 1.1
+
+💰 Están en $110.000
+
+📦 Disponibles hoy
+
+👉 ¿Para qué ciudad serían?`,
+                    media: './src/img/WhatsApp Image 2026-04-05 at 2.50.01 PM.jpeg'
+                }
+            ])
+        }
+
+        // 🔥 OTROS PRODUCTOS (opcional)
+    }
+)
 
 // =====================================================
 // 🚀 INIT
