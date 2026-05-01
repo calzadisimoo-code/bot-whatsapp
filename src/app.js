@@ -1146,7 +1146,7 @@ Puedes hacer el pago por Nequi:
 
 
 const flowUbicacion = addKeyword([
-    'donde','ubicacion','estan en palmira','eres','ubicado','ubicación','direccion','dirección','ubicados','encuentra','encuentran','local'
+    'donde','ubicacion','en que parte de palmira esta?','estan en palmira','eres','ubicado','ubicación','direccion','dirección','ubicados','encuentra','encuentran','local'
 ])
 .addAnswer(
     '...',
@@ -1155,7 +1155,7 @@ const flowUbicacion = addKeyword([
 
         const nombre = ctx.pushName || 'parcero'
 
-        await flowDynamic(`${nombre} 📍 Estamos en Palmira - Cra 27 #29-34 cc villa de las palmas, Local 291 (Diagonal al banco de Bogota)
+        await flowDynamic(`${nombre} 📍 Estamos en Palmira - Calle 29 #26-34 cc villa de las palmas, Local 291 (Diagonal al banco de Bogota)
 
 👉 Te lo dejo separado de una
 
