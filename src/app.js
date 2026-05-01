@@ -1063,7 +1063,7 @@ const flowOzuna = addKeyword([
 
 ⏳ Entrega rápida 1-3 días`,
 
-                media: './src/img/WhatsApp Image 2026-04-05 at 2.50.01 PM.jpeg'
+                media: './src/img/PhotoCollage_1776480765316.jpg'
             }
         ])
     }
