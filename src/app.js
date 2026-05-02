@@ -71,9 +71,6 @@ const VENTAS_FILE = './ventas.json'
 const GASTOS_FILE = './gastos.json'
 const NOMINA_FILE = './nomina.json'
 
-// 🔐 ADMIN
-const ADMIN = '573145823872'
-
 // =====================================================
 // 📦 PRODUCTOS (NO TOCAR)
 // =====================================================
@@ -96,46 +93,6 @@ const productosDB = {
 }
 
  // 🔚 FIN productos
-
-
-const flowAdminVentas = addKeyword(['ventas'])
-.addAnswer('📊 Cargando ventas...', null, async (ctx, ctxFn) => {
-
-    if (!ctx.from.includes(ADMIN)) return
-
-    return ctxFn.flowDynamic(obtenerVentasHoy())
-})
-
-
-const flowAdminCrear = addKeyword(['crear'])
-.addAnswer('Procesando...', { capture: true }, async (ctx, ctxFn) => {
-
-    if (!ctx.from.includes(ADMIN)) return
-
-    return ctxFn.flowDynamic(crearProductoDesdeAdmin(ctx.body))
-})
-
-
-const flowAdminGasto = addKeyword(['gasto'])
-.addAnswer('Procesando gasto...', { capture: true }, async (ctx, ctxFn) => {
-
-    if (!ctx.from.includes(ADMIN)) return
-
-    return ctxFn.flowDynamic(
-        manejarRespuesta(ctx, ctxFn)
-    )
-})
-
-
-const flowAdminHelp = addKeyword(['help'])
-.addAnswer('Mostrando comandos...', null, async (ctx, ctxFn) => {
-
-    if (!ctx.from.includes(ADMIN)) return
-
-    return ctxFn.flowDynamic(ayudaAdmin())
-})
-
-
 
 
 
@@ -261,48 +218,11 @@ Hoy deben haber ${inventarioFinal}`
 
 // =====================================================
 // 💾 GUARDADO (GASTOS, INVENTARIO, VENTAS)
-// =====================================================
-
-const guardarGasto = (tipo, nombre, valor) => {
-
-    let gastos = []
-
-    if (fs.existsSync(GASTOS_FILE)) {
-        gastos = JSON.parse(fs.readFileSync(GASTOS_FILE))
-    }
-
-    gastos.push({
-        fecha: getFechaLocal(), // 🔥 CLAVE
-        tipo,
-        nombre,
-        valor
-    })
-
-    fs.writeFileSync(GASTOS_FILE, JSON.stringify(gastos, null, 2))
-} // 🔚 FIN guardarGasto
-
+// ============
 
 // =====================================================
 // 💰 GUARDAR NOMINA
 // =====================================================
-
-const guardarNomina = (nombre, valor) => {
-
-    let nomina = []
-
-    if (fs.existsSync(NOMINA_FILE)) {
-        nomina = JSON.parse(fs.readFileSync(NOMINA_FILE))
-    }
-
-    nomina.push({
-        fecha: getFechaLocal(),
-        nombre,
-        valor
-    })
-
-    fs.writeFileSync(NOMINA_FILE, JSON.stringify(nomina, null, 2))
-}
-
 
 
 // 📦 INVENTARIO CON COSTO
@@ -314,148 +234,9 @@ let inventario = {
 } // 🔚 FIN inventario
 
 
-
-// =========================
-// 💾 INVENTARIO
-const guardarInventario = () => {
-    const data = {}
-    for (const codigo in inventario) {
-        data[codigo] = inventario[codigo]
-    }
-    fs.writeFileSync(INVENTARIO_FILE, JSON.stringify(data, null, 2))
-} // 🔚 FIN guardarInventario
-
-
-const cargarInventario = () => {
-    if (!fs.existsSync(INVENTARIO_FILE)) return
-
-    const data = JSON.parse(fs.readFileSync(INVENTARIO_FILE, 'utf-8'))
-
-    for (const codigo in data) {
-        inventario[codigo] = data[codigo]
-    }
-
-    guardarInventario()
-} // 🔚 FIN cargarInventario
-
-
-
-// =========================
-// 💰 GUARDAR VENTAS
-const guardarVenta = (venta) => {
-    let ventas = []
-
-    if (fs.existsSync(VENTAS_FILE)) {
-        ventas = JSON.parse(fs.readFileSync(VENTAS_FILE))
-    }
-
-    ventas.push(venta)
-
-    fs.writeFileSync(VENTAS_FILE, JSON.stringify(ventas, null, 2))
-} // 🔚 FIN guardarVenta
-
-
-
-// =====================================================
-// 🗑️ ELIMINAR VENTA
-// =====================================================
-
-const eliminarVenta = (msg) => {
-
-    const id = msg.split(' ')[1]
-
-    if (!id) return "❌ Usa: eliminar ID"
-
-    if (!fs.existsSync(VENTAS_FILE)) return "❌ No hay ventas"
-
-    let ventas = JSON.parse(fs.readFileSync(VENTAS_FILE))
-
-    const nuevas = ventas.filter(v => v.id != id)
-
-    if (ventas.length === nuevas.length) {
-        return "❌ ID no encontrado"
-    }
-
-    fs.writeFileSync(VENTAS_FILE, JSON.stringify(nuevas, null, 2))
-
-    return "🗑️ Venta eliminada correctamente"
-} // 🔚 FIN eliminarVenta
-
-
-
 // =====================================================
 // 📊 VENTAS HOY
-// =====================================================
-
-const obtenerVentasHoy = () => {
-    if (!fs.existsSync(VENTAS_FILE)) return "sin ventas"
-
-    const ventas = JSON.parse(fs.readFileSync(VENTAS_FILE))
-    const hoyObj = new Date()
-    const hoy = getFechaLocal()
-
-    const hoyVentas = ventas.filter(v => v.fecha === hoy)
-
-    if (hoyVentas.length === 0) return "sin ventas hoy"
-
-    let totalProductos = 0
-    let totalVentas = 0
-    let totalGanancia = 0
-
-    let texto = `VENTAS ${hoyObj.toLocaleDateString()}\n\n`
-
-    hoyVentas.forEach(v => {
-        totalProductos += v.cantidad
-        totalVentas += v.precio * v.cantidad
-        totalGanancia += v.ganancia * v.cantidad
-
-        texto += `${v.cantidad} ${v.producto} ${v.precio} G${v.ganancia} ${v.hora || ''} ${v.id}\n`
-    })
-
-    let totalGastos = 0
-    let totalNomina = 0
-    let totalAds = 0
-
-    if (fs.existsSync(GASTOS_FILE)) {
-        const gastos = JSON.parse(fs.readFileSync(GASTOS_FILE))
-
-        gastos.forEach(g => {
-            if (g.fecha === hoy) {
-
-                if (g.tipo === "gasto") totalGastos += g.valor
-                if (g.tipo === "nomina") totalNomina += g.valor
-                if (g.tipo === "anuncio") totalAds += g.valor
-            }
-        })
-    }
-	
-	// 🔥 NOMINA DEL DIA (NUEVO ARCHIVO)
-if (fs.existsSync(NOMINA_FILE)) {
-    const nomina = JSON.parse(fs.readFileSync(NOMINA_FILE))
-
-    nomina.forEach(n => {
-        if (n.fecha === hoy) {
-            totalNomina += n.valor
-        }
-    })
-}
-
-    const totalGeneral = totalGastos + totalNomina + totalAds
-
-    texto += `\nProductos ${totalProductos}
-Venta ${totalVentas}
-Ganancia ${totalGanancia}
-
-Gastos ${totalGastos}
-Nomina ${totalNomina}
-Ads ${totalAds}
-
-Neto ${totalGanancia - totalGeneral}`
-
-    return texto
-} // 🔚 FIN obtenerVentasHoy
-
-
+// ===========
 // =====================================================
 // 📊 VENTAS POR MES
 // =====================================================
@@ -601,35 +382,6 @@ $${precio * 1000}`
 // 🆕 CREAR PRODUCTO
 // =====================================================
 
-const crearProductoDesdeAdmin = (msg) => {
-
-    const partes = msg.split(' ')
-
-    const nombre = partes[1]
-    const costo = parseFloat(partes[2])
-
-    if (!nombre || isNaN(costo)) {
-        return "❌ Usa: crear nombre costo\nEj: crear crocs 20"
-    }
-
-    const codigo = nombre.toLowerCase()
-
-    inventario[codigo] = {
-        nombre: nombre,
-        stock: 0,
-        costo: costo
-    }
-
-    guardarInventario()
-
-    return `✅ Producto creado
-
-${nombre}
-Costo: $${costo * 1000}`
-} // 🔚 FIN crearProductoDesdeAdmin
-
-
-
 // =====================================================
 // 📖 HELP ADMIN
 // =====================================================
@@ -666,124 +418,6 @@ eliminar 17123456789
 // =====================================================
 // 🧠 MANEJADOR ADMIN
 // =====================================================
-
-const manejarRespuesta = async (ctx, { flowDynamic }) => {
-	
-	
-
-    if (ctx.from.includes(ADMIN)) {
-        const msg = ctx.body.toLowerCase().trim()
-		
-		
-		if (msg.startsWith('gastos ') && msg.split(' ').length === 3) {
-            return flowDynamic(obtenerGastosPorMes(msg))
-          }
-		
-	if (msg === 'inventario') {
-        return flowDynamic(resumenInventario())
-    }
-		
-		// 📢 PAGO ANUNCIO
-if (msg.startsWith('pago anuncio ')) {
-    const partes = msg.split(' ')
-
-    const valor = Math.abs(parseInt(partes[2]))
-
-    if (isNaN(valor)) {
-        return flowDynamic("usa: pago anuncio -100")
-    }
-
-    guardarGasto("anuncio", "ads", valor)
-
-    return flowDynamic(`pago anuncio registrado`)
-}
-
-        if (msg.startsWith('ventas ') && msg.split(' ').length === 3) {
-            return flowDynamic(obtenerVentasPorMes(msg))
-        }
-
-        if (msg === 'ventas') {
-            return flowDynamic(obtenerVentasHoy())
-        }
-
-        if (msg === 'venta' || msg.startsWith('venta ')) {
-            return flowDynamic(procesarVentaFlexible(msg))
-        }
-		
-		if (msg.startsWith('crear ')) {
-            return flowDynamic(crearProductoDesdeAdmin(msg))
-}
-
-if (msg.startsWith('gasto ')) {
-    const partes = msg.split(' ')
-    const nombre = partes[1]
-    const valor = Math.abs(parseInt(partes[2]))
-
-    if (!nombre || isNaN(valor)) {
-        return flowDynamic("usa: gasto nombre -20")
-    }
-
-    guardarGasto("gasto", nombre, valor)
-    return flowDynamic(`✅gasto registrado`)
-}
-
-// 🔥 VER NOMINA POR MES (PRIMERO)
-const mesesValidos = [
-    'enero','febrero','marzo','abril','mayo','junio',
-    'julio','agosto','septiembre','octubre','noviembre','diciembre'
-]
-
-// 🔥 VER NOMINA POR MES
-if (
-    msg.startsWith('nomina ') &&
-    mesesValidos.includes(msg.split(' ')[1])
-) {
-    return flowDynamic(obtenerNominaPorMes(msg))
-}
-
-// 🔥 REGISTRAR NOMINA (DESPUÉS)
-if (msg.startsWith('nomina ')) {
-    const partes = msg.split(' ')
-    const nombre = partes[1]
-    const valor = Math.abs(parseFloat(partes[2]))
-
-    if (!nombre || isNaN(valor)) {
-        return flowDynamic("usa: nomina nombre -50")
-    }
-
-    guardarNomina(nombre, valor)
-
-    return flowDynamic(`✅ nomina registrada`)
-}
-        if (msg.startsWith('eliminar ')) {
-            return flowDynamic(eliminarVenta(msg))
-        }
-
-        if (msg.startsWith('compra ')) {
-            const codigo = msg.split(' ')[1]
-
-            if (inventario[codigo]) {
-                inventario[codigo].stock++
-                guardarInventario()
-                return flowDynamic(`stock actualizado`)
-            }
-        }
-
-        if (msg === 'help') {
-            return flowDynamic(`comandos:
-
-venta ...
-ventas
-ventas abril 2026
-gasto nombre -20
-nomina nombre -50
-eliminar id
-compra codigo`)
-        }
-    }
-} // 🔚 FIN manejarRespuesta
-
-
 
 // =====================================================
 // 🤖 FLOWS
@@ -841,42 +475,6 @@ Puedes pagar por Nequi:
 🔥 ¿me pasas los datos para enviártelo hoy?`)
     }
 )
-
-
-const flowCargador = addKeyword([
-    'cargador','67w'
-])
-
-// 🔥 MENSAJE PRINCIPAL
-.addAnswer(
-    null,
-    null,
-    async (ctx, ctxFn) => {
-
-        const nombre = ctx.pushName || 'parcero'
-
-        await ctxFn.flowDynamic([
-            {
-                body: `⚡ ${nombre}, este cargador carga súper rápido, es de los que más salen
-
-💰 Precio: $45.000
-
-¿qué celular tienes?`,
-                media: './src/img/WhatsApp Image 2026-04-13 at 5.16.32 AM.jpeg'
-            }
-        ])
-    }
-)
-
-// 🔥 CAPTURA RESPUESTA
-.addAnswer(
-    null,
-    { capture: true },
-    async (ctx, ctxFn) => {
-        return manejarRespuesta(ctx, ctxFn)
-    }
-)
-
 
 
 // 🔥 CONTROL
@@ -1566,8 +1164,6 @@ Nombre - Ciudad - Dirección - Barrio - Teléfono
 // =====================================================
 // 🚀 INIT
 // =====================================================
-
-cargarInventario()
 
 createBot({
     flow: createFlow([
