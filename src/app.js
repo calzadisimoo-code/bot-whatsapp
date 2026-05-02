@@ -1042,7 +1042,7 @@ Escríbeme tu talla (38, 40, 42)`,
 💸 Pagas al recibir  
 
 👉 Para enviártelas necesito:
-Nombre - Ciudad - Dirección - Barrio - Teléfono  
+Nombre - Ciudad - Dirección - Teléfono  
 
 🚀 Te despacho hoy mismo`)
 
