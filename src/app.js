@@ -1446,18 +1446,15 @@ cargarInventario()
 
 createBot({
     flow: createFlow([
-	flowUbicacion,
-	//flowCiudades,
-	//flowContraentrega,
-	    flowHorario,
+	flow,           // saludo
+        flowAF1,        // AF1
+        flowOzuna,      // chanclas
+        flowAf111,      // af1 1.1
+        flowFoto,       // fotos
         flowCatalogo,
-		//flowAf111,
-        //flowAF1,
-      //  flowCargador,
-		flowNequi,
-		//flowEnvio,
-        //flowRecoger,
-        flow
+        flowUbicacion,
+        flowHorario,
+        flowNequi
     ]),
     provider: createProvider(Provider, { version: [2, 3000, 1035824857] }),
     database: new Database(),
