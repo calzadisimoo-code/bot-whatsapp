@@ -261,9 +261,7 @@ ${data.nombre}
 💰 PRECIO HOY: ${data.precio}  
 ❌ Antes: ${data.antes}
 
-⭐ Producto en promoción hoy`,
-            media: data.imagen
-        }
+⭐ Producto en promoción hoy`}
     ])
 
     await delay()
