@@ -54,67 +54,6 @@ const getHoraLocal = () => {
         String(now.getSeconds()).padStart(2, '0')
 } // 🔚 FIN getHoraLocal
 
-
-// =============================
-// 🔥 SEGUIMIENTO
-// =============================
-//const iniciarSeguimiento = async (ctx, flowDynamic) => {
-  //  const user = ctx.from
-//
-  //  if (seguimiento[user]) return
-
-//    seguimiento[user] = true
-
-    // ⏱️ MENSAJE 1 - 5 MIN
-  //  setTimeout(async () => {
-
-    //    if (!seguimiento[user]) return // 🔥 si respondió, no enviar
-
-      //  await flowDynamic(`👀 Ey, se están vendiendo bastante hoy
-
-//👉 ¿te lo separo de una?`)
-
-  //  }, 300000)
-
-    // ⏱️ MENSAJE 2 - 10 MIN
-    //setTimeout(async () => {
-
-        //if (!seguimiento[user]) return
-
-      //  await flowDynamic(`⚠️ Últimas unidades disponibles
-
-//👉 Si la quieres hoy dime YA`)
-
-  //      delete seguimiento[user]
-
-    //}, 600000)
-//}
-
-// =============================
-// 🔥 RECUPERACIÓN
-// =============================
-//const recuperarCliente = async (ctx, flowDynamic) => {
-  //  const user = ctx.from
-    //if (clientesActivos[user]) return
-
-    //clientesActivos[user] = true
-
-    //setTimeout(async () => {
-      //  await flowDynamic(`👀 Oye, no sé si sigues interesado
-
-//👉 ¿te confirmo disponibilidad?`)
-  //  }, 900000)
-
-    //setTimeout(async () => {
-      //  await flowDynamic(`🔥 Último mensaje
-
-//👉 Si las quieres hoy dime "sí"`)
-  //      delete clientesActivos[user]
-    //}, 1800000)
-//}
-
-
-
 // =====================================================
 // 📦 IMPORTS Y CONFIG
 // =====================================================
@@ -135,67 +74,28 @@ const NOMINA_FILE = './nomina.json'
 // 🔐 ADMIN
 const ADMIN = '573145823872'
 
-
-import OpenAI from "openai"
-
-const openai = new OpenAI({
-  apiKey: "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"
-})
-
-const responderIA = async (mensaje) => {
-    const res = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
-        messages: [
-            {
-                role: "system",
-                content: "Eres un vendedor por WhatsApp, respondes corto, directo y siempre intentas cerrar."
-            },
-            {
-                role: "user",
-                content: mensaje
-            }
-        ]
-    })
-
-    return res.choices[0].message.content
-}
-
-
-
 // =====================================================
 // 📦 PRODUCTOS (NO TOCAR)
 // =====================================================
+const productosDB = {
+    af1_doble_a: {
+        nombre: 'AIR FORCE 1 DOBLE A',
+        precio: '$50.000',
+        antes: '$80.000',
+        imagen: './src/img/af1.jpg',
+        tieneTalla: true
+    },
 
-const productos = [
-{
-    nombre: 'chanclas,sandalias, ozuna',
-    titulo: 'CHANCLAS OZUNA',
-    precio: '$68.000',
-    descripcion: '\n👣 Súper cómodas todo el día\n🔥 No se resbalan\n😎 Se ven duras con cualquier outfit',
-    imagen: './src/img/WhatsApp Image 2026-04-05 at 2.50.01 PM.jpeg'
-},
-{
-    nombre: 'audifonos,airpods,pro 2',
-    titulo: 'AIRPODS PRO 2 CANCELACION DE RUIDO ',
-    descripcion: '\n🎧 Cancelación de ruido\n🔊 Sonido potente\n🔥 De los más pedidos',
-    precio: '$65.000',
-    imagen: './src/img/WhatsApp Image 2026-04-05 at 3.48.54 PM.jpeg'
-},
-{
-    nombre: 'cargador,120w',
-    titulo: 'CARGADOR 120W CARGA ULTRA RAPIDA',
-    precio: '$45.000',
-    descripcion: '\n⚡ Carga tu celular en minutos\n🔋 Ideal para uso diario\n🔥 Se están vendiendo mucho',
-    imagen: './src/img/WhatsApp Image 2026-04-05 at 2.55.57 PM.jpeg'
-},
-{
-    nombre: 'zapatillas,zapatos,zapatillas blancas,tennis,tenis,zapatilla,calzado,air force 1,af1,air force',
-    titulo: 'Nike Air Force 1 Blanca',
-    precio: '$65.000',
-    descripcion: '\n🔥 Súper cómodas\n👣 Suela resistente y cocida\n🔥 De las más vendidas',
-    imagen: './src/img/WhatsApp Image 2026-04-05 at 2.50.01 PM.jpeg'
+    chanclas_ozuna: {
+        nombre: 'CHANCLAS OZUNA PREMIUM',
+        precio: '$70.000',
+        antes: '$100.000',
+        imagen: './src/img/PhotoCollage_1776480765316.jpg',
+        tieneTalla: true
+    }
 }
-] // 🔚 FIN productos
+
+ // 🔚 FIN productos
 
 
 const flowAdminVentas = addKeyword(['ventas'])
@@ -1102,130 +1002,6 @@ Nombre - Ciudad - Dirección - Barrio - Teléfono
 )
 
 
-
-// 🔥 CONTROL
-const seguimientoOzuna = {}
-const timersOzuna = {}
-
-const flowOzuna = addKeyword([
-    'chanclas','chancla','sandalias','ozuna'
-])
-
-// 🔥 1. PRIMER MENSAJE (SIEMPRE SE ENVÍA)
-.addAnswer(
-    `🔥 50% OFF HOY 🔥
-
-🩴 CHANCLAS OZUNA PREMIUM
-
-⭐ Más vendidas esta semana  
-⭐ Calidad superior garantizada  
-
-✅ Súper cómodas todo el día  
-✅ Antideslizantes (no resbalan)  
-✅ Resistentes y ligeras`, // ⚠️ ESTO ES CLAVE (NO LO DEJES NULL)
-    null,
-    async (ctx, { flowDynamic }) => {
-
-        const user = ctx.from
-
-        estadoUsuarios[user] = {
-            producto: 'chanclas_ozuna'
-        }
-
-        await delay()
-
-        await flowDynamic([
-            {
-                body: `
-💰 PRECIO HOY: $70.000  
-❌ Antes: $100.000  
-
-🚚 Envío GRATIS en Palmira  
-📦 Valle: $15.000  
-💸 Pagas al recibir  
-
-⏳ Entrega rápida 1-3 días`,
-
-                media: './src/img/PhotoCollage_1776480765316.jpg'
-            }
-        ])
-    }
-)
-
-// 🔥 2. CAPTURA (SOLO DESPUÉS DEL PRIMER MENSAJE)
-.addAnswer(
-    `⚠️ STOCK LIMITADO
-
-🔥 Últimas unidades disponibles
-
-👉 Pide las tuyas ahora
-
-Escríbeme tu talla (38, 40, 42)`, // ⚠️ TAMBIÉN IMPORTANTE
-    { capture: true },
-    async (ctx, { flowDynamic }) => {
-
-        const msg = ctx.body.toLowerCase()
-        const user = ctx.from
-
-        // limpiar
-        if (seguimientoOzuna[user]) delete seguimientoOzuna[user]
-
-        if (timersOzuna[user]) {
-            timersOzuna[user].forEach(t => clearTimeout(t))
-            delete timersOzuna[user]
-        }
-
-        const numero = msg.match(/\d{2}/)
-
-        // 🔥 SI ENVÍA TALLA
-        if (numero) {
-
-            estadoUsuarios[user] = {
-                producto: 'chanclas_ozuna',
-                talla: numero[0]
-            }
-
-            await delay()
-            await flowDynamic(`🔥 Perfecto, talla ${numero[0]} disponible
-
-💰 $70.000  
-🚚 Envío GRATIS en Palmira  
-📦 Valle: $15.000  
-
-💸 Pagas al recibir  
-
-👉 Para enviártelas necesito:
-Nombre - Ciudad - Dirección - Barrio - Teléfono  
-
-🚀 Te despacho hoy mismo`)
-
-            seguimientoOzuna[user] = 'direccion'
-            timersOzuna[user] = []
-
-            timersOzuna[user].push(setTimeout(async () => {
-                if (seguimientoOzuna[user] !== 'direccion') return
-                await flowDynamic(`👀 Solo me faltan tus datos para enviarlas`)
-            }, 180000))
-
-            timersOzuna[user].push(setTimeout(async () => {
-                if (seguimientoOzuna[user] !== 'direccion') return
-                await flowDynamic(`⚠️ Últimos cupos de envío hoy
-
-👉 Envíame tus datos ahora`)
-                delete seguimientoOzuna[user]
-            }, 600000))
-
-            return
-        }
-
-        // 🔥 SI NO ENVÍA TALLA
-        return flowDynamic(`👀 Para pedirlas rápido
-
-👉 Escríbeme tu talla (ej: 40, 42)`)
-    }
-)
-
-
 const flowCatalogo = addKeyword(['catalogo','catálogo','modelo','modelos'])
 .addAnswer(
     '...',
@@ -1663,6 +1439,119 @@ const flowFoto = addKeyword(['foto','fotos','imagen','muestrame','manda foto'])
     }
 )
 
+const flowProducto = addKeyword([
+    'af1','chanclas','sandalias','air force'
+])
+
+.addAnswer('...', null, async (ctx, { flowDynamic }) => {
+
+    const msg = ctx.body.toLowerCase()
+    const user = ctx.from
+
+    // 🔥 BLOQUEOS
+    if (usuariosBloqueados[user]) return
+    if (esDireccion(msg)) {
+        bloquearUsuario(user)
+        return
+    }
+
+    // 🔥 DETECTAR PRODUCTO (MEJORADO)
+    let producto = null
+
+    if (msg.includes('af1') || msg.includes('air force')) {
+        producto = 'af1_doble_a'
+    }
+
+    if (msg.includes('chancla') || msg.includes('sandalia')) {
+        producto = 'chanclas_ozuna'
+    }
+
+    // 🔥 SI NO SABE EL PRODUCTO → NO RESPONDE (COMO PEDISTE)
+    if (!producto) return
+
+    const data = productosDB[producto]
+
+    estadoUsuarios[user] = { producto }
+
+    await delay()
+
+    // 🔥 MENSAJE BASE
+    await flowDynamic([
+        {
+            body: `🔥 50% OFF HOY 🔥
+
+${data.nombre}
+
+💰 PRECIO HOY: ${data.precio}  
+❌ Antes: ${data.antes}
+
+⭐ Producto en promoción hoy`,
+            media: data.imagen
+        }
+    ])
+
+    // 🔥 SIGUIENTE PASO
+    await delay()
+
+    if (data.tieneTalla) {
+        await flowDynamic(`👉 Escríbeme tu talla (38, 40, 42)`)
+    } else {
+        await flowDynamic(`👉 ¿Para qué ciudad sería el envío?`)
+    }
+})
+
+
+// 🔥 CAPTURA UNIVERSAL
+.addAnswer('', { capture: true }, async (ctx, { flowDynamic }) => {
+
+    const msg = ctx.body.toLowerCase()
+    const user = ctx.from
+
+    // 🔥 BLOQUEOS
+    if (usuariosBloqueados[user]) return
+    if (esDireccion(msg)) {
+        bloquearUsuario(user)
+        return
+    }
+
+    const producto = estadoUsuarios[user]?.producto
+    if (!producto) return
+
+    const data = productosDB[producto]
+
+    const numero = msg.match(/\d{2}/)
+
+    // 🔥 SI TIENE TALLA
+    if (data.tieneTalla) {
+
+        if (!numero) {
+            return flowDynamic(`👉 Escríbeme tu talla (ej: 40)`)
+        }
+
+        estadoUsuarios[user].talla = numero[0]
+
+        await delay()
+
+        return flowDynamic(`🔥 Perfecto, talla ${numero[0]} disponible
+
+💰 ${data.precio}
+
+👉 Para enviártelo necesito:
+Nombre - Ciudad - Dirección - Barrio - Teléfono`)
+    }
+
+    // 🔥 SI NO TIENE TALLA
+    if (!data.tieneTalla) {
+
+        await delay()
+
+        return flowDynamic(`🔥 Perfecto
+
+👉 Envíame:
+Nombre - Ciudad - Dirección - Barrio - Teléfono`)
+    }
+})
+
 // =====================================================
 // 🚀 INIT
 // =====================================================
@@ -1678,7 +1567,6 @@ createBot({
         flowCatalogo,
 		flowAf111,
         flowAF1,
-	    flowOzuna,
       //  flowCargador,
 		flowNequi,
 		//flowEnvio,
