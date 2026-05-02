@@ -1561,6 +1561,7 @@ cargarInventario()
 createBot({
     flow: createFlow([
 	flowUbicacion,
+	flowProducto,
 	flowCiudades,
 	//flowContraentrega,
 	    flowHorario,
