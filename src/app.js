@@ -97,6 +97,18 @@ const productosDB = {
 // =====================================================
 // 🤖 FLOWS
 // =====================================================
+const flow = addKeyword(['hola','buenas','info','precio','menu','menú'])
+.addAnswer(null, null, async (ctx, { flowDynamic }) => {
+
+    const nombre = ctx.pushName || 'parcero'
+
+    await delay()
+
+    await flowDynamic(`🔥 Hola ${nombre}
+
+👉 Escríbeme el producto que quieres ver:`)
+})
+
 const flowUbicacion = addKeyword([
     'donde','ubicacion','en que parte de palmira esta?','estan en palmira','eres','ubicado','ubicación','direccion','dirección','ubicados','encuentra','encuentran','local'
 ])
@@ -311,6 +323,7 @@ Nombre - Ciudad - Dirección - Barrio - Teléfono`)
 // 🚀 INIT
 createBot({
     flow: createFlow([
+	     flow,
          flowProducto,
          flowCatalogo,
          flowNequi,
