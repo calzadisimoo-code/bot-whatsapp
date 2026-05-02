@@ -1507,12 +1507,6 @@ ${data.nombre}
     const msg = ctx.body.toLowerCase()
     const user = ctx.from
 
-    // 🔥 BLOQUEOS
-    if (usuariosBloqueados[user]) return
-    if (esDireccion(msg)) {
-        bloquearUsuario(user)
-        return
-    }
 
     const producto = estadoUsuarios[user]?.producto
     if (!producto) return
