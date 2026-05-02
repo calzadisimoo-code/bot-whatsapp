@@ -562,7 +562,7 @@ Escríbeme tu talla (38, 40, 42)`,
             await flowDynamic(`🔥 Perfecto, talla ${numero[0]} disponible
 
 💰 $110.000  
-🚚 Envío GRATIS en Palmira  
+🚚 Envío RAPIDO en Palmira  
 📦 Valle: $15.000  
 
 💸 Pagas al recibir  
@@ -946,131 +946,6 @@ Ciudad - Dirección - Nombre
 👉 Me envias el comprobante y te despacho de una 🚀`)
     }
 )
-
-
-
-const flowCiudades = addKeyword([
-    'palmira','cali','buga','tulua','tuluá','valle',
-    'bogota','bogotá',
-    'medellin','medellín',
-    'barranquilla',
-    'cartagena',
-    'cucuta','cúcuta',
-    'bucaramanga',
-    'pereira',
-    'manizales',
-    'armenia',
-    'ibague','ibagué',
-    'neiva',
-    'villavicencio',
-    'pasto',
-    'monteria','montería',
-    'santa marta'
-])
-.addAnswer(
-    null,
-    null,
-    async (ctx, { flowDynamic }) => {
-
-        const ciudad = ctx.body.toLowerCase().trim()
-        const nombre = ctx.pushName || 'parcero'
-
-        // 🔥 HORA COLOMBIA (ARREGLADO)
-        const hora = new Date().toLocaleString('es-CO', {
-            timeZone: 'America/Bogota',
-            hour: 'numeric',
-            hour12: false
-        })
-        const horaNumero = parseInt(hora)
-
-        // =========================
-        // 🔥 PALMIRA EXACTO
-        // =========================
-        const esPalmira =
-            ciudad === 'palmira' ||
-            ciudad === 'soy de palmira' ||
-            ciudad === 'estoy en palmira' ||
-            ciudad === 'vivo en palmira' ||
-            ciudad === 'palmira valle del cauca' ||
-            ciudad === 'para palmira'
-
-        if (esPalmira) {
-
-            if (horaNumero >= 5 && horaNumero <= 19) {
-                return flowDynamic(`Perfecto ${nombre} 👍 Te llega en 15 minutos y pagas al recibir.
-                
-Para enviarlo necesito:
-nombre + dirección`)
-            }
-
-            if (horaNumero > 19 && horaNumero <= 23) {
-                return flowDynamic(`Perfecto ${nombre} 👍 Te llega mañana tipo 9:30am y pagas al recibir.
-                
-Para enviarlo necesito:
-nombre + dirección`)
-            }
-
-            return flowDynamic(`Perfecto ${nombre} 👍 Te llega hoy tipo 9:30am y pagas al recibir.
-            
-Para enviarlo necesito:
-nombre + dirección`)
-        }
-
-        // =========================
-        // 🔥 VALLE EXACTO
-        // =========================
-        const esValle =
-            ciudad === 'cali' ||
-            ciudad === 'soy de cali' ||
-            ciudad === 'estoy en cali' ||
-            
-            ciudad === 'rozo' ||
-            ciudad === 'soy de rozo' ||
-            ciudad === 'estoy en rozo' ||
-
-            ciudad === 'buga' ||
-            ciudad === 'soy de buga' ||
-
-            ciudad === 'tulua' ||
-            ciudad === 'tuluá' ||
-            ciudad === 'soy de tulua'
-
-        if (esValle) {
-            return flowDynamic(`Perfecto ${nombre} 👍 Te llega en 2 días y pagas al recibir.
-            
-Para enviarlo necesito:
-nombre + dirección + teléfono`)
-        }
-
-        // =========================
-        // 🔥 RESTO EXACTO
-        // =========================
-        const esColombia =
-            ciudad === 'bogota' || ciudad === 'bogotá' ||
-            ciudad === 'medellin' || ciudad === 'medellín' ||
-            ciudad === 'barranquilla' ||
-            ciudad === 'cartagena' ||
-            ciudad === 'cucuta' || ciudad === 'cúcuta' ||
-            ciudad === 'bucaramanga' ||
-            ciudad === 'pereira' ||
-            ciudad === 'manizales' ||
-            ciudad === 'armenia' ||
-            ciudad === 'ibague' || ciudad === 'ibagué' ||
-            ciudad === 'neiva' ||
-            ciudad === 'villavicencio' ||
-            ciudad === 'pasto' ||
-            ciudad === 'monteria' || ciudad === 'montería' ||
-            ciudad === 'santa marta'
-
-        if (esColombia) {
-            return flowDynamic(`Perfecto ${nombre} 👍 Te llega en 3 días y pagas al recibir.
-            
-Para enviarlo necesito:
-nombre + dirección + teléfono`)
-        }
-    }
-)
-//
 
 //
 const flowFoto = addKeyword(['foto','fotos','imagen','muestrame','manda foto'])
