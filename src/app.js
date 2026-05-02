@@ -1443,19 +1443,12 @@ const flowProducto = addKeyword([
     'af1','chanclas','sandalias','air force'
 ])
 
+// 🔥 MENSAJE INICIAL
 .addAnswer(null, null, async (ctx, { flowDynamic }) => {
 
     const msg = ctx.body.toLowerCase()
     const user = ctx.from
 
-    // 🔥 BLOQUEOS
-    if (usuariosBloqueados[user]) return
-    if (esDireccion(msg)) {
-        bloquearUsuario(user)
-        return
-    }
-
-    // 🔥 DETECTAR PRODUCTO (MEJORADO)
     let producto = null
 
     if (msg.includes('af1') || msg.includes('air force')) {
@@ -1466,16 +1459,16 @@ const flowProducto = addKeyword([
         producto = 'chanclas_ozuna'
     }
 
-    // 🔥 SI NO SABE EL PRODUCTO → NO RESPONDE (COMO PEDISTE)
+    // ❌ si no detecta producto no responde
     if (!producto) return
 
     const data = productosDB[producto]
 
+    // 🔥 guardar producto
     estadoUsuarios[user] = { producto }
 
     await delay()
 
-    // 🔥 MENSAJE BASE
     await flowDynamic([
         {
             body: `🔥 50% OFF HOY 🔥
@@ -1490,7 +1483,6 @@ ${data.nombre}
         }
     ])
 
-    // 🔥 SIGUIENTE PASO
     await delay()
 
     if (data.tieneTalla) {
@@ -1502,11 +1494,10 @@ ${data.nombre}
 
 
 // 🔥 CAPTURA UNIVERSAL
-.addAnswer(null, null, async (ctx, { flowDynamic }) => {
+.addAnswer(null, { capture: true }, async (ctx, { flowDynamic }) => {
 
     const msg = ctx.body.toLowerCase()
     const user = ctx.from
-
 
     const producto = estadoUsuarios[user]?.producto
     if (!producto) return
