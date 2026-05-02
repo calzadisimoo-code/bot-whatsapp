@@ -1211,7 +1211,7 @@ const flowContraentrega = addKeyword([
 
 Tarifas:
 📍 Palmira: $6.000  
-📍 Valle: $13.000  
+📍 Valle: $13.000
 📍 Fuera del Valle: $23.000  
 
 🔐 Somos tienda física:
@@ -1222,7 +1222,7 @@ Puedes hacer el pago por Nequi:
 👤 Juan Galarraga
 
 👉 Solo necesito:
-Ciudad - Dirección - Barrio - Nombre
+Ciudad - Dirección - Nombre
 
 👉 Me envias el comprobante y te despacho de una 🚀`)
     }
