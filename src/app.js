@@ -1448,7 +1448,7 @@ createBot({
     flow: createFlow([
 	flow,           // saludo
         flowAF1,        // AF1
-        flowOzuna,      // chanclas
+       // flowOzuna,      // chanclas
         flowAf111,      // af1 1.1
         flowFoto,       // fotos
         flowCatalogo,
