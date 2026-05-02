@@ -481,7 +481,7 @@ const seguimientoAF111 = {}
 const timersAF111 = {}
 
 const flowAf111 = addKeyword([
-    'af1 1.1','air force 1.1','af1 blanca 1.1','airforce 1.1','air force 1 blanca 1.1'
+    'af1 1.1','air force 1.1','Hola quiero las AF1 blancas 1.1','af1 blanca 1.1','airforce 1.1','air force 1 blanca 1.1'
 ])
 
 // 🔥 1. PRIMER MENSAJE
@@ -1127,7 +1127,7 @@ const seguimientoOzuna = {}
 const timersOzuna = {}
 
 const flowOzuna = addKeyword([
-    'chanclas','chancla','ozuna','chanclas ozuna','ozuna 1.1','sandalias ozuna'
+    'chanclas','chancla','Quiero chanclas ozuna para envio','ozuna','chanclas ozuna','ozuna 1.1','sandalias ozuna'
 ])
 
 // 🔥 1. PRIMER MENSAJE
