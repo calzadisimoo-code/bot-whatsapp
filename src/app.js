@@ -1439,105 +1439,6 @@ const flowFoto = addKeyword(['foto','fotos','imagen','muestrame','manda foto'])
     }
 )
 
-const flowProducto = addKeyword([
-    'af1','chanclas','sandalias','air force'
-])
-
-.addAnswer(null, null, async (ctx, { flowDynamic }) => {
-
-    const msg = ctx.body.toLowerCase()
-    const user = ctx.from
-
-    // 🔥 DETECTAR PRODUCTO (MEJORADO)
-    let producto = null
-
-    if (msg.includes('af1') || msg.includes('air force')) {
-        producto = 'af1_doble_a'
-    }
-
-    if (msg.includes('chancla') || msg.includes('sandalia')) {
-        producto = 'chanclas_ozuna'
-    }
-
-    // 🔥 SI NO SABE EL PRODUCTO → NO RESPONDE (COMO PEDISTE)
-    if (!producto) return
-
-    const data = productosDB[producto]
-
-    estadoUsuarios[user] = { producto }
-
-    await delay()
-
-    // 🔥 MENSAJE BASE
-    await flowDynamic([
-        {
-            body: `🔥 50% OFF HOY 🔥
-
-${data.nombre}
-
-💰 PRECIO HOY: ${data.precio}  
-❌ Antes: ${data.antes}
-
-⭐ Producto en promoción hoy`,
-            media: data.imagen
-        }
-    ])
-
-    // 🔥 SIGUIENTE PASO
-    await delay()
-
-    if (data.tieneTalla) {
-        await flowDynamic(`👉 Escríbeme tu talla (38, 40, 42)`)
-    } else {
-        await flowDynamic(`👉 ¿Para qué ciudad sería el envío?`)
-    }
-})
-
-
-// 🔥 CAPTURA UNIVERSAL
-.addAnswer(null, null, async (ctx, { flowDynamic }) => {
-
-    const msg = ctx.body.toLowerCase()
-    const user = ctx.from
-
-
-    const producto = estadoUsuarios[user]?.producto
-    if (!producto) return
-
-    const data = productosDB[producto]
-
-    const numero = msg.match(/\d{2}/)
-
-    // 🔥 SI TIENE TALLA
-    if (data.tieneTalla) {
-
-        if (!numero) {
-            return flowDynamic(`👉 Escríbeme tu talla (ej: 40)`)
-        }
-
-        estadoUsuarios[user].talla = numero[0]
-
-        await delay()
-
-        return flowDynamic(`🔥 Perfecto, talla ${numero[0]} disponible
-
-💰 ${data.precio}
-
-👉 Para enviártelo necesito:
-Nombre - Ciudad - Dirección - Barrio - Teléfono`)
-    }
-
-    // 🔥 SI NO TIENE TALLA
-    if (!data.tieneTalla) {
-
-        await delay()
-
-        return flowDynamic(`🔥 Perfecto
-
-👉 Envíame:
-Nombre - Ciudad - Dirección - Barrio - Teléfono`)
-    }
-})
 
 // =====================================================
 // 🚀 INIT
@@ -1548,7 +1449,6 @@ cargarInventario()
 createBot({
     flow: createFlow([
 	flowUbicacion,
-	flowProducto,
 	//flowCiudades,
 	//flowContraentrega,
 	    flowHorario,
