@@ -1438,8 +1438,6 @@ const flowFoto = addKeyword(['foto','fotos','imagen','muestrame','manda foto'])
         // 🔥 OTROS PRODUCTOS (opcional)
     }
 )
-
-
 // =====================================================
 // 🚀 INIT
 // =====================================================
