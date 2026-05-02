@@ -792,7 +792,7 @@ const flowRecoger = addKeyword([
     'voy','paso','recoger','recogo','retiro','voy a pasar'
 ])
 .addAnswer(
-    '...',
+    null,
     null,
     async (ctx, { flowDynamic }) => {
 
@@ -817,7 +817,7 @@ const flowEnvio = addKeyword([
     'envialo','enviamelo','enviame','lo quiero con envio'
 ])
 .addAnswer(
-    '...', // 👈 SIEMPRE algo aquí
+    null, // 👈 SIEMPRE algo aquí
     null,
     async (ctx, { flowDynamic }) => {
 
@@ -849,7 +849,7 @@ const flowCargador = addKeyword([
 
 // 🔥 MENSAJE PRINCIPAL
 .addAnswer(
-    '...',
+    null,
     null,
     async (ctx, ctxFn) => {
 
@@ -1004,7 +1004,7 @@ Nombre - Ciudad - Dirección - Barrio - Teléfono
 
 const flowCatalogo = addKeyword(['catalogo','catálogo','modelo','modelos'])
 .addAnswer(
-    '...',
+    null,
     null,
     async (ctx, { flowDynamic }) => {
 
@@ -1028,7 +1028,7 @@ const flowNequi = addKeyword([
     'nequi','numero','pago nequi'
 ])
 .addAnswer(
-    '...',
+    null,
     null,
     async (ctx, { flowDynamic }) => {
 
@@ -1050,7 +1050,7 @@ const flowUbicacion = addKeyword([
     'donde','ubicacion','en que parte de palmira esta?','estan en palmira','eres','ubicado','ubicación','direccion','dirección','ubicados','encuentra','encuentran','local'
 ])
 .addAnswer(
-    '...',
+    null,
     null,
     async (ctx, { flowDynamic }) => {
 
@@ -1070,7 +1070,7 @@ const flowUbicacion = addKeyword([
 const flow = addKeyword(['hola','buenas','info','buenas tardes','buenos dias'])
 
 .addAnswer(
-    '...',
+    null,
     null,
     async (ctx, { flowDynamic }) => {
 
@@ -1145,7 +1145,7 @@ const flowHorario = addKeyword([
 ])
 
 .addAnswer(
-    '...',
+    null,
     null,
     async (ctx, { flowDynamic }) => {
 
@@ -1199,7 +1199,7 @@ const flowContraentrega = addKeyword([
 ])
 
 .addAnswer(
-    '...',
+    null,
     null,
     async (ctx, { flowDynamic }) => {
 
@@ -1249,7 +1249,7 @@ const flowCiudades = addKeyword([
     'santa marta'
 ])
 .addAnswer(
-    '...',
+    null,
     null,
     async (ctx, { flowDynamic }) => {
 
@@ -1355,7 +1355,7 @@ nombre + dirección + teléfono`)
 const flowAf111 = addKeyword([
     'af1 1.1','air force 1.1','airforce 1.1','af1 blanca 1.1','air force 1 blanca 1.1'
 ])
-.addAnswer('...', null, async (ctx, { flowDynamic }) => {
+.addAnswer(null, null, async (ctx, { flowDynamic }) => {
 
     const mensaje = ctx.body.toLowerCase()
     const nombre = ctx.pushName || 'parcero'
@@ -1443,7 +1443,7 @@ const flowProducto = addKeyword([
     'af1','chanclas','sandalias','air force'
 ])
 
-.addAnswer('...', null, async (ctx, { flowDynamic }) => {
+.addAnswer(null, null, async (ctx, { flowDynamic }) => {
 
     const msg = ctx.body.toLowerCase()
     const user = ctx.from
@@ -1502,7 +1502,7 @@ ${data.nombre}
 
 
 // 🔥 CAPTURA UNIVERSAL
-.addAnswer('', { capture: true }, async (ctx, { flowDynamic }) => {
+.addAnswer(null, null, async (ctx, { flowDynamic }) => {
 
     const msg = ctx.body.toLowerCase()
     const user = ctx.from
