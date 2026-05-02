@@ -1252,9 +1252,9 @@ Nombre - Ciudad - Dirección - Barrio - Teléfono
 createBot({
     flow: createFlow([
 	flow,           // saludo
+	    flowAf111,      // af1 1.1
         flowAF1,        // AF1
         flowOzuna,      // chanclas
-        flowAf111,      // af1 1.1
         flowFoto,       // fotos
         flowCatalogo,
         flowUbicacion,
