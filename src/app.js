@@ -950,43 +950,127 @@ nombre + dirección + teléfono`)
     }
 )
 //
+// 🔥 CONTROL
+const seguimientoAF111 = {}
+const timersAF111 = {}
+
 const flowAf111 = addKeyword([
-    'af1 1.1','air force 1.1','airforce 1.1','af1 blanca 1.1','air force 1 blanca 1.1'
+    'af1 1.1','air force 1.1','af1 blanca 1.1','airforce 1.1','air force 1 blanca 1.1'
 ])
-.addAnswer(null, null, async (ctx, { flowDynamic }) => {
 
-    const mensaje = ctx.body.toLowerCase()
-    const nombre = ctx.pushName || 'parcero'
-    const user = ctx.from
+// 🔥 1. PRIMER MENSAJE
+.addAnswer(
+    `🔥 50% OFF HOY 🔥
 
-    // 🔥 GUARDAR PRODUCTO (CLAVE)
-    estadoUsuarios[user] = {
-        producto: 'af1_11'
-    }
+👟 AIR FORCE 1.1 PREMIUM
 
-    // 🔥 SI PIDE PRECIO
-    if (
-        mensaje.includes('precio') ||
-        mensaje.includes('cuanto') ||
-        mensaje.includes('valor')
-    ) {
+⭐ Más vendidas esta semana  
+⭐ Calidad superior garantizada  
+
+✅ Acabados premium  
+✅ Súper cómodas todo el día  
+✅ Resistentes y duraderas`,
+    null,
+    async (ctx, { flowDynamic }) => {
+
+        const user = ctx.from
+
+        estadoUsuarios[user] = {
+            producto: 'af1_11'
+        }
 
         await delay()
-        return flowDynamic(`💰 Las AF1 blancas 1.1 están en $110.000
 
-🔥 Me quedan pocas en promocion hoy
-👉 ¿Me regalas la direccion exacta para enviartelas de una?`)
+        await flowDynamic([
+            {
+                body: `
+💰 PRECIO HOY: $110.000  
+❌ Antes: $140.000  
+
+🚚 Envío RAPIDO en Palmira  
+📦 Valle: $15.000  
+💸 Pagas al recibir  
+
+⏳ Entrega rápida 1-3 días`,
+                media: './src/img/WhatsApp-Image-2024-08-05-at-15.29.38.jpeg'
+            }
+        ])
     }
-
-    // 🔥 SI SOLO MUESTRA INTERÉS (NO PRESIONES DURO)
-    await delay()
-    return flowDynamic(`💰 Las AF1 blancas 1.1 están en $110.000
-
-🔥 Me quedan pocas en promocion hoy
-👉 ¿Me regalas la direccion exacta para enviartelas de una?`)
-})
+)
 
 
+// 🔥 2. CAPTURA
+.addAnswer(
+    `⚠️ STOCK LIMITADO
+
+🔥 Últimas unidades disponibles
+
+👉 Pide las tuyas ahora
+
+Escríbeme tu talla (38, 40, 42)`,
+    { capture: true },
+    async (ctx, { flowDynamic }) => {
+
+        const msg = ctx.body.toLowerCase()
+        const user = ctx.from
+
+        // limpiar
+        if (seguimientoAF111[user]) delete seguimientoAF111[user]
+
+        if (timersAF111[user]) {
+            timersAF111[user].forEach(t => clearTimeout(t))
+            delete timersAF111[user]
+        }
+
+        const numero = msg.match(/\d{2}/)
+
+        // 🔥 SI ENVÍA TALLA
+        if (numero) {
+
+            estadoUsuarios[user] = {
+                producto: 'af1_11',
+                talla: numero[0]
+            }
+
+            await delay()
+            await flowDynamic(`🔥 Perfecto, talla ${numero[0]} disponible
+
+💰 $110.000  
+🚚 Envío GRATIS en Palmira  
+📦 Valle: $15.000  
+
+💸 Pagas al recibir  
+
+👉 Para enviártelas necesito:
+Nombre - Ciudad - Dirección - Barrio - Teléfono  
+
+🚀 Te despacho hoy mismo`)
+
+            seguimientoAF111[user] = 'direccion'
+            timersAF111[user] = []
+
+            timersAF111[user].push(setTimeout(async () => {
+                if (seguimientoAF111[user] !== 'direccion') return
+                await flowDynamic(`👀 Solo me faltan tus datos para enviarlas`)
+            }, 180000))
+
+            timersAF111[user].push(setTimeout(async () => {
+                if (seguimientoAF111[user] !== 'direccion') return
+                await flowDynamic(`⚠️ Últimos cupos de envío hoy
+
+👉 Envíame tus datos ahora`)
+                delete seguimientoAF111[user]
+            }, 600000))
+
+            return
+        }
+
+        // 🔥 SI NO ENVÍA TALLA
+        return flowDynamic(`👀 Para pedirlas rápido
+
+👉 Escríbeme tu talla (ej: 40, 42)`)
+    }
+)
 //
 const flowFoto = addKeyword(['foto','fotos','imagen','muestrame','manda foto'])
 .addAnswer(
@@ -1071,7 +1155,7 @@ const flowOzuna = addKeyword([
         await flowDynamic([
             {
                 body: `
-💰 PRECIO HOY: $70.000  
+💰 PRECIO HOY: $69.900  
 ❌ Antes: $100.000  
 
 🚚 Envío GRATIS en Palmira  
