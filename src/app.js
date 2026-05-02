@@ -88,7 +88,7 @@ const productosDB = {
 
     chanclas_ozuna: {
         nombre: 'CHANCLAS OZUNA PREMIUM',
-        precio: '$70.000',
+        precio: '$69.900',
         antes: '$100.000',
         imagen: './src/img/PhotoCollage_1776480765316.jpg',
         tieneTalla: true
