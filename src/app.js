@@ -1207,7 +1207,7 @@ Escríbeme tu talla (38, 40, 42)`,
             await delay()
             await flowDynamic(`🔥 Perfecto, talla ${numero[0]} disponible
 
-💰 $70.000  
+💰 $69.900  
 🚚 Envío GRATIS en Palmira  
 📦 Valle: $15.000  
 
