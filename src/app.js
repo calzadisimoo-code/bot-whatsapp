@@ -6,6 +6,19 @@ const ABTest = {
     A: { enviados: 0, respuestas: 0 },
     B: { enviados: 0, respuestas: 0 }
 }
+//
+const usuariosBloqueados = {}
+//
+const esDireccion = (msg) => {
+    return (
+        msg.includes('#') ||
+        msg.includes('calle') ||
+        msg.includes('cll') ||
+        msg.includes('cra') ||
+        msg.includes('carrera')
+    )
+}
+//
 
 const usuariosAB = {}
 //
@@ -109,7 +122,27 @@ const getHoraLocal = () => {
     //}, 1800000)
 //}
 
+const bloquearUsuario = (user) => {
+    usuariosBloqueados[user] = true
 
+    // 🔥 limpiar timers OZUNA
+    if (timersOzuna[user]) {
+        timersOzuna[user].forEach(t => clearTimeout(t))
+        delete timersOzuna[user]
+    }
+
+    // 🔥 limpiar timers AF1
+    if (timersAF1AA[user]) {
+        timersAF1AA[user].forEach(t => clearTimeout(t))
+        delete timersAF1AA[user]
+    }
+
+    // 🔥 limpiar seguimiento
+    delete seguimientoOzuna[user]
+    delete seguimientoAF1AA[user]
+
+    console.log('🛑 Usuario bloqueado por enviar dirección:', user)
+}
 
 // =====================================================
 // 📦 IMPORTS Y CONFIG
@@ -997,6 +1030,18 @@ const flowAF1 = addKeyword([
 ✅ Resistentes y duraderas`,
     null,
     async (ctx, { flowDynamic }) => {
+		
+		const msg = ctx.body.toLowerCase()
+const user = ctx.from
+
+// 🔥 SI YA ESTÁ BLOQUEADO → NO HACER NADA
+if (usuariosBloqueados[user]) return
+
+// 🔥 SI ENVÍA DIRECCIÓN → BLOQUEAR Y SALIR
+if (esDireccion(msg)) {
+    bloquearUsuario(user)
+    return
+}
 
         const user = ctx.from
 
@@ -1121,6 +1166,18 @@ const flowOzuna = addKeyword([
 ✅ Resistentes y ligeras`, // ⚠️ ESTO ES CLAVE (NO LO DEJES NULL)
     null,
     async (ctx, { flowDynamic }) => {
+		
+		const msg = ctx.body.toLowerCase()
+const user = ctx.from
+
+// 🔥 SI YA ESTÁ BLOQUEADO → NO HACER NADA
+if (usuariosBloqueados[user]) return
+
+// 🔥 SI ENVÍA DIRECCIÓN → BLOQUEAR Y SALIR
+if (esDireccion(msg)) {
+    bloquearUsuario(user)
+    return
+}
 
         const user = ctx.from
 
