@@ -77,7 +77,7 @@ const productosDB = {
         nombre: 'AIR FORCE 1 DOBLE A',
         precio: '$50.000',
         antes: '$80.000',
-        imagen: './src/img/af1.jpg',
+        //imagen: './src/img/af1.jpg',
         tieneTalla: true
     },
 
@@ -85,7 +85,7 @@ const productosDB = {
         nombre: 'CHANCLAS OZUNA PREMIUM',
         precio: '$69.900',
         antes: '$100.000',
-        imagen: './src/img/PhotoCollage_1776480765316.jpg',
+        //imagen: './src/img/PhotoCollage_1776480765316.jpg',
         tieneTalla: true
     }
 }
