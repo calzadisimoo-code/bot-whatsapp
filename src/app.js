@@ -415,6 +415,7 @@ const flowPantalonetas = addKeyword([
 
 👉 ¿En qué talla? (S, M, L, XL)`,
                 media: './src/img/pantaloneta1.jpeg'
+				media: './src/img/pantaloneta1.jpeg'
             }
         ])
     }
