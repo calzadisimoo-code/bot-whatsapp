@@ -405,6 +405,7 @@ const flowPantalonetas = addKeyword([
     null,
     async (ctx, { flowDynamic }) => {
 
+        // 🔥 primero envía las imágenes
         await flowDynamic([
             {
                 media: './src/img/pantaloneta1.jpeg'
@@ -416,6 +417,9 @@ const flowPantalonetas = addKeyword([
                 media: './src/img/af111.jpeg'
             }
         ])
+
+        // 🔥 luego envía el mensaje final
+        await flowDynamic(`👉 Dime tu talla (S, M, L o XL)`)
     }
 )
 
