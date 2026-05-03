@@ -411,10 +411,19 @@ const flowPantalonetas = addKeyword([
                 media: './src/img/pantaloneta1.jpeg'
             },
             {
-                media: './src/img/af1.jpeg'
+                media: './src/img/pantaloneta2.jpeg'
             },
             {
-                media: './src/img/af111.jpeg'
+                media: './src/img/pantaloneta3.jpeg'
+            },
+            {
+                media: './src/img/pantaloneta4.jpeg'
+            },
+            {
+                media: './src/img/pantaloneta5.jpeg'
+            },
+            {
+                media: './src/img/pantaloneta6.jpeg'
             }
         ])
 
