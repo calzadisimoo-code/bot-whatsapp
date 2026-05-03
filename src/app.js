@@ -997,17 +997,33 @@ const flowFoto = addKeyword(['foto','fotos','imagen','muestrame','manda foto'])
     }
 )
 //
-/// 🔥 CONTROL
-const seguimientoOzuna = {}
-const timersOzuna = {}
+// 🔥 CONTROL (NO USADO POR AHORA)
+// const seguimientoOzuna = {}
+// const timersOzuna = {}
 
 const flowOzuna = addKeyword([
     'chanclas','chancla','Quiero chanclas ozuna para envio','ozuna','chanclas ozuna','ozuna 1.1','sandalias ozuna'
 ])
 
-// 🔥 1. MENSAJE INICIAL (CAPTURA TALLA)
+// 🔥 1. MENSAJE INICIAL (CON IMAGEN)
 .addAnswer(
-    `Hola ¿En qué talla?`,
+    `Hola 👋 ¿En qué talla?`,
+    null,
+    async (ctx, { flowDynamic }) => {
+
+        await flowDynamic([
+            {
+                body: '',
+                media: './src/img/PhotoCollage_1776480765316.jpg'
+            }
+        ])
+    }
+)
+
+
+// 🔥 2. CAPTURA TALLA (SIN MENSAJE EXTRA)
+.addAnswer(
+    null,
     { capture: true },
     async (ctx, { flowDynamic }) => {
 
@@ -1016,7 +1032,7 @@ const flowOzuna = addKeyword([
 
         const numero = msg.match(/\d{2}/)
 
-        // 🔥 SI ENVÍA TALLA
+        // ✅ SI ENVÍA TALLA
         if (numero) {
 
             estadoUsuarios[user] = {
@@ -1026,37 +1042,34 @@ const flowOzuna = addKeyword([
 
             await delay()
 
-            await flowDynamic([
-                {
-                    body: `vale, enviame porfa la dirección para hacerte el envio hoy mismo`,
-                    media: './src/img/PhotoCollage_1776480765316.jpg'
-                }
-            ])
-
-            seguimientoOzuna[user] = 'direccion'
-            timersOzuna[user] = []
-
-            // ⏱️ RECORDATORIOS
-            timersOzuna[user].push(setTimeout(async () => {
-                if (seguimientoOzuna[user] !== 'direccion') return
-                await flowDynamic(`👀 Solo me faltan tus datos para enviarlas`)
-            }, 1800000))
-
-            timersOzuna[user].push(setTimeout(async () => {
-                if (seguimientoOzuna[user] !== 'direccion') return
-                await flowDynamic(`⚠️ Últimos cupos de envío hoy
-
-👉 Envíame tus datos ahora`)
-                delete seguimientoOzuna[user]
-            }, 6000000))
+            await flowDynamic(`Vale, envíame porfa la dirección para hacerte el envio hoy mismo`)
 
             return
         }
 
-        // 🔥 SI NO ENVÍA TALLA
-        return flowDynamic(`👀 Escríbeme tu talla (ej: 39, 40, 41)`)
+        // ❌ SI NO ENVÍA TALLA
+        // return flowDynamic(`👀 Escríbeme tu talla (ej: 39, 40, 41)`)
     }
 )
+
+
+// 🔥 3. CAPTURA DIRECCIÓN (COMENTADO)
+// .addAnswer(
+//     null,
+//     { capture: true },
+//     async (ctx) => {
+
+//         const user = ctx.from
+//         const msg = ctx.body
+
+//         estadoUsuarios[user] = {
+//             ...estadoUsuarios[user],
+//             datos: msg
+//         }
+
+//         return
+//     }
+// )
 
 
 
