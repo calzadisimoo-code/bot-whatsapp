@@ -534,7 +534,7 @@ const flowAf111 = addKeyword([
 👉 Pide las tuyas ahora
 
 Escríbeme tu talla (38, 40, 42)`,
-    { capture: true },
+    { capture: true, idle: 0 },
     async (ctx, { flowDynamic }) => {
 
         const msg = ctx.body.toLowerCase()
@@ -656,7 +656,7 @@ const flowAF1 = addKeyword([
 👉 Pide las tuyas ahora
 
 Escríbeme tu talla (38, 40, 42)`,
-    { capture: true },
+    { capture: true, idle: 0 },
     async (ctx, { flowDynamic }) => {
 
         const msg = ctx.body.toLowerCase()
@@ -839,7 +839,7 @@ if (total < 20) {
 // 🔥 AQUÍ DETECTA SI RESPONDE
 .addAnswer(
     null,
-    { capture: true },
+    { capture: true, idle: 0 },
     async (ctx, { flowDynamic }) => {
 
         const user = ctx.from
@@ -1021,7 +1021,7 @@ const flowOzuna = addKeyword([
 // 🔥 2. CAPTURA TALLA
 .addAnswer(
     null,
-    { capture: true },
+    { capture: true, idle: 0 },
     async (ctx, { flowDynamic }) => {
 
         const msg = ctx.body.toLowerCase()
