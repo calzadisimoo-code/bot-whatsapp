@@ -1010,7 +1010,7 @@ const flowOzuna = addKeyword([
 
         await flowDynamic([
             {
-                body: `Hola 👋 ¿En qué talla?`,
+                body: `Hola $69.900 ¿En qué talla?`,
                 media: './src/img/PhotoCollage_1776480765316.jpg'
             }
         ])
