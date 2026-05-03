@@ -417,10 +417,10 @@ const flowPantalonetas = addKeyword([
                 media: './src/img/pantaloneta1.jpg'
             },
             {
-                media: './src/img/pantaloneta1.jpg'
+                media: './src/img/af1.jpg'
             },
             {
-                media: './src/img/pantaloneta1.jpg'
+                media: './src/img/af111.jpg'
             }
         ])
     }
@@ -459,7 +459,8 @@ const flowPantalonetas = addKeyword([
 
 createBot({
     flow: createFlow([
-	flow,           // saludo
+	flow,      
+        flowPantalonetas,	// saludo
 	    flowAf111,      // af1 1.1
         flowAF1,        // AF1
         flowOzuna,      // chanclas      // fotos
