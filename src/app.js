@@ -8,9 +8,6 @@ const ABTest = {
 }
 //
 
-
-//
-
 const usuariosAB = {}
 //
 const mostrarAB = () => {
@@ -66,12 +63,6 @@ import fs from 'fs'
 
 const PORT = process.env.PORT ?? 3008
 
-const INVENTARIO_FILE = './inventario.txt'
-const VENTAS_FILE = './ventas.json'
-const GASTOS_FILE = './gastos.json'
-const NOMINA_FILE = './nomina.json'
-
-// =====================================================
 // 📦 PRODUCTOS (NO TOCAR)
 // =====================================================
 const productosDB = {
@@ -93,455 +84,46 @@ const productosDB = {
 }
 
  // 🔚 FIN productos
-
-
-
-// =====================================================
-// 💰 GASTOS / NOMINA
-// =====================================================
-
-const obtenerGastosPorMes = (msg) => {
-
-    if (!fs.existsSync(GASTOS_FILE)) return "sin datos"
-
-    const gastos = JSON.parse(fs.readFileSync(GASTOS_FILE))
-
-    const meses = {
-        enero: 0, febrero: 1, marzo: 2, abril: 3, mayo: 4, junio: 5,
-        julio: 6, agosto: 7, septiembre: 8, octubre: 9, noviembre: 10, diciembre: 11
-    }
-
-    const partes = msg.split(' ')
-    const mes = meses[partes[1]]
-    const year = parseInt(partes[2])
-
-    let totalGastos = 0
-    let lista = ""
-
-    gastos.forEach(g => {
-        const fecha = new Date(g.fecha)
-
-        if (fecha.getMonth() === mes && fecha.getFullYear() === year) {
-
-            if (g.tipo === "gasto") {
-                totalGastos += g.valor
-                lista += `${g.nombre} ${g.valor}\n`
-            }
-        }
-    })
-
-    if (lista === "") lista = "sin gastos\n"
-
-    return `GASTOS ${partes[1]} ${year}
-
-${lista}
-Total gastos ${totalGastos}`
-} // 🔚 FIN obtenerGastosPorMes
-
-
-//inicio obtenernominapormes
-const obtenerNominaPorMes = (msg) => {
-
-    if (!fs.existsSync(NOMINA_FILE)) return "sin nomina"
-
-    const nomina = JSON.parse(fs.readFileSync(NOMINA_FILE))
-
-    const meses = {
-        enero: 0, febrero: 1, marzo: 2, abril: 3, mayo: 4, junio: 5,
-        julio: 6, agosto: 7, septiembre: 8, octubre: 9, noviembre: 10, diciembre: 11
-    }
-
-    const partes = msg.split(' ')
-    const mes = meses[partes[1]]
-    const year = parseInt(partes[2])
-
-    let total = 0
-    let lista = ""
-
-    nomina.forEach(n => {
-        const fecha = new Date(n.fecha)
-
-        if (fecha.getMonth() === mes && fecha.getFullYear() === year) {
-            total += n.valor
-            lista += `${n.nombre} ${n.valor}\n`
-        }
-    })
-
-    if (lista === "") lista = "sin nomina\n"
-
-    return `NOMINA ${partes[1]} ${year}
-
-${lista}
-Total nomina ${total}`
-} // 🔚 FIN obtenerNominaPorMes
-
-
-// =====================================================
-// 📊 INVENTARIO Y RESUMEN
-// =====================================================
-
-const resumenInventario = () => {
-
-    const INVENTARIO_INICIAL = 200 // 🔥 CAMBIA ESTE NUMERO
-
-    if (!fs.existsSync(VENTAS_FILE)) {
-        return `Ayer habían ${INVENTARIO_INICIAL}\n\nSin ventas hoy`
-    }
-
-    const ventas = JSON.parse(fs.readFileSync(VENTAS_FILE))
-    const hoy = getFechaLocal()
-
-    const hoyVentas = ventas.filter(v => v.fecha === hoy)
-
-    if (hoyVentas.length === 0) {
-        return `Ayer habían ${INVENTARIO_INICIAL}\n\nSin ventas hoy\n\nHoy deben haber ${INVENTARIO_INICIAL}`
-    }
-
-    let totalVendidos = 0
-    let textoVentas = ""
-
-    hoyVentas.forEach(v => {
-        totalVendidos += v.cantidad
-        textoVentas += `${v.cantidad} ${v.producto}\n`
-    })
-
-    const inventarioFinal = INVENTARIO_INICIAL - totalVendidos
-
-    return `Ayer habían ${INVENTARIO_INICIAL}
-
-Ventas hoy:
-${textoVentas}
-Hoy deben haber ${inventarioFinal}`
-} // 🔚 FIN resumenInventario
-
-
-
-// =====================================================
-// 💾 GUARDADO (GASTOS, INVENTARIO, VENTAS)
-// ============
-
-// =====================================================
-// 💰 GUARDAR NOMINA
-// =====================================================
-
-
-// 📦 INVENTARIO CON COSTO
-let inventario = {
-    af1b: { nombre: "Nike Air Force 1 Blanca", stock: 0, costo: 30 },
-    c120: { nombre: "Cargador 120W", stock: 0, costo: 20 },
-    zapatilla: { nombre: "zapatilla", stock: 0, costo: 25 },
-    tecnologia: { nombre: "tecnologia", stock: 0, costo: 40 }
-} // 🔚 FIN inventario
-
-
-// =====================================================
-// 📊 VENTAS HOY
-// ===========
-// =====================================================
-// 📊 VENTAS POR MES
-// =====================================================
-
-const obtenerVentasPorMes = (mesTexto) => {
-
-    if (!fs.existsSync(VENTAS_FILE)) return "sin datos"
-
-    const ventas = JSON.parse(fs.readFileSync(VENTAS_FILE))
-    const gastos = fs.existsSync(GASTOS_FILE)
-        ? JSON.parse(fs.readFileSync(GASTOS_FILE))
-        : []
-
-    const meses = {
-        enero: 0, febrero: 1, marzo: 2, abril: 3, mayo: 4, junio: 5,
-        julio: 6, agosto: 7, septiembre: 8, octubre: 9, noviembre: 10, diciembre: 11
-    }
-
-    const partes = mesTexto.split(' ')
-    const mes = meses[partes[1]]
-    const year = parseInt(partes[2])
-
-    let totalProd = 0
-    let totalVenta = 0
-    let totalGanancia = 0
-
-    let totalGastos = 0
-    let totalNomina = 0
-    let totalAds = 0
-
-    ventas.forEach(v => {
-        const fecha = new Date(v.fecha)
-
-        if (fecha.getMonth() === mes && fecha.getFullYear() === year) {
-            totalProd += v.cantidad
-            totalVenta += v.precio * v.cantidad
-            totalGanancia += v.ganancia * v.cantidad
-        }
-    })
-
-    gastos.forEach(g => {
-        const fecha = new Date(g.fecha)
-
-        if (fecha.getMonth() === mes && fecha.getFullYear() === year) {
-
-            if (g.tipo === "gasto") totalGastos += g.valor
-            if (g.tipo === "anuncio") totalAds += g.valor
-        }
-    })
-
-    const totalGeneralGastos = totalGastos + totalNomina + totalAds
-
-    return `Mes ${partes[1]} ${year}
-
-TotalProd ${totalProd}
-TotalVenta ${totalVenta}
-TotalGanancia ${totalGanancia}
-
-Gastos ${totalGastos}
-Nomina ${totalNomina}
-Ads ${totalAds}
-
-Neto ${totalGanancia - totalGeneralGastos}`
-} // 🔚 FIN obtenerVentasPorMes
-
-
-
-// =====================================================
-// 🔥 PROCESAR VENTA FLEXIBLE
-// =====================================================
-
-const procesarVentaFlexible = (msg) => {
-
-    const partes = msg.split(' ')
-
-    let cantidad = 1
-    let codigo = null
-    let precio = 0
-	let tipo = 'normal' // 🔥 AQUÍ EXACTAMENTE
-
-    partes.forEach(p => {
-		
-		if (['local','envio','anuncio','cliente'].includes(p)) {
-    tipo = p
-}
-
-        if (!isNaN(p)) {
-            const num = parseInt(p)
-
-            if (num <= 10 && cantidad === 1) {
-                cantidad = num
-            } else {
-                precio = num
-            }
-        }
-
-        if (inventario[p]) {
-            codigo = p
-        }
-    })
-
-    if (!codigo) {
-        return `⚠️ Producto no existe
-
-Escribe:
-crear nombre costo
-
-Ej:
-crear crocs 20`
-    }
-
-    let producto = inventario[codigo].nombre
-    let costo = inventario[codigo].costo
-
-    inventario[codigo].stock -= cantidad
-    guardarInventario()
-
-    const ganancia = precio - costo
-
-    const venta = {
-    id: Date.now(),
-    fecha: getFechaLocal(),
-    hora: getHoraLocal(),
-    producto,
-    cantidad,
-    precio,
-    ganancia,
-    tipo // 🔥 ESTO
-}
-
-    guardarVenta(venta)
-
-    return `✅ Venta guardada
-
-ID: ${venta.id}
-${cantidad} ${producto}
-$${precio * 1000}`
-} // 🔚 FIN procesarVentaFlexible
-
-
-
-// =====================================================
-// 🆕 CREAR PRODUCTO
-// =====================================================
-
-// =====================================================
-// 📖 HELP ADMIN
-// =====================================================
-
-const ayudaAdmin = () => {
-return `🧠 COMANDOS ADMIN:
-
-👉 venta ...
-Ej: venta af1b envio 50
-Ej: venta af1b 2 local 60
-
-(No importa el orden ni si faltan cosas)
-
-👉 ventas
-Ver resumen del día
-
-👉 compra codigo
-Aumentar stock
-
-👉 inventario
-Ver stock
-
-👉 eliminar ID
-Elimina una venta
-
-Ej:
-eliminar 17123456789
-
-`
-} // 🔚 FIN ayudaAdmin
-
-
-
-// =====================================================
-// 🧠 MANEJADOR ADMIN
-// =====================================================
-
 // =====================================================
 // 🤖 FLOWS
 // ====================================================
 //
-// 🔥 CONTROL
-const seguimientoAF111 = {}
-const timersAF111 = {}
-
-const flowAf111 = addKeyword([
-    'af1 1.1','air force 1.1','Hola quiero las AF1 blancas 1.1','af1 blanca 1.1','airforce 1.1','air force 1 blanca 1.1'
+/// 🔥 KEYWORDS
+const flowAF111 = addKeyword([
+    'Hola quiero las AF1 blancas 1.1'
 ])
 
-// 🔥 1. PRIMER MENSAJE
+// 🔥 1. MENSAJE INICIAL (TEXTO + IMAGEN JUNTOS)
 .addAnswer(
-    `🔥 50% OFF HOY 🔥
-
-👟 AIR FORCE 1.1 PREMIUM
-
-⭐ Más vendidas esta semana  
-⭐ Calidad superior garantizada  
-
-✅ Acabados premium  
-✅ Súper cómodas todo el día  
-✅ Resistentes y duraderas`,
+    `...`,
     null,
     async (ctx, { flowDynamic }) => {
 
-        const user = ctx.from
-
-        estadoUsuarios[user] = {
-            producto: 'af1_11'
-        }
-
-        await delay()
-
         await flowDynamic([
             {
-                body: `
-💰 PRECIO HOY: $110.000  
-❌ Antes: $140.000  
-
-🚚 Envío RAPIDO en Palmira  
-📦 Valle: $15.000  
-💸 Pagas al recibir  
-
-⏳ Entrega rápida 1-3 días`,
-                media: './src/img/WhatsApp-Image-2024-08-05-at-15.29.38.jpeg'
+                body: `Hola $110.000 ¿En qué talla?`,
+                media: './src/img/PhotoCollage_1776480765316.jpg'
             }
         ])
     }
 )
 
 
-// 🔥 2. CAPTURA
+// 🔥 2. CAPTURA TALLA
 .addAnswer(
-    `⚠️ STOCK LIMITADO
-
-🔥 Últimas unidades disponibles
-
-👉 Pide las tuyas ahora
-
-Escríbeme tu talla (38, 40, 42)`,
+    null,
     { capture: true, idle: 0 },
     async (ctx, { flowDynamic }) => {
 
         const msg = ctx.body.toLowerCase()
-        const user = ctx.from
-
-        // limpiar
-        if (seguimientoAF111[user]) delete seguimientoAF111[user]
-
-        if (timersAF111[user]) {
-            timersAF111[user].forEach(t => clearTimeout(t))
-            delete timersAF111[user]
-        }
-
         const numero = msg.match(/\d{2}/)
 
-        // 🔥 SI ENVÍA TALLA
         if (numero) {
-
-            estadoUsuarios[user] = {
-                producto: 'af1_11',
-                talla: numero[0]
-            }
-
-            await delay()
-            await flowDynamic(`🔥 Perfecto, talla ${numero[0]} disponible
-
-💰 $110.000  
-🚚 Envío RAPIDO en Palmira  
-📦 Valle: $15.000  
-
-💸 Pagas al recibir  
-
-👉 Para enviártelas necesito:
-Nombre - Ciudad - Dirección - Teléfono  
-
-🚀 Te despacho hoy mismo`)
-
-            seguimientoAF111[user] = 'direccion'
-            timersAF111[user] = []
-
-            timersAF111[user].push(setTimeout(async () => {
-                if (seguimientoAF111[user] !== 'direccion') return
-                await flowDynamic(`👀 Solo me faltan tus datos para enviarlas`)
-            }, 180000))
-
-            timersAF111[user].push(setTimeout(async () => {
-                if (seguimientoAF111[user] !== 'direccion') return
-                await flowDynamic(`⚠️ Últimos cupos de envío hoy
-
-👉 Envíame tus datos ahora`)
-                delete seguimientoAF111[user]
-            }, 600000))
-
+            await flowDynamic(`Vale, envíame porfa la dirección para hacerte el envio`)
             return
         }
 
-        // 🔥 SI NO ENVÍA TALLA
-        return flowDynamic(`👀 Para pedirlas rápido
-
-👉 Escríbeme tu talla (ej: 40, 42)`)
+        // ❌ sin respuesta si no manda talla
     }
 )
 
