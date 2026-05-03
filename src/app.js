@@ -290,7 +290,7 @@ const detectarProducto = (mensaje) => {
     return null
 }
 
-const flowProductos = addKeyword([''])
+const flowProductos = addKeyword(['.*'], { regex: true })
 .addAnswer(
     null,
     { capture: true },
@@ -338,9 +338,9 @@ const flowProductos = addKeyword([''])
 
 createBot({
     flow: createFlow([
+	flowProductos,
 	flow,           // saludo       // AF1     // chanclas      // fotos
         flowCatalogo,
-		flowProductos,
         flowUbicacion,
         flowHorario,
         flowNequi
