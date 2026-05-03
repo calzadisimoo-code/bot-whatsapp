@@ -528,7 +528,8 @@ const flowMaletines = addKeyword([
 createBot({
     flow: createFlow([
 	flow,      
-        flowPantalonetas,	// saludo
+        flowPantalonetas,
+        flowMaletines,		// saludo
 	    flowAf111,      // af1 1.1
         flowAF1,        // AF1
         flowOzuna,      // chanclas      // fotos
