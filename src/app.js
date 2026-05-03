@@ -598,125 +598,42 @@ Nombre - Ciudad - Dirección - Teléfono
     }
 )
 
-// 🔥 CONTROL
-const seguimientoAF1AA = {}
-const timersAF1AA = {}
-
+/// 🔥 KEYWORDS
 const flowAF1 = addKeyword([
-    'af1','air force','af1 50 mil','af1 baratas','af1 economicas','air force economicas'
+    'air force','af1','quiero las air force 1 blanca','air force one'
 ])
 
-// 🔥 1. PRIMER MENSAJE (SIEMPRE SE ENVÍA)
+// 🔥 1. MENSAJE INICIAL (TEXTO + IMAGEN JUNTOS)
 .addAnswer(
-    `🔥 50% OFF HOY 🔥
-
-👟 AIR FORCE 1 DOBLE A
-
-⭐ Más vendidas esta semana  
-⭐ Excelente calidad por el precio  
-
-✅ Cocidas (no se despegan fácil)  
-✅ Súper cómodas todo el día  
-✅ Resistentes y duraderas`,
+    `...`,
     null,
     async (ctx, { flowDynamic }) => {
 
-        const user = ctx.from
-
-        estadoUsuarios[user] = {
-            producto: 'af1_doble_a'
-        }
-
-        await delay()
-
         await flowDynamic([
             {
-                body: `
-💰 PRECIO HOY: $50.000  
-❌ Antes: $80.000  
-
-🚚 Envío RAPIDO en Palmira  
-📦 Valle: $15.000  
-💸 Pagas al recibir  
-
-⏳ Entrega rápida 1-3 días`,
-
+                body: `Hola $50.000 ¿En qué talla?`,
                 media: './src/img/WhatsApp Image 2026-04-05 at 2.50.01 PM.jpeg'
             }
         ])
     }
 )
 
-// 🔥 2. CAPTURA (SOLO DESPUÉS DEL PRIMER MENSAJE)
+
+// 🔥 2. CAPTURA TALLA
 .addAnswer(
-    `⚠️ STOCK LIMITADO
-
-🔥 Últimas unidades disponibles
-
-👉 Pide las tuyas ahora
-
-Escríbeme tu talla (38, 40, 42)`,
+    null,
     { capture: true, idle: 0 },
     async (ctx, { flowDynamic }) => {
 
         const msg = ctx.body.toLowerCase()
-        const user = ctx.from
-
-        // limpiar
-        if (seguimientoAF1AA[user]) delete seguimientoAF1AA[user]
-
-        if (timersAF1AA[user]) {
-            timersAF1AA[user].forEach(t => clearTimeout(t))
-            delete timersAF1AA[user]
-        }
-
         const numero = msg.match(/\d{2}/)
 
-        // 🔥 SI ENVÍA TALLA
         if (numero) {
-
-            estadoUsuarios[user] = {
-                producto: 'af1_doble_a',
-                talla: numero[0]
-            }
-
-            await delay()
-            await flowDynamic(`🔥 Perfecto, talla ${numero[0]} disponible
-
-💰 $50.000  
-🚚 Envío RAPIDO en Palmira  
-📦 Valle: $15.000  
-
-💸 Pagas al recibir  
-
-👉 Para enviártelas necesito:
-Nombre - Ciudad - Dirección - Barrio - Teléfono  
-
-🚀 Te despacho hoy mismo`)
-
-            seguimientoAF1AA[user] = 'direccion'
-            timersAF1AA[user] = []
-
-            timersAF1AA[user].push(setTimeout(async () => {
-                if (seguimientoAF1AA[user] !== 'direccion') return
-                await flowDynamic(`👀 Solo me faltan tus datos para enviarlas`)
-            }, 180000))
-
-            timersAF1AA[user].push(setTimeout(async () => {
-                if (seguimientoAF1AA[user] !== 'direccion') return
-                await flowDynamic(`⚠️ Últimos cupos de envío hoy
-
-👉 Envíame tus datos ahora`)
-                delete seguimientoAF1AA[user]
-            }, 600000))
-
+            await flowDynamic(`Vale, envíame porfa la dirección para hacerte el envio`)
             return
         }
 
-        // 🔥 SI NO ENVÍA TALLA
-        return flowDynamic(`👀 Para pedirlas rápido
-
-👉 Escríbeme tu talla (ej: 40, 42)`)
+        // ❌ sin respuesta si no manda talla
     }
 )
 
