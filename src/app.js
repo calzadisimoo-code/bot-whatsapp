@@ -521,6 +521,33 @@ const flowMaletines = addKeyword([
     }
 )
 
+/// 🔥 KEYWORDS
+const flowZapatillas = addKeyword([
+    'zapatillas','hola tiene zapatillas nike','zapatillas para hombre','que estilos de zapatillas tiene',
+	'me gustaria ver lso estilos de zapatillas que tengan','tiene estas zapatillas'
+])
+
+// 🔥 1. MENSAJE INICIAL
+.addAnswer(
+    `🔥 ZAPATILLAS`,
+    null,
+    async (ctx, { flowDynamic }) => {
+
+        // 🔥 primero envía las imágenes
+        await flowDynamic([
+            {
+                media: './src/img/af1.jpeg'
+            },
+            {
+                media: './src/img/af111.jpeg'
+            }
+        ])
+
+        // 🔥 luego envía el mensaje final
+        await flowDynamic(`👉 Dime cual te gusto y la talla?`)
+    }
+)
+
 // =====================================================
 // 🚀 INIT
 // =====================================================
@@ -529,7 +556,8 @@ createBot({
     flow: createFlow([
 	flow,      
         flowPantalonetas,
-        flowMaletines,		// saludo
+        flowMaletines,
+		flowZapatillas,
 	    flowAf111,      // af1 1.1
         flowAF1,        // AF1
         flowOzuna,      // chanclas      // fotos
