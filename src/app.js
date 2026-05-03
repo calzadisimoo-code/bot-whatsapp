@@ -997,7 +997,7 @@ const flowFoto = addKeyword(['foto','fotos','imagen','muestrame','manda foto'])
     }
 )
 //
-// 🔥 CONTROL (NO USADO POR AHORA)
+// 🔥 CONTROL (NO USADO)
 // const seguimientoOzuna = {}
 // const timersOzuna = {}
 
@@ -1005,15 +1005,15 @@ const flowOzuna = addKeyword([
     'chanclas','chancla','Quiero chanclas ozuna para envio','ozuna','chanclas ozuna','ozuna 1.1','sandalias ozuna'
 ])
 
-// 🔥 1. MENSAJE INICIAL (CON IMAGEN)
+// 🔥 1. MENSAJE INICIAL (TEXTO + IMAGEN)
 .addAnswer(
-    `Hola 👋 ¿En qué talla?`,
+    null,
     null,
     async (ctx, { flowDynamic }) => {
 
         await flowDynamic([
             {
-                body: '',
+                body: `Hola 👋 ¿En qué talla?`,
                 media: './src/img/PhotoCollage_1776480765316.jpg'
             }
         ])
@@ -1047,8 +1047,8 @@ const flowOzuna = addKeyword([
             return
         }
 
-        // ❌ SI NO ENVÍA TALLA
-        // return flowDynamic(`👀 Escríbeme tu talla (ej: 39, 40, 41)`)
+        // ❌ SI NO ENVÍA TALLA (sin respuesta)
+        // return flowDynamic(`Escríbeme tu talla`)
     }
 )
 
@@ -1070,8 +1070,6 @@ const flowOzuna = addKeyword([
 //         return
 //     }
 // )
-
-
 
 // =====================================================
 // 🚀 INIT
