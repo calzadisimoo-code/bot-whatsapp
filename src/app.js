@@ -89,7 +89,7 @@ const productosDB = {
 // ====================================================
 //
 /// 🔥 KEYWORDS
-const flowAF111 = addKeyword([
+const flowAf111 = addKeyword([
     'Hola quiero las AF1 blancas 1.1'
 ])
 
