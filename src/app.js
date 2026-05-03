@@ -422,7 +422,60 @@ eliminar 17123456789
 // =====================================================
 // 🤖 FLOWS
 // =====================================================
+const flowRecoger = addKeyword([
+    'voy','paso','recoger','recogo','retiro','voy a pasar'
+])
+.addAnswer(
+    `...`,
+    null,
+    async (ctx, { flowDynamic }) => {
 
+        const nombre = ctx.pushName || 'parcero'
+        
+		await delay()
+        await flowDynamic(`🔥 Perfecto ${nombre}
+
+📍 Estamos en Palmira - Calle 29 #26-34 cc villa de las palmas, Local 291
+
+👉 Te lo dejo separado de una
+
+¿a qué hora vienes hoy?`)
+    }
+)
+
+
+const flowEnvio = addKeyword([
+    'envio','enviar','enví','mandalo','mandamelo','mandar',
+    'domicilio','a domicilio','me lo envias','me lo envía',
+    'si envio','para envio','con envio','envio porfa',
+    'envialo','enviamelo','enviame','lo quiero con envio'
+])
+.addAnswer(
+    null, // 👈 SIEMPRE algo aquí
+    null,
+    async (ctx, { flowDynamic }) => {
+
+        const nombre = ctx.pushName || 'parcero'
+
+        await delay()
+        await flowDynamic(`Perfecto ${nombre}, te lo envío hoy mismo
+
+👉 Solo necesito:
+Ciudad - Dirección - Barrio - Nombre
+
+💰 El producto lo pagas por adelantado
+📦 El envío lo pagas cuando lo recibes
+
+Puedes pagar por Nequi:
+📱 3217204017  
+👤 Juan Galarraga  
+
+👉 Me envías el comprobante y te despacho de una 🚀
+
+🔥 ¿me pasas los datos para enviártelo hoy?`)
+    }
+)
+//
 // 🔥 CONTROL
 const seguimientoAF111 = {}
 const timersAF111 = {}
@@ -545,48 +598,127 @@ Nombre - Ciudad - Dirección - Teléfono
     }
 )
 
+// 🔥 CONTROL
+const seguimientoAF1AA = {}
+const timersAF1AA = {}
 
-
-
-/// 🔥 KEYWORDS
 const flowAF1 = addKeyword([
-    'air force','af1','Quiero air force para envio','quiero las air force 1 blancas','force one'
+    'af1','air force','af1 50 mil','af1 baratas','af1 economicas','air force economicas'
 ])
 
-// 🔥 1. MENSAJE INICIAL (TEXTO + IMAGEN JUNTOS)
+// 🔥 1. PRIMER MENSAJE (SIEMPRE SE ENVÍA)
 .addAnswer(
-    `...`,
+    `🔥 50% OFF HOY 🔥
+
+👟 AIR FORCE 1 DOBLE A
+
+⭐ Más vendidas esta semana  
+⭐ Excelente calidad por el precio  
+
+✅ Cocidas (no se despegan fácil)  
+✅ Súper cómodas todo el día  
+✅ Resistentes y duraderas`,
     null,
     async (ctx, { flowDynamic }) => {
 
+        const user = ctx.from
+
+        estadoUsuarios[user] = {
+            producto: 'af1_doble_a'
+        }
+
+        await delay()
+
         await flowDynamic([
             {
-                body: `Hola $50.000 ¿En qué talla?`,
+                body: `
+💰 PRECIO HOY: $50.000  
+❌ Antes: $80.000  
+
+🚚 Envío RAPIDO en Palmira  
+📦 Valle: $15.000  
+💸 Pagas al recibir  
+
+⏳ Entrega rápida 1-3 días`,
+
                 media: './src/img/WhatsApp Image 2026-04-05 at 2.50.01 PM.jpeg'
             }
         ])
     }
 )
 
-
-// 🔥 2. CAPTURA TALLA
+// 🔥 2. CAPTURA (SOLO DESPUÉS DEL PRIMER MENSAJE)
 .addAnswer(
-    null,
+    `⚠️ STOCK LIMITADO
+
+🔥 Últimas unidades disponibles
+
+👉 Pide las tuyas ahora
+
+Escríbeme tu talla (38, 40, 42)`,
     { capture: true, idle: 0 },
     async (ctx, { flowDynamic }) => {
 
         const msg = ctx.body.toLowerCase()
+        const user = ctx.from
+
+        // limpiar
+        if (seguimientoAF1AA[user]) delete seguimientoAF1AA[user]
+
+        if (timersAF1AA[user]) {
+            timersAF1AA[user].forEach(t => clearTimeout(t))
+            delete timersAF1AA[user]
+        }
+
         const numero = msg.match(/\d{2}/)
 
+        // 🔥 SI ENVÍA TALLA
         if (numero) {
-            await flowDynamic(`Vale, envíame porfa la dirección para hacerte el envio`)
+
+            estadoUsuarios[user] = {
+                producto: 'af1_doble_a',
+                talla: numero[0]
+            }
+
+            await delay()
+            await flowDynamic(`🔥 Perfecto, talla ${numero[0]} disponible
+
+💰 $50.000  
+🚚 Envío RAPIDO en Palmira  
+📦 Valle: $15.000  
+
+💸 Pagas al recibir  
+
+👉 Para enviártelas necesito:
+Nombre - Ciudad - Dirección - Barrio - Teléfono  
+
+🚀 Te despacho hoy mismo`)
+
+            seguimientoAF1AA[user] = 'direccion'
+            timersAF1AA[user] = []
+
+            timersAF1AA[user].push(setTimeout(async () => {
+                if (seguimientoAF1AA[user] !== 'direccion') return
+                await flowDynamic(`👀 Solo me faltan tus datos para enviarlas`)
+            }, 180000))
+
+            timersAF1AA[user].push(setTimeout(async () => {
+                if (seguimientoAF1AA[user] !== 'direccion') return
+                await flowDynamic(`⚠️ Últimos cupos de envío hoy
+
+👉 Envíame tus datos ahora`)
+                delete seguimientoAF1AA[user]
+            }, 600000))
+
             return
         }
 
-        // ❌ sin respuesta si no manda talla
+        // 🔥 SI NO ENVÍA TALLA
+        return flowDynamic(`👀 Para pedirlas rápido
+
+👉 Escríbeme tu talla (ej: 40, 42)`)
     }
 )
-
 
 
 const flowCatalogo = addKeyword(['catalogo','catálogo','modelo','modelos'])
@@ -657,7 +789,7 @@ const flowUbicacion = addKeyword([
 const flow = addKeyword(['hola','buenas','info','buenas tardes','buenos dias'])
 
 .addAnswer(
-    `...`,
+    null,
     null,
     async (ctx, { flowDynamic }) => {
 
@@ -779,6 +911,92 @@ CC Villa de las Palmas, Local 291 (Diagonal al banco de Bogota)
 )
 
 
+const flowContraentrega = addKeyword([
+    'contraentrega',
+    'contra entrega',
+    'pago contra entrega'
+])
+
+.addAnswer(
+    null,
+    null,
+    async (ctx, { flowDynamic }) => {
+
+        await delay()
+        await flowDynamic(`Te explico 👇
+
+💰 Pagas SOLO el producto por adelantado  
+📦 El envío lo pagas cuando lo recibes  
+
+Tarifas:
+📍 Palmira: $6.000  
+📍 Valle: $13.000
+📍 Fuera del Valle: $23.000  
+
+🔐 Somos tienda física:
+📍 Palmira - Cra 27 #29-34 CC Villa de las Palmas, Local 291 (alfrente del banco de Bogotá)
+
+Puedes hacer el pago por Nequi:
+📱 3217204017  
+👤 Juan Galarraga
+
+👉 Solo necesito:
+Ciudad - Dirección - Nombre
+
+👉 Me envias el comprobante y te despacho de una 🚀`)
+    }
+)
+
+//
+const flowFoto = addKeyword(['foto','fotos','imagen','muestrame','manda foto'])
+.addAnswer(
+    null,
+    null,
+    async (ctx, { flowDynamic }) => {
+
+        const user = ctx.from
+        const estado = estadoUsuarios[user]
+
+        if (!estado) return
+
+        // 🔥 CHANCLAS
+        if (estado.producto === 'chanclas_ozuna') {
+            await delay()
+            return flowDynamic([
+                {
+                    body: `🔥 Estas son las chanclas Ozuna
+
+💰 Están en $70.000
+
+📦 Disponibles hoy
+
+👉 ¿Para qué ciudad serían?`,
+                    media: './src/img/WhatsApp Image 2026-04-05 at 2.50.01 PM.jpeg'
+                }
+            ])
+        }
+
+        // 🔥 AF1
+        if (estado.producto === 'af1_11') {
+            await delay()
+            return flowDynamic([
+                {
+                    body: `🔥 Estas son las AF1 blancas 1.1
+
+💰 Están en $110.000
+
+📦 Disponibles hoy
+
+👉 ¿Para qué ciudad serían?`,
+                    media: './src/img/WhatsApp Image 2026-04-05 at 2.50.01 PM.jpeg'
+                }
+            ])
+        }
+
+        // 🔥 OTROS PRODUCTOS (opcional)
+    }
+)
+//
 /// 🔥 KEYWORDS
 const flowOzuna = addKeyword([
     'chanclas','chancla','Quiero chanclas ozuna para envio','ozuna','chanclas ozuna','ozuna 1.1','sandalias ozuna'
@@ -828,6 +1046,7 @@ createBot({
 	    flowAf111,      // af1 1.1
         flowAF1,        // AF1
         flowOzuna,      // chanclas
+        flowFoto,       // fotos
         flowCatalogo,
         flowUbicacion,
         flowHorario,
