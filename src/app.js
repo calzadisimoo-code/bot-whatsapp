@@ -599,7 +599,7 @@ Nombre - Ciudad - Dirección - Teléfono
 )
 
 /// 🔥 KEYWORDS
-const flowAF1AA = addKeyword([
+const flowAF1 = addKeyword([
     'air force','af1','Quiero air force para envio','quiero las air force 1 blancas','force one'
 ])
 
