@@ -1040,7 +1040,7 @@ const flowOzuna = addKeyword([
             timersOzuna[user].push(setTimeout(async () => {
                 if (seguimientoOzuna[user] !== 'direccion') return
                 await flowDynamic(`👀 Solo me faltan tus datos para enviarlas`)
-            }, 180000))
+            }, 1800000))
 
             timersOzuna[user].push(setTimeout(async () => {
                 if (seguimientoOzuna[user] !== 'direccion') return
@@ -1048,42 +1048,13 @@ const flowOzuna = addKeyword([
 
 👉 Envíame tus datos ahora`)
                 delete seguimientoOzuna[user]
-            }, 600000))
+            }, 6000000))
 
             return
         }
 
         // 🔥 SI NO ENVÍA TALLA
         return flowDynamic(`👀 Escríbeme tu talla (ej: 39, 40, 41)`)
-    }
-)
-
-
-// 🔥 2. CAPTURA DIRECCIÓN (SIN RESPUESTA)
-.addAnswer(
-    `✍️ Escríbeme tus datos para el envío`,
-    { capture: true },
-    async (ctx) => {
-
-        const user = ctx.from
-        const msg = ctx.body
-
-        // 🔥 LIMPIAR SEGUIMIENTO
-        if (seguimientoOzuna[user]) delete seguimientoOzuna[user]
-
-        if (timersOzuna[user]) {
-            timersOzuna[user].forEach(t => clearTimeout(t))
-            delete timersOzuna[user]
-        }
-
-        // 🔥 GUARDAR DATOS
-        estadoUsuarios[user] = {
-            ...estadoUsuarios[user],
-            datos: msg
-        }
-
-        // ❌ NO RESPONDE NADA
-        return
     }
 )
 
