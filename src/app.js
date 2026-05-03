@@ -69,17 +69,15 @@ const productosDB = {
     af1_doble_a: {
         nombre: 'AIR FORCE 1 DOBLE A',
         precio: '$50.000',
-        antes: '$80.000',
-        imagen: './src/img/af1.jpg',
-        tieneTalla: true
+        imagen: './src/img/WhatsApp Image 2026-04-05 at 2.50.01 PM.jpeg',
+        keywords: ['af1','air force','air force 1']
     },
 
     chanclas_ozuna: {
         nombre: 'CHANCLAS OZUNA PREMIUM',
-        precio: '$69.900',
-        antes: '$100.000',
-        imagen: './src/img/PhotoCollage_1776480765316.jpg',
-        tieneTalla: true
+        precio: '$70.000',
+        imagen: './src/img/ozuna.jpg',
+        keywords: ['ozuna','chanclas','sandalias']
     }
 }
 
@@ -88,84 +86,6 @@ const productosDB = {
 // 🤖 FLOWS
 // ====================================================
 //
-/// 🔥 KEYWORDS
-const flowAf111 = addKeyword([
-    'Hola quiero las AF1 blancas 1.1'
-])
-
-// 🔥 1. MENSAJE INICIAL (TEXTO + IMAGEN JUNTOS)
-.addAnswer(
-    `...`,
-    null,
-    async (ctx, { flowDynamic }) => {
-
-        await flowDynamic([
-            {
-                body: `Hola $110.000 ¿En qué talla?`,
-                media: './src/img/PhotoCollage_1776480765316.jpg'
-            }
-        ])
-    }
-)
-
-
-// 🔥 2. CAPTURA TALLA
-.addAnswer(
-    null,
-    { capture: true, idle: 0 },
-    async (ctx, { flowDynamic }) => {
-
-        const msg = ctx.body.toLowerCase()
-        const numero = msg.match(/\d{2}/)
-
-        if (numero) {
-            await flowDynamic(`Vale, envíame porfa la dirección para hacerte el envio`)
-            return
-        }
-
-        // ❌ sin respuesta si no manda talla
-    }
-)
-
-/// 🔥 KEYWORDS
-const flowAF1 = addKeyword([
-    'air force','af1','quiero las air force 1 blanca','air force one'
-])
-
-// 🔥 1. MENSAJE INICIAL (TEXTO + IMAGEN JUNTOS)
-.addAnswer(
-    `...`,
-    null,
-    async (ctx, { flowDynamic }) => {
-
-        await flowDynamic([
-            {
-                body: `Hola $50.000 ¿En qué talla?`,
-                media: './src/img/WhatsApp Image 2026-04-05 at 2.50.01 PM.jpeg'
-            }
-        ])
-    }
-)
-
-
-// 🔥 2. CAPTURA TALLA
-.addAnswer(
-    null,
-    { capture: true, idle: 0 },
-    async (ctx, { flowDynamic }) => {
-
-        const msg = ctx.body.toLowerCase()
-        const numero = msg.match(/\d{2}/)
-
-        if (numero) {
-            await flowDynamic(`Vale, envíame porfa la dirección para hacerte el envio`)
-            return
-        }
-
-        // ❌ sin respuesta si no manda talla
-    }
-)
-
 
 const flowCatalogo = addKeyword(['catalogo','catálogo','modelo','modelos'])
 .addAnswer(
@@ -356,58 +276,71 @@ CC Villa de las Palmas, Local 291 (Diagonal al banco de Bogota)
     }
 )
 
+const detectarProducto = (mensaje) => {
+    mensaje = mensaje.toLowerCase()
 
-//
-/// 🔥 KEYWORDS
-const flowOzuna = addKeyword([
-    'chanclas','chancla','Quiero chanclas ozuna para envio','ozuna','chanclas ozuna','ozuna 1.1','sandalias ozuna'
-])
+    for (const key in productosDB) {
+        const producto = productosDB[key]
 
-// 🔥 1. MENSAJE INICIAL (TEXTO + IMAGEN JUNTOS)
-.addAnswer(
-    `...`,
-    null,
-    async (ctx, { flowDynamic }) => {
-
-        await flowDynamic([
-            {
-                body: `Hola $69.900 ¿En qué talla?`,
-                media: './src/img/PhotoCollage_1776480765316.jpg'
-            }
-        ])
+        if (producto.keywords.some(k => mensaje.includes(k))) {
+            return producto
+        }
     }
-)
 
+    return null
+}
 
-// 🔥 2. CAPTURA TALLA
+const flowProductos = addKeyword([''])
 .addAnswer(
     null,
-    { capture: true, idle: 0 },
+    { capture: true },
     async (ctx, { flowDynamic }) => {
 
-        const msg = ctx.body.toLowerCase()
-        const numero = msg.match(/\d{2}/)
+        const producto = detectarProducto(ctx.body)
 
-        if (numero) {
-            await flowDynamic(`Vale, envíame porfa la dirección para hacerte el envio`)
+        if (producto) {
+            await flowDynamic([
+                {
+                    body: `🔥 ${producto.nombre}
+💰 ${producto.precio}
+
+👉 ¿En qué talla?`,
+                    media: producto.imagen
+                }
+            ])
+
+            estadoUsuarios[ctx.from] = { esperandoTalla: true }
             return
         }
 
-        // ❌ sin respuesta si no manda talla
+        // 👉 SI ESTÁ ESPERANDO TALLA
+        if (estadoUsuarios[ctx.from]?.esperandoTalla) {
+
+            const numero = ctx.body.match(/\d{2}/)
+
+            if (numero) {
+                await flowDynamic(`Perfecto 👌
+
+📦 Envíame tu dirección completa para despacharte hoy mismo 🚚`)
+                
+                delete estadoUsuarios[ctx.from]
+                return
+            } else {
+                await flowDynamic(`¿Qué talla necesitas? Ej: 38, 40, 42`)
+                return
+            }
+        }
     }
 )
-
 // =====================================================
 // 🚀 INIT
 // =====================================================
 
 createBot({
     flow: createFlow([
-	flow,           // saludo
-	    flowAf111,      // af1 1.1
-        flowAF1,        // AF1
-        flowOzuna,      // chanclas      // fotos
+	flow,           // saludo       // AF1     // chanclas      // fotos
         flowCatalogo,
+		flowProductos,
         flowUbicacion,
         flowHorario,
         flowNequi
