@@ -540,6 +540,123 @@ const flowZapatillas = addKeyword([
             },
             {
                 media: './src/img/af111.jpeg'
+            },
+            {
+                media: './src/img/zapatilla1.jpeg'
+            },
+            {
+                media: './src/img/zapatilla2.jpeg'
+            },
+            {
+                media: './src/img/zapatilla3.jpeg'
+            },
+            {
+                media: './src/img/zapatilla4.jpeg'
+            },
+            {
+                media: './src/img/zapatilla5.jpeg'
+            },
+            {
+                media: './src/img/zapatilla6.jpeg'
+            },
+            {
+                media: './src/img/zapatilla7.jpeg'
+            },
+            {
+                media: './src/img/zapatilla8.jpeg'
+            },
+            {
+                media: './src/img/zapatilla9.jpeg'
+            },
+            {
+                media: './src/img/zapatilla10.jpeg'
+            },
+            {
+                media: './src/img/zapatilla11.jpeg'
+            },
+            {
+                media: './src/img/zapatilla12.jpeg'
+            },
+            {
+                media: './src/img/zapatilla13.jpeg'
+            },
+            {
+                media: './src/img/zapatilla14.jpeg'
+            },
+            {
+                media: './src/img/zapatilla15.jpeg'
+            },
+            {
+                media: './src/img/zapatilla16.jpeg'
+            },
+            {
+                media: './src/img/zapatilla17.jpeg'
+            },
+            {
+                media: './src/img/zapatilla18.jpeg'
+            },
+            {
+                media: './src/img/zapatilla19.jpeg'
+            },
+            {
+                media: './src/img/zapatilla20.jpeg'
+            },
+            {
+                media: './src/img/zapatilla21.jpeg'
+            },
+            {
+                media: './src/img/zapatilla22.jpeg'
+            },
+            {
+                media: './src/img/zapatilla23.jpeg'
+            },
+            {
+                media: './src/img/zapatilla24.jpeg'
+            },
+            {
+                media: './src/img/zapatilla25.jpeg'
+            },
+            {
+                media: './src/img/zapatilla26.jpeg'
+            },
+            {
+                media: './src/img/zapatilla27.jpeg'
+            },
+            {
+                media: './src/img/zapatilla28.jpeg'
+            },
+            {
+                media: './src/img/zapatilla29.jpeg'
+            },
+            {
+                media: './src/img/zapatilla30.jpeg'
+            },
+            {
+                media: './src/img/zapatilla31.jpeg'
+            },
+            {
+                media: './src/img/zapatilla32.jpeg'
+            },
+            {
+                media: './src/img/zapatilla33.jpeg'
+            },
+            {
+                media: './src/img/zapatilla34.jpeg'
+            },
+            {
+                media: './src/img/zapatilla35.jpeg'
+            },
+            {
+                media: './src/img/zapatilla36.jpeg'
+            },
+            {
+                media: './src/img/zapatilla37.jpeg'
+            },
+            {
+                media: './src/img/zapatilla38.jpeg'
+            },
+            {
+                media: './src/img/zapatilla39.jpeg'
             }
         ])
 
