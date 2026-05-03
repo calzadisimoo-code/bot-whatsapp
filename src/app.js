@@ -997,23 +997,20 @@ const flowFoto = addKeyword(['foto','fotos','imagen','muestrame','manda foto'])
     }
 )
 //
-// 🔥 CONTROL (NO USADO POR AHORA)
-// const seguimientoOzuna = {}
-// const timersOzuna = {}
-
+/// 🔥 KEYWORDS
 const flowOzuna = addKeyword([
     'chanclas','chancla','Quiero chanclas ozuna para envio','ozuna','chanclas ozuna','ozuna 1.1','sandalias ozuna'
 ])
 
-// 🔥 1. MENSAJE INICIAL (CON IMAGEN)
+// 🔥 1. MENSAJE INICIAL (TEXTO + IMAGEN JUNTOS)
 .addAnswer(
-    `Hola 👋 ¿En qué talla?`,
+    `...`,
     null,
     async (ctx, { flowDynamic }) => {
 
         await flowDynamic([
             {
-                body: '',
+                body: `Hola 👋 ¿En qué talla?`,
                 media: './src/img/PhotoCollage_1776480765316.jpg'
             }
         ])
@@ -1021,57 +1018,23 @@ const flowOzuna = addKeyword([
 )
 
 
-// 🔥 2. CAPTURA TALLA (SIN MENSAJE EXTRA)
+// 🔥 2. CAPTURA TALLA
 .addAnswer(
     null,
     { capture: true },
     async (ctx, { flowDynamic }) => {
 
         const msg = ctx.body.toLowerCase()
-        const user = ctx.from
-
         const numero = msg.match(/\d{2}/)
 
-        // ✅ SI ENVÍA TALLA
         if (numero) {
-
-            estadoUsuarios[user] = {
-                producto: 'chanclas_ozuna',
-                talla: numero[0]
-            }
-
-            await delay()
-
-            await flowDynamic(`Vale, envíame porfa la dirección para hacerte el envio hoy mismo`)
-
+            await flowDynamic(`Vale, envíame porfa la dirección para hacerte el envio`)
             return
         }
 
-        // ❌ SI NO ENVÍA TALLA
-        // return flowDynamic(`👀 Escríbeme tu talla (ej: 39, 40, 41)`)
+        // ❌ sin respuesta si no manda talla
     }
 )
-
-
-// 🔥 3. CAPTURA DIRECCIÓN (COMENTADO)
-// .addAnswer(
-//     null,
-//     { capture: true },
-//     async (ctx) => {
-
-//         const user = ctx.from
-//         const msg = ctx.body
-
-//         estadoUsuarios[user] = {
-//             ...estadoUsuarios[user],
-//             datos: msg
-//         }
-
-//         return
-//     }
-// )
-
-
 
 // =====================================================
 // 🚀 INIT
