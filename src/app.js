@@ -414,13 +414,13 @@ const flowPantalonetas = addKeyword([
 📦 Envío disponible
 
 👉 ¿En qué talla? (S, M, L, XL)`,
-                media: './src/img/pantaloneta1.jpg'
+                media: './src/img/pantaloneta1.jpeg'
             },
             {
-                media: './src/img/af1.jpg'
+                media: './src/img/pantaloneta1.jpeg'
             },
             {
-                media: './src/img/af111.jpg'
+                media: './src/img/pantaloneta1.jpeg'
             }
         ])
     }
