@@ -426,7 +426,7 @@ const flowRecoger = addKeyword([
     'voy','paso','recoger','recogo','retiro','voy a pasar'
 ])
 .addAnswer(
-    null,
+    `...`,
     null,
     async (ctx, { flowDynamic }) => {
 
@@ -435,7 +435,7 @@ const flowRecoger = addKeyword([
 		await delay()
         await flowDynamic(`🔥 Perfecto ${nombre}
 
-📍 Estamos en Palmira - Cra27 #29-34 cc villa de las palmas, Local 291
+📍 Estamos en Palmira - Calle 29 #26-34 cc villa de las palmas, Local 291
 
 👉 Te lo dejo separado de una
 
@@ -723,7 +723,7 @@ Nombre - Ciudad - Dirección - Barrio - Teléfono
 
 const flowCatalogo = addKeyword(['catalogo','catálogo','modelo','modelos'])
 .addAnswer(
-    null,
+    `...`,
     null,
     async (ctx, { flowDynamic }) => {
 
@@ -747,7 +747,7 @@ const flowNequi = addKeyword([
     'nequi','numero','pago nequi'
 ])
 .addAnswer(
-    null,
+    `...`,
     null,
     async (ctx, { flowDynamic }) => {
 
@@ -780,7 +780,7 @@ const flowUbicacion = addKeyword([
 
 👉 Te lo dejo separado de una
 
-¿a qué hora vienes hoy?`)
+¿a qué hora vienes?`)
     }
 )
 
@@ -864,7 +864,7 @@ const flowHorario = addKeyword([
 ])
 
 .addAnswer(
-    null,
+    `...`,
     null,
     async (ctx, { flowDynamic }) => {
 
@@ -879,7 +879,7 @@ const flowHorario = addKeyword([
 📅 Lunes a sabados: 9:00am - 7:00pm  
 📅 Domingo: 9:00am - 2:00pm  
 
-📍 Palmira - Calle 29 #27-34  
+📍 Palmira - Calle 29 #26-34  
 CC Villa de las Palmas, Local 291 (Diagonal al banco de Bogota)
 
 🚀 Puedes venir ahora mismo y te atiendo de una  
@@ -897,7 +897,7 @@ CC Villa de las Palmas, Local 291 (Diagonal al banco de Bogota)
 📅 Lunes a sabados: 9:00am - 7:00pm  
 📅 Domingo: 9:00am - 2:00pm  
 
-📍 Palmira - Calle 29 #27-34  
+📍 Palmira - Calle 29 #26-34  
 CC Villa de las Palmas, Local 291 (Diagonal al banco de Bogota)
 
 🚀 Si quieres, te dejo el pedido listo desde ya  
