@@ -401,18 +401,12 @@ const flowPantalonetas = addKeyword([
 
 // 🔥 1. MENSAJE INICIAL
 .addAnswer(
-    `...`,
+    `🔥 PANTALONETAS PREMIUM`,
     null,
     async (ctx, { flowDynamic }) => {
 
         await flowDynamic([
             {
-                body: `🔥 PANTALONETAS PREMIUM
-💰 $69.900
-
-📦 Envío disponible
-
-👉 ¿En qué talla? (S, M, L, XL)`,
                 media: './src/img/pantaloneta1.jpeg'
             },
             {
