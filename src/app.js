@@ -401,7 +401,7 @@ const flowPantalonetas = addKeyword([
 
 // 🔥 1. MENSAJE INICIAL
 .addAnswer(
-    `🔥 PANTALONETAS PREMIUM`,
+    `🔥 PANTALONETAS`,
     null,
     async (ctx, { flowDynamic }) => {
 
@@ -429,6 +429,70 @@ const flowPantalonetas = addKeyword([
 
         // 🔥 luego envía el mensaje final
         await flowDynamic(`👉 Dime tu talla (S, M, L o XL)`)
+    }
+)
+
+
+// 🔥 2. CAPTURA TALLA
+.addAnswer(
+    null,
+    { capture: true, idle: 0 },
+    async (ctx, { flowDynamic }) => {
+
+        const msg = ctx.body.toLowerCase()
+
+        const tallas = ['s','m','l','xl']
+        const encontroTalla = tallas.some(t => msg.includes(t))
+
+        if (encontroTalla) {
+            await flowDynamic(`Perfecto 👌
+
+📦 Envíame tu dirección completa para despacharte hoy mismo 🚚`)
+            return
+        }
+
+        await flowDynamic(`👉 Dime cual te gusto?`)
+    }
+)
+
+/// 🔥 KEYWORDS
+const flowMaletines = addKeyword([
+    'maletines','maletin','vendes maletines','tienes maletines','un maletin','bolsos'
+])
+
+// 🔥 1. MENSAJE INICIAL
+.addAnswer(
+    `🔥 MALETINES`,
+    null,
+    async (ctx, { flowDynamic }) => {
+
+        // 🔥 primero envía las imágenes
+        await flowDynamic([
+            {
+                media: './src/img/maletin1.jpeg'
+            },
+            {
+                media: './src/img/maletin2.jpeg'
+            },
+            {
+                media: './src/img/maletin3.jpeg'
+            },
+            {
+                media: './src/img/maletin4.jpeg'
+            },
+            {
+                media: './src/img/maletin5.jpeg'
+            },
+            {
+                media: './src/img/maletin6.jpeg'
+            },
+            {
+                media: './src/img/maletin7.jpeg'
+            }
+        ])
+
+        // 🔥 luego envía el mensaje final
+        await flowDynamic(`👉 Dime cual te gusto?`)
     }
 )
 
