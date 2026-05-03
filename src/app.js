@@ -422,60 +422,7 @@ eliminar 17123456789
 // =====================================================
 // 🤖 FLOWS
 // =====================================================
-const flowRecoger = addKeyword([
-    'voy','paso','recoger','recogo','retiro','voy a pasar'
-])
-.addAnswer(
-    `...`,
-    null,
-    async (ctx, { flowDynamic }) => {
 
-        const nombre = ctx.pushName || 'parcero'
-        
-		await delay()
-        await flowDynamic(`🔥 Perfecto ${nombre}
-
-📍 Estamos en Palmira - Calle 29 #26-34 cc villa de las palmas, Local 291
-
-👉 Te lo dejo separado de una
-
-¿a qué hora vienes hoy?`)
-    }
-)
-
-
-const flowEnvio = addKeyword([
-    'envio','enviar','enví','mandalo','mandamelo','mandar',
-    'domicilio','a domicilio','me lo envias','me lo envía',
-    'si envio','para envio','con envio','envio porfa',
-    'envialo','enviamelo','enviame','lo quiero con envio'
-])
-.addAnswer(
-    null, // 👈 SIEMPRE algo aquí
-    null,
-    async (ctx, { flowDynamic }) => {
-
-        const nombre = ctx.pushName || 'parcero'
-
-        await delay()
-        await flowDynamic(`Perfecto ${nombre}, te lo envío hoy mismo
-
-👉 Solo necesito:
-Ciudad - Dirección - Barrio - Nombre
-
-💰 El producto lo pagas por adelantado
-📦 El envío lo pagas cuando lo recibes
-
-Puedes pagar por Nequi:
-📱 3217204017  
-👤 Juan Galarraga  
-
-👉 Me envías el comprobante y te despacho de una 🚀
-
-🔥 ¿me pasas los datos para enviártelo hoy?`)
-    }
-)
-//
 // 🔥 CONTROL
 const seguimientoAF111 = {}
 const timersAF111 = {}
@@ -598,6 +545,9 @@ Nombre - Ciudad - Dirección - Teléfono
     }
 )
 
+
+
+
 /// 🔥 KEYWORDS
 const flowAF1 = addKeyword([
     'air force','af1','Quiero air force para envio','quiero las air force 1 blancas','force one'
@@ -636,6 +586,7 @@ const flowAF1 = addKeyword([
         // ❌ sin respuesta si no manda talla
     }
 )
+
 
 
 const flowCatalogo = addKeyword(['catalogo','catálogo','modelo','modelos'])
@@ -706,7 +657,7 @@ const flowUbicacion = addKeyword([
 const flow = addKeyword(['hola','buenas','info','buenas tardes','buenos dias'])
 
 .addAnswer(
-    null,
+    `...`,
     null,
     async (ctx, { flowDynamic }) => {
 
@@ -828,92 +779,6 @@ CC Villa de las Palmas, Local 291 (Diagonal al banco de Bogota)
 )
 
 
-const flowContraentrega = addKeyword([
-    'contraentrega',
-    'contra entrega',
-    'pago contra entrega'
-])
-
-.addAnswer(
-    null,
-    null,
-    async (ctx, { flowDynamic }) => {
-
-        await delay()
-        await flowDynamic(`Te explico 👇
-
-💰 Pagas SOLO el producto por adelantado  
-📦 El envío lo pagas cuando lo recibes  
-
-Tarifas:
-📍 Palmira: $6.000  
-📍 Valle: $13.000
-📍 Fuera del Valle: $23.000  
-
-🔐 Somos tienda física:
-📍 Palmira - Cra 27 #29-34 CC Villa de las Palmas, Local 291 (alfrente del banco de Bogotá)
-
-Puedes hacer el pago por Nequi:
-📱 3217204017  
-👤 Juan Galarraga
-
-👉 Solo necesito:
-Ciudad - Dirección - Nombre
-
-👉 Me envias el comprobante y te despacho de una 🚀`)
-    }
-)
-
-//
-const flowFoto = addKeyword(['foto','fotos','imagen','muestrame','manda foto'])
-.addAnswer(
-    null,
-    null,
-    async (ctx, { flowDynamic }) => {
-
-        const user = ctx.from
-        const estado = estadoUsuarios[user]
-
-        if (!estado) return
-
-        // 🔥 CHANCLAS
-        if (estado.producto === 'chanclas_ozuna') {
-            await delay()
-            return flowDynamic([
-                {
-                    body: `🔥 Estas son las chanclas Ozuna
-
-💰 Están en $70.000
-
-📦 Disponibles hoy
-
-👉 ¿Para qué ciudad serían?`,
-                    media: './src/img/WhatsApp Image 2026-04-05 at 2.50.01 PM.jpeg'
-                }
-            ])
-        }
-
-        // 🔥 AF1
-        if (estado.producto === 'af1_11') {
-            await delay()
-            return flowDynamic([
-                {
-                    body: `🔥 Estas son las AF1 blancas 1.1
-
-💰 Están en $110.000
-
-📦 Disponibles hoy
-
-👉 ¿Para qué ciudad serían?`,
-                    media: './src/img/WhatsApp Image 2026-04-05 at 2.50.01 PM.jpeg'
-                }
-            ])
-        }
-
-        // 🔥 OTROS PRODUCTOS (opcional)
-    }
-)
-//
 /// 🔥 KEYWORDS
 const flowOzuna = addKeyword([
     'chanclas','chancla','Quiero chanclas ozuna para envio','ozuna','chanclas ozuna','ozuna 1.1','sandalias ozuna'
@@ -963,7 +828,6 @@ createBot({
 	    flowAf111,      // af1 1.1
         flowAF1,        // AF1
         flowOzuna,      // chanclas
-        flowFoto,       // fotos
         flowCatalogo,
         flowUbicacion,
         flowHorario,
