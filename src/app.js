@@ -394,13 +394,12 @@ const flowOzuna = addKeyword([
         // ❌ sin respuesta si no manda talla
     }
 )
-
 /// 🔥 KEYWORDS
 const flowPantalonetas = addKeyword([
     'pantaloneta','pantalonetas','short','shorts','bermuda','bermudas'
 ])
 
-// 🔥 1. MENSAJE INICIAL (VARIAS IMÁGENES + PREGUNTA)
+// 🔥 1. MENSAJE INICIAL
 .addAnswer(
     `...`,
     null,
@@ -415,14 +414,19 @@ const flowPantalonetas = addKeyword([
 
 👉 ¿En qué talla? (S, M, L, XL)`,
                 media: './src/img/pantaloneta1.jpeg'
-				media: './src/img/pantaloneta1.jpeg'
+            },
+            {
+                media: './src/img/af1.jpeg'
+            },
+            {
+                media: './src/img/af111.jpeg'
             }
         ])
     }
 )
 
 
-// 🔥 2. CAPTURA TALLA (LETRAS)
+// 🔥 2. CAPTURA TALLA
 .addAnswer(
     null,
     { capture: true, idle: 0 },
@@ -430,7 +434,6 @@ const flowPantalonetas = addKeyword([
 
         const msg = ctx.body.toLowerCase()
 
-        // 🔥 detectar tallas tipo S M L XL
         const tallas = ['s','m','l','xl']
         const encontroTalla = tallas.some(t => msg.includes(t))
 
@@ -441,7 +444,6 @@ const flowPantalonetas = addKeyword([
             return
         }
 
-        // 🔥 si no escribe talla válida
         await flowDynamic(`¿Qué talla necesitas?
 
 👉 S, M, L o XL`)
