@@ -139,7 +139,7 @@ const flowAF1 = addKeyword([
         await flowDynamic([
             {
                 body: `Hola $50.000 ¿En qué talla?`,
-                media: './src/img/WhatsApp Image 2026-04-05 at 2.50.01 PM.jpeg'
+                media: './src/img/af1.jpeg'
             }
         ])
     }
@@ -392,6 +392,64 @@ const flowOzuna = addKeyword([
         }
 
         // ❌ sin respuesta si no manda talla
+    }
+)
+
+/// 🔥 KEYWORDS
+const flowPantalonetas = addKeyword([
+    'pantaloneta','pantalonetas','short','shorts','bermuda','bermudas'
+])
+
+// 🔥 1. MENSAJE INICIAL (VARIAS IMÁGENES + PREGUNTA)
+.addAnswer(
+    `...`,
+    null,
+    async (ctx, { flowDynamic }) => {
+
+        await flowDynamic([
+            {
+                body: `🔥 PANTALONETAS PREMIUM
+💰 $69.900
+
+📦 Envío disponible
+
+👉 ¿En qué talla? (S, M, L, XL)`,
+                media: './src/img/pantaloneta1.jpg'
+            },
+            {
+                media: './src/img/pantaloneta1.jpg'
+            },
+            {
+                media: './src/img/pantaloneta1.jpg'
+            }
+        ])
+    }
+)
+
+
+// 🔥 2. CAPTURA TALLA (LETRAS)
+.addAnswer(
+    null,
+    { capture: true, idle: 0 },
+    async (ctx, { flowDynamic }) => {
+
+        const msg = ctx.body.toLowerCase()
+
+        // 🔥 detectar tallas tipo S M L XL
+        const tallas = ['s','m','l','xl']
+        const encontroTalla = tallas.some(t => msg.includes(t))
+
+        if (encontroTalla) {
+            await flowDynamic(`Perfecto 👌
+
+📦 Envíame tu dirección completa para despacharte hoy mismo 🚚`)
+            return
+        }
+
+        // 🔥 si no escribe talla válida
+        await flowDynamic(`¿Qué talla necesitas?
+
+👉 S, M, L o XL`)
     }
 )
 
