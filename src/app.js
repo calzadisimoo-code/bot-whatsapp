@@ -766,7 +766,7 @@ Puedes hacer el pago por Nequi:
 
 
 const flowUbicacion = addKeyword([
-    'donde','ubicacion','en que parte de palmira esta?','estan en palmira','eres','ubicado','ubicación','direccion','dirección','ubicados','encuentra','encuentran','local'
+    'donde','ubicacion','en donde estas ubicado','en que parte de palmira esta?','estan en palmira','eres','ubicado','ubicación','direccion','dirección','ubicados','encuentra','encuentran','local'
 ])
 .addAnswer(
     null,
@@ -997,7 +997,7 @@ const flowFoto = addKeyword(['foto','fotos','imagen','muestrame','manda foto'])
     }
 )
 //
-// 🔥 CONTROL
+/// 🔥 CONTROL
 const seguimientoOzuna = {}
 const timersOzuna = {}
 
@@ -1005,69 +1005,14 @@ const flowOzuna = addKeyword([
     'chanclas','chancla','Quiero chanclas ozuna para envio','ozuna','chanclas ozuna','ozuna 1.1','sandalias ozuna'
 ])
 
-// 🔥 1. PRIMER MENSAJE
+// 🔥 1. MENSAJE INICIAL (CAPTURA TALLA)
 .addAnswer(
-    `🔥 50% OFF HOY 🔥
-
-🩴 CHANCLAS OZUNA 1.1
-
-⭐ Más vendidas esta semana  
-⭐ Calidad premium garantizada  
-
-✅ Súper cómodas todo el día  
-✅ Antideslizantes (no resbalan)  
-✅ Resistentes y ligeras`,
-    null,
-    async (ctx, { flowDynamic }) => {
-
-        const user = ctx.from
-
-        estadoUsuarios[user] = {
-            producto: 'chanclas_ozuna'
-        }
-
-        await delay()
-
-        await flowDynamic([
-            {
-                body: `
-💰 PRECIO HOY: $69.900  
-❌ Antes: $100.000  
-
-🚚 Envío GRATIS en Palmira  
-📦 Valle: $15.000  
-💸 Pagas al recibir  
-
-⏳ Entrega rápida 1-3 días`,
-                media: './src/img/PhotoCollage_1776480765316.jpg'
-            }
-        ])
-    }
-)
-
-
-// 🔥 2. CAPTURA
-.addAnswer(
-    `⚠️ STOCK LIMITADO
-
-🔥 Últimas unidades disponibles
-
-👉 Pide las tuyas ahora
-
-Escríbeme tu talla (38, 40, 42)`,
+    `Hola ¿En qué talla?`,
     { capture: true },
     async (ctx, { flowDynamic }) => {
 
         const msg = ctx.body.toLowerCase()
         const user = ctx.from
-
-        // limpiar
-        if (seguimientoOzuna[user]) delete seguimientoOzuna[user]
-
-        if (timersOzuna[user]) {
-            timersOzuna[user].forEach(t => clearTimeout(t))
-            delete timersOzuna[user]
-        }
 
         const numero = msg.match(/\d{2}/)
 
@@ -1080,22 +1025,18 @@ Escríbeme tu talla (38, 40, 42)`,
             }
 
             await delay()
-            await flowDynamic(`🔥 Perfecto, talla ${numero[0]} disponible
 
-💰 $69.900  
-🚚 Envío GRATIS en Palmira  
-📦 Valle: $15.000  
-
-💸 Pagas al recibir  
-
-👉 Para enviártelas necesito:
-Nombre - Ciudad - Dirección - Barrio - Teléfono  
-
-🚀 Te despacho hoy mismo`)
+            await flowDynamic([
+                {
+                    body: `vale, enviame porfa la dirección para hacerte el envio hoy mismo`,
+                    media: './src/img/PhotoCollage_1776480765316.jpg'
+                }
+            ])
 
             seguimientoOzuna[user] = 'direccion'
             timersOzuna[user] = []
 
+            // ⏱️ RECORDATORIOS
             timersOzuna[user].push(setTimeout(async () => {
                 if (seguimientoOzuna[user] !== 'direccion') return
                 await flowDynamic(`👀 Solo me faltan tus datos para enviarlas`)
@@ -1113,9 +1054,36 @@ Nombre - Ciudad - Dirección - Barrio - Teléfono
         }
 
         // 🔥 SI NO ENVÍA TALLA
-        return flowDynamic(`👀 Para pedirlas rápido
+        return flowDynamic(`👀 Escríbeme tu talla (ej: 39, 40, 41)`)
+    }
+)
 
-👉 Escríbeme tu talla (ej: 40, 42)`)
+
+// 🔥 2. CAPTURA DIRECCIÓN (SIN RESPUESTA)
+.addAnswer(
+    `✍️ Escríbeme tus datos para el envío`,
+    { capture: true },
+    async (ctx) => {
+
+        const user = ctx.from
+        const msg = ctx.body
+
+        // 🔥 LIMPIAR SEGUIMIENTO
+        if (seguimientoOzuna[user]) delete seguimientoOzuna[user]
+
+        if (timersOzuna[user]) {
+            timersOzuna[user].forEach(t => clearTimeout(t))
+            delete timersOzuna[user]
+        }
+
+        // 🔥 GUARDAR DATOS
+        estadoUsuarios[user] = {
+            ...estadoUsuarios[user],
+            datos: msg
+        }
+
+        // ❌ NO RESPONDE NADA
+        return
     }
 )
 
