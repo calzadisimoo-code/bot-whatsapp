@@ -769,7 +769,7 @@ const flowUbicacion = addKeyword([
     'donde','ubicacion','en donde estas ubicado','en que parte de palmira esta?','estan en palmira','eres','ubicado','ubicación','direccion','dirección','ubicados','encuentra','encuentran','local'
 ])
 .addAnswer(
-    null,
+    `...`,
     null,
     async (ctx, { flowDynamic }) => {
 
