@@ -85,12 +85,11 @@ const productosDB = {
 // =====================================================
 // 🤖 FLOWS
 // ====================================================
-//
-// 🔥 KEYWORDS
+//// 🔥 KEYWORDS
 const flowAf111 = addKeyword([
     'af1 1.1',
     'air force 1.1',
-	'Quiero las AF1 blancas 1.1',
+    'quiero las af1 blancas 1.1',
     '1.1',
     'af1 blancas 1.1'
 ])
@@ -124,14 +123,15 @@ const flowAf111 = addKeyword([
         const msg = ctx.body.toLowerCase()
         const numero = msg.match(/\d{2}/)
 
-        if (numero) {
+        // 🔥 SOLO RESPONDE SI HAY TALLA
+        if (!numero) return
 
-            const talla = numero[0]
-            const precio = 100000
-			
-			await delay() // 🔥 AQUÍ EL DELAY
+        const talla = numero[0]
+        const precio = 100000
 
-            await flowDynamic(`✅ Pedido confirmado
+        await delay()
+
+        await flowDynamic(`✅ Pedido confirmado
 
 📦 Air Force 1.1 talla ${talla}
 
@@ -145,16 +145,8 @@ Valle: $15.000
 👉 Valle: $${(precio + 15000).toLocaleString('es-CO')}
 
 🚀 Solo me falta la dirección para hacerte el envío`)
-
-            return
-        }
-
-        // ❌ SI NO MANDA TALLA
-        return flowDynamic(`👉 Escríbeme tu talla (ej: 40, 42)`)
     }
 )
-
-
 
 // 🔥 KEYWORDS
 const flowAF1 = addKeyword([
@@ -190,14 +182,15 @@ const flowAF1 = addKeyword([
         const msg = ctx.body.toLowerCase()
         const numero = msg.match(/\d{2}/)
 
-        if (numero) {
+        // 🔥 SOLO RESPONDE SI HAY TALLA
+        if (!numero) return
 
-            const talla = numero[0]
-            const precio = 50000
-			
-			await delay() // 🔥 AQUÍ EL DELAY
+        const talla = numero[0]
+        const precio = 50000
 
-            await flowDynamic(`✅ Pedido confirmado
+        await delay()
+
+        await flowDynamic(`✅ Pedido confirmado
 
 📦 Air Force 1 talla ${talla}
 
@@ -211,12 +204,6 @@ Valle: $15.000
 👉 Valle: $${(precio + 15000).toLocaleString('es-CO')}
 
 🚀 Solo me falta la dirección para hacerte el envío`)
-
-            return
-        }
-
-        // ❌ SI NO MANDA TALLA
-        return flowDynamic(`👉 Escríbeme tu talla (ej: 40, 42)`)
     }
 )
 
@@ -409,7 +396,6 @@ CC Villa de las Palmas, Local 291 (Diagonal al banco de Bogota)
         }
     }
 )
-
 // 🔥 KEYWORDS
 const flowOzuna = addKeyword([
     'chanclas','chancla','quiero chanclas ozuna','ozuna','chanclas ozuna','ozuna 1.1','sandalias ozuna'
@@ -444,14 +430,15 @@ const flowOzuna = addKeyword([
         const msg = ctx.body.toLowerCase()
         const numero = msg.match(/\d{2}/)
 
-        if (numero) {
+        // 🔥 SOLO RESPONDE SI HAY TALLA
+        if (!numero) return
 
-            const talla = numero[0]
-            const precio = 70000
-			
-			await delay() // 🔥 AQUÍ EL DELAY
+        const talla = numero[0]
+        const precio = 70000
 
-            await flowDynamic(`✅ Pedido confirmado
+        await delay()
+
+        await flowDynamic(`✅ Pedido confirmado
 
 📦 Chanclas Ozuna talla ${talla}
 
@@ -465,12 +452,6 @@ Valle: $15.000
 👉 Valle: $${(precio + 15000).toLocaleString('es-CO')}
 
 🚀 Solo me falta la dirección para hacerte el envío`)
-
-            return
-        }
-
-        // ❌ SI NO MANDA TALLA
-        return flowDynamic(`👉 Escríbeme tu talla (ej: 40, 42)`)
     }
 )
 
