@@ -128,6 +128,8 @@ const flowAf111 = addKeyword([
 
             const talla = numero[0]
             const precio = 100000
+			
+			await delay() // 🔥 AQUÍ EL DELAY
 
             await flowDynamic(`✅ Pedido confirmado
 
@@ -192,6 +194,8 @@ const flowAF1 = addKeyword([
 
             const talla = numero[0]
             const precio = 50000
+			
+			await delay() // 🔥 AQUÍ EL DELAY
 
             await flowDynamic(`✅ Pedido confirmado
 
@@ -444,6 +448,8 @@ const flowOzuna = addKeyword([
 
             const talla = numero[0]
             const precio = 70000
+			
+			await delay() // 🔥 AQUÍ EL DELAY
 
             await flowDynamic(`✅ Pedido confirmado
 
