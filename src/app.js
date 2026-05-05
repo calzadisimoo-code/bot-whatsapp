@@ -288,7 +288,7 @@ const flowUbicacion = addKeyword([
 const flow = addKeyword(['hola','buenas','info','buenas tardes','buenos dias'])
 
 .addAnswer(
-    `...`,
+    `Hola`,
     null,
     async (ctx, { flowDynamic }) => {
 
@@ -320,9 +320,9 @@ if (total < 20) {
         let mensaje = ''
 
         if (opcion === 'A') {
-            mensaje = `¡Hola! en que producto estas interesado 👇`
+            mensaje = `En que producto estas interesado 👇`
         } else {
-            mensaje = `Hola, en que ciudad te encuentras?`
+            mensaje = `En que ciudad te encuentras?`
         }
         
 		await delay()
