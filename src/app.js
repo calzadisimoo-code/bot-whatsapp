@@ -356,14 +356,12 @@ CC Villa de las Palmas, Local 291 (Diagonal al banco de Bogota)
     }
 )
 
-
-//
-/// 🔥 KEYWORDS
+// 🔥 KEYWORDS
 const flowOzuna = addKeyword([
-    'chanclas','chancla','Quiero chanclas ozuna para envio','ozuna','chanclas ozuna','ozuna 1.1','sandalias ozuna'
+    'chanclas','chancla','quiero chanclas ozuna','ozuna','chanclas ozuna','ozuna 1.1','sandalias ozuna'
 ])
 
-// 🔥 1. MENSAJE INICIAL (TEXTO + IMAGEN JUNTOS)
+// 🔥 1. MENSAJE INICIAL
 .addAnswer(
     `...`,
     null,
@@ -371,7 +369,11 @@ const flowOzuna = addKeyword([
 
         await flowDynamic([
             {
-                body: `Hola $69.900 ¿En qué talla?`,
+                body: `🔥 CHANCLAS OZUNA PREMIUM
+
+💰 $70.000
+
+👉 ¿Qué talla necesitas?`,
                 media: './src/img/ozuna.jpg'
             }
         ])
@@ -379,7 +381,7 @@ const flowOzuna = addKeyword([
 )
 
 
-// 🔥 2. CAPTURA TALLA
+// 🔥 2. CAPTURA TALLA + CIERRE
 .addAnswer(
     null,
     { capture: true, idle: 0 },
@@ -389,13 +391,33 @@ const flowOzuna = addKeyword([
         const numero = msg.match(/\d{2}/)
 
         if (numero) {
-            await flowDynamic(`Vale, envíame porfa la dirección para hacerte el envio`)
+
+            const talla = numero[0]
+            const precio = 70000
+
+            await flowDynamic(`✅ Pedido confirmado
+
+📦 Chanclas Ozuna talla ${talla}
+
+💸 Precio: $70.000  
+🚚 Envío:
+Palmira: $4.000 a $6.000  
+Valle: $15.000  
+
+💰 Total:
+👉 Palmira: $${precio + 5000} aprox  
+👉 Valle: $${precio + 15000}
+
+🚀 Solo me falta la dirección para hacerte el envío`)
+
             return
         }
 
-        // ❌ sin respuesta si no manda talla
+        // ❌ SI NO MANDA TALLA
+        return flowDynamic(`👉 Escríbeme tu talla (ej: 40, 42)`)
     }
 )
+
 /// 🔥 KEYWORDS
 const flowPantalonetas = addKeyword([
     'pantaloneta','pantalonetas','short','shorts','bermuda','bermudas'
