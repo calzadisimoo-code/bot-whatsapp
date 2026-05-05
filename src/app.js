@@ -600,6 +600,49 @@ const flowMaletines = addKeyword([
     }
 )
 
+const flowguayos = addKeyword([
+    'maletines','maletin','vendes maletines','tienes maletines','un maletin','bolsos'
+])
+
+// 🔥 1. MENSAJE INICIAL
+.addAnswer(
+    `🔥 GUAYOS`,
+    null,
+    async (ctx, { flowDynamic }) => {
+
+        // 🔥 primero envía las imágenes
+        await flowDynamic([
+            {
+                media: './src/img/guayo1.jpeg'
+            },
+            {
+                media: './src/img/guayo2.jpeg'
+            },
+            {
+                media: './src/img/guayo3.jpeg'
+            },
+            {
+                media: './src/img/guayo4.jpeg'
+            },
+            {
+                media: './src/img/guayo5.jpeg'
+            },
+            {
+                media: './src/img/guayo6.jpeg'
+            },
+            {
+                media: './src/img/guayo7.jpeg'
+            },
+            {
+                media: './src/img/guayo8.jpeg'
+            }
+        ])
+
+        // 🔥 luego envía el mensaje final
+        await flowDynamic(`👉 Dime cual te gusto?`)
+    }
+)
+
 /// 🔥 KEYWORDS
 const flowZapatillas = addKeyword([
     'zapatillas','hola tiene zapatillas nike','zapatillas para hombre','que estilos de zapatillas tiene',
@@ -753,6 +796,7 @@ createBot({
 	flow,      
         flowPantalonetas,
         flowMaletines,
+		flowguayos,
 		flowAf111, 
 		flowZapatillas,     // af1 1.1
         flowAF1,        // AF1
