@@ -88,7 +88,9 @@ const productosDB = {
 //
 /// 🔥 KEYWORDS
 const flowAf111 = addKeyword([
-    'Hola quiero las AF1 blancas 1.1','air force 1.1','air force blancas 1.1'
+    'af1 1.1',
+    'air force 1.1',
+    '1.1'
 ])
 
 // 🔥 1. MENSAJE INICIAL (TEXTO + IMAGEN JUNTOS)
@@ -127,7 +129,7 @@ const flowAf111 = addKeyword([
 
 /// 🔥 KEYWORDS
 const flowAF1 = addKeyword([
-    'air force','af1','quiero las air force 1 blanca','air force one'
+    'af1','quiero las air force 1 blanca','air force barata'
 ])
 
 // 🔥 1. MENSAJE INICIAL (TEXTO + IMAGEN JUNTOS)
@@ -230,76 +232,91 @@ const flowUbicacion = addKeyword([
 
 
 
-const flow = addKeyword(['hola','buenas','info','buenas tardes','buenos dias'])
+const flow = addKeyword(['hola','buenas','info','buenas tardes','buenos dias','af1','air force','chanclas','ozuna'])
 
-.addAnswer(
-    null,
-    null,
-    async (ctx, { flowDynamic }) => {
+.addAnswer(null, null, async (ctx, { flowDynamic }) => {
 
-        const user = ctx.from
+    const msg = ctx.body.toLowerCase()
+    const user = ctx.from
 
-        // 🔥 calcular rendimiento
-        let opcion
+    // 🔥 DETECTAR PRODUCTO
+    let productoDetectado = null
 
-const total = ABTest.A.enviados + ABTest.B.enviados
+    for (const key in productosDB) {
+        const producto = productosDB[key]
 
-// 🔥 PRIMEROS MENSAJES → 50/50 REAL
-if (total < 20) {
-    opcion = Math.random() < 0.5 ? 'A' : 'B'
-} else {
-    const ratioA = ABTest.A.respuestas / (ABTest.A.enviados || 1)
-    const ratioB = ABTest.B.respuestas / (ABTest.B.enviados || 1)
-
-    if (ratioA > ratioB) {
-        opcion = Math.random() < 0.8 ? 'A' : 'B'
-    } else {
-        opcion = Math.random() < 0.8 ? 'B' : 'A'
-    }
-}
-
-        // 🔥 guardar usuario
-        usuariosAB[user] = opcion
-        ABTest[opcion].enviados++
-
-        let mensaje = ''
-
-        if (opcion === 'A') {
-            mensaje = `¡Hola! 👋 Este producto está disponible con entrega inmediata 🚚
-
-🔥 Hoy lo tenemos en promoción
-
-👉 ¿Para qué ciudad sería el envío?`
-        } else {
-            mensaje = `Hola, en que ciudad te encuentras?`
+        if (producto.keywords.some(k => msg.includes(k))) {
+            productoDetectado = key
+            break
         }
-        
-		await delay()
-        await flowDynamic(mensaje)
     }
-)
 
+    // 🔥 SI DETECTA PRODUCTO
+    if (productoDetectado) {
 
-// 🔥 AQUÍ DETECTA SI RESPONDE
-.addAnswer(
-    null,
-    { capture: true, idle: 0 },
-    async (ctx, { flowDynamic }) => {
+        const data = productosDB[productoDetectado]
 
-        const user = ctx.from
+        estadoUsuarios[user] = {
+            producto: productoDetectado
+        }
 
-        if (usuariosAB[user]) {
-    const opcion = usuariosAB[user]
-    ABTest[opcion].respuestas++
-    delete usuariosAB[user]
+        await delay()
 
-    mostrarAB()
-}
+        await flowDynamic([
+            {
+                body: `🔥 ${data.nombre}
 
-        // aquí sigue tu flujo normal
+💰 ${data.precio}
+
+🚚 Envío disponible  
+💸 Pagas al recibir  
+
+👉 ¿Qué talla necesitas?`,
+                media: data.imagen
+            }
+        ])
+
+        return
     }
-)
 
+    // 🔥 SI NO DETECTA PRODUCTO (SALUDO NORMAL)
+    await delay()
+    await flowDynamic(`👋 Hola, ¿qué producto estás buscando?
+
+🔥 Tengo:
+- Air Force 1
+- Chanclas Ozuna
+
+👉 Escríbeme el modelo`)
+})
+
+
+// 🔥 CAPTURA UNIVERSAL
+.addAnswer(null, { capture: true, idle: 0 }, async (ctx, { flowDynamic }) => {
+
+    const msg = ctx.body.toLowerCase()
+    const user = ctx.from
+
+    const productoActivo = estadoUsuarios[user]?.producto
+    if (!productoActivo) return
+
+    const numero = msg.match(/\d{2}/)
+
+    // 🔥 SI ENVÍA TALLA
+    if (numero) {
+
+        await delay()
+
+        await flowDynamic(`🔥 Perfecto talla ${numero[0]} disponible
+
+👉 Envíame:
+Nombre - Ciudad - Dirección - Teléfono  
+
+🚀 Te lo envío hoy mismo`)
+
+        return
+    }
+})
 
 const flowHorario = addKeyword([
     'atiende','horario','abierto',
