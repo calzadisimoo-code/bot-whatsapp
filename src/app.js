@@ -405,8 +405,8 @@ Palmira: $4.000 a $6.000
 Valle: $15.000  
 
 💰 Total:
-👉 Palmira: $${precio + 5000} aprox  
-👉 Valle: $${precio + 15000}
+👉 Palmira: $${(precio + 5000).toLocaleString('es-CO')}
+👉 Valle: $${(precio + 15000).toLocaleString('es-CO')}
 
 🚀 Solo me falta la dirección para hacerte el envío`)
 
