@@ -136,11 +136,11 @@ const flowAf111 = addKeyword([
 📦 Air Force 1.1 talla ${talla}
 
 💸 Precio: $${precio.toLocaleString('es-CO')}  
-🚚 Envío:
-Palmira: $4.000 a $6.000  
+🚚 Envío
+Palmira: $4.000 a $7.000  
 Valle: $15.000  
 
-💰 Total:
+💰 Total aprox:
 👉 Palmira: $${(precio + 5000).toLocaleString('es-CO')}  
 👉 Valle: $${(precio + 15000).toLocaleString('es-CO')}
 
@@ -451,12 +451,12 @@ const flowOzuna = addKeyword([
 📦 Chanclas Ozuna talla ${talla}
 
 💸 Precio: $70.000  
-🚚 Envío:
-Palmira: $4.000 a $6.000  
+🚚 Envío
+Palmira: $4.000 a $7.000  
 Valle: $15.000  
 
-💰 Total:
-👉 Palmira: $${(precio + 5000).toLocaleString('es-CO')}
+💰 Total aprox:
+👉 Palmira: $${(precio + 5000).toLocaleString('es-CO')}  
 👉 Valle: $${(precio + 15000).toLocaleString('es-CO')}
 
 🚀 Para enviártelas hoy mismo necesito:
