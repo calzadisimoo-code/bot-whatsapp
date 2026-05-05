@@ -86,15 +86,16 @@ const productosDB = {
 // 🤖 FLOWS
 // ====================================================
 //
-/// 🔥 KEYWORDS
+// 🔥 KEYWORDS
 const flowAf111 = addKeyword([
     'af1 1.1',
-	'Hola quiero las AF1 blancas 1.1',
     'air force 1.1',
-    '1.1'
+	'Quiero las AF1 blancas 1.1',
+    '1.1',
+    'af1 blancas 1.1'
 ])
 
-// 🔥 1. MENSAJE INICIAL (TEXTO + IMAGEN JUNTOS)
+// 🔥 1. MENSAJE INICIAL
 .addAnswer(
     `...`,
     null,
@@ -102,7 +103,11 @@ const flowAf111 = addKeyword([
 
         await flowDynamic([
             {
-                body: `Hola son 1.1 te quedan en $100.000 ¿En qué talla?`,
+                body: `🔥 AIR FORCE 1.1 PREMIUM
+
+💰 $100.000
+
+👉 ¿Qué talla necesitas?`,
                 media: './src/img/af111.jpeg'
             }
         ])
@@ -110,7 +115,7 @@ const flowAf111 = addKeyword([
 )
 
 
-// 🔥 2. CAPTURA TALLA
+// 🔥 2. CAPTURA TALLA + CIERRE
 .addAnswer(
     null,
     { capture: true, idle: 0 },
@@ -120,13 +125,35 @@ const flowAf111 = addKeyword([
         const numero = msg.match(/\d{2}/)
 
         if (numero) {
-            await flowDynamic(`Vale, envíame porfa la dirección para hacerte el envio`)
+
+            const talla = numero[0]
+            const precio = 100000
+
+            await flowDynamic(`✅ Pedido confirmado
+
+📦 Air Force 1.1 talla ${talla}
+
+💸 Precio: $${precio.toLocaleString('es-CO')}  
+🚚 Envío:
+Palmira: $4.000 a $6.000  
+Valle: $15.000  
+
+💰 Total:
+👉 Palmira: $${(precio + 5000).toLocaleString('es-CO')}  
+👉 Valle: $${(precio + 15000).toLocaleString('es-CO')}
+
+🚀 Solo me falta la dirección para hacerte el envío`)
+
             return
         }
 
-        // ❌ sin respuesta si no manda talla
+        // ❌ SI NO MANDA TALLA
+        return flowDynamic(`👉 Escríbeme tu talla (ej: 40, 42)`)
     }
 )
+
+
+
 // 🔥 KEYWORDS
 const flowAF1 = addKeyword([
     'af1','quiero las air force 1 blanca','air force barata','air force 1'
