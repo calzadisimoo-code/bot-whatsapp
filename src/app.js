@@ -69,14 +69,14 @@ const productosDB = {
     af1_doble_a: {
         nombre: 'AIR FORCE 1 DOBLE A',
         precio: '$50.000',
-        imagen: './src/img/af1.jpeg',
+       // imagen: './src/img/af1.jpeg',
         keywords: ['af1','air force','air force 1']
     },
 
     chanclas_ozuna: {
         nombre: 'CHANCLAS OZUNA PREMIUM',
         precio: '$70.000',
-        imagen: './src/img/ozuna.jpeg',
+        //imagen: './src/img/ozuna.jpeg',
         keywords: ['ozuna','chanclas','sandalias']
     }
 }
