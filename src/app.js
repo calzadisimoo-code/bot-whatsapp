@@ -144,7 +144,13 @@ Valle: $15.000
 👉 Palmira: $${(precio + 5000).toLocaleString('es-CO')}  
 👉 Valle: $${(precio + 15000).toLocaleString('es-CO')}
 
-🚀 Solo me falta la dirección para hacerte el envío`)
+🚀 Para enviártelas hoy mismo necesito:
+
+Nombre:
+Dirección:
+Teléfono:
+
+⚠️ Tengo varias solicitudes en esa talla, apenas me envíes los datos te las despacho de una`)
     }
 )
 
@@ -203,7 +209,13 @@ Valle: $15.000
 👉 Palmira: $${(precio + 5000).toLocaleString('es-CO')}  
 👉 Valle: $${(precio + 15000).toLocaleString('es-CO')}
 
-🚀 Solo me falta la dirección para hacerte el envío`)
+🚀 Para enviártelas hoy mismo necesito:
+
+Nombre:
+Dirección:
+Teléfono:
+
+⚠️ Tengo varias solicitudes en esa talla, apenas me envíes los datos te las despacho de una`)
     }
 )
 
@@ -451,7 +463,13 @@ Valle: $15.000
 👉 Palmira: $${(precio + 5000).toLocaleString('es-CO')}
 👉 Valle: $${(precio + 15000).toLocaleString('es-CO')}
 
-🚀 Solo me falta la dirección para hacerte el envío`)
+🚀 Para enviártelas hoy mismo necesito:
+
+Nombre:
+Dirección:
+Teléfono:
+
+⚠️ Tengo varias solicitudes en esa talla, apenas me envíes los datos te las despacho de una`)
     }
 )
 
