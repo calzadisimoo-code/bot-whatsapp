@@ -202,10 +202,10 @@ const flowAF1 = addKeyword([
 
 💸 Precio: $${precio.toLocaleString('es-CO')}  
 🚚 Envío:
-Palmira: $4.000 a $6.000  
+Palmira: $4.000 a $7.000  
 Valle: $15.000  
 
-💰 Total:
+💰 Total aprox:
 👉 Palmira: $${(precio + 5000).toLocaleString('es-CO')}  
 👉 Valle: $${(precio + 15000).toLocaleString('es-CO')}
 
