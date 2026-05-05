@@ -601,7 +601,7 @@ const flowMaletines = addKeyword([
 )
 
 const flowguayos = addKeyword([
-    'maletines','maletin','vendes maletines','tienes maletines','un maletin','bolsos'
+    'guayo','vendes guayos','guayos','tienes guayos','necesito unos guayos','guayos para sintetica'
 ])
 
 // 🔥 1. MENSAJE INICIAL
