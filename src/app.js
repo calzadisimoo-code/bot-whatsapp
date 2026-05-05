@@ -288,7 +288,7 @@ const flowUbicacion = addKeyword([
 const flow = addKeyword(['hola','buenas','info','buenas tardes','buenos dias'])
 
 .addAnswer(
-    null,
+    `...`,
     null,
     async (ctx, { flowDynamic }) => {
 
@@ -320,11 +320,7 @@ if (total < 20) {
         let mensaje = ''
 
         if (opcion === 'A') {
-            mensaje = `¡Hola! 👋 Este producto está disponible con entrega inmediata 🚚
-
-🔥 Hoy lo tenemos en promoción
-
-👉 ¿Para qué ciudad sería el envío?`
+            mensaje = `¡Hola! en que producto estas interesado 👇`
         } else {
             mensaje = `Hola, en que ciudad te encuentras?`
         }
