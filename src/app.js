@@ -88,7 +88,7 @@ const productosDB = {
 //
 /// 🔥 KEYWORDS
 const flowAf111 = addKeyword([
-    'Hola quiero las AF1 blancas 1.1','air force 1.1'
+    'Hola quiero las AF1 blancas 1.1','air force 1.1','air force blancas 1.1'
 ])
 
 // 🔥 1. MENSAJE INICIAL (TEXTO + IMAGEN JUNTOS)
@@ -99,7 +99,7 @@ const flowAf111 = addKeyword([
 
         await flowDynamic([
             {
-                body: `Hola $110.000 ¿En qué talla?`,
+                body: `Hola son 1.1 te quedan en $100.000 ¿En qué talla?`,
                 media: './src/img/af111.jpg'
             }
         ])
@@ -674,8 +674,8 @@ createBot({
 	flow,      
         flowPantalonetas,
         flowMaletines,
-		flowZapatillas,
-	    flowAf111,      // af1 1.1
+		flowAf111, 
+		flowZapatillas,     // af1 1.1
         flowAF1,        // AF1
         flowOzuna,      // chanclas      // fotos
         flowCatalogo,
