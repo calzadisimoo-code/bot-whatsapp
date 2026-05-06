@@ -791,13 +791,17 @@ const flowPro2 = addKeyword([
 
 // 🔥 1. MENSAJE INICIAL
 .addAnswer(
-    `🔥 AirPods Pro 2 1.1 - Con cancelacion de ruido 💰 $60.000`,
+    `🔥 AirPods Pro 2`,
     null,
     async (ctx, { flowDynamic }) => {
 
         await flowDynamic([
             {
-                body: `👉 ¿Para qué ciudad sería el envío? 🚚`,
+                body: `🔥 AirPods Pro 2 1.1 - con cancelacion de riudo
+
+💰 $60.000
+
+👉 ¿Para qué ciudad sería el envío? 🚚`,
                 media: './src/video/airpodspro2.mp4'
             }
         ])
