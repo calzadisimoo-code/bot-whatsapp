@@ -783,6 +783,73 @@ const flowZapatillas = addKeyword([
     }
 )
 
+
+// 🔥 KEYWORDS
+const flowPro2 = addKeyword([
+    'airpods','air pods pro 2','Quiero AirPods Pro 2','airpods pro','audifonos airpods','airpods 1.1','pro 2'
+])
+
+// 🔥 1. MENSAJE INICIAL
+.addAnswer(
+    `...`,
+    null,
+    async (ctx, { flowDynamic }) => {
+
+        await flowDynamic([
+            {
+                body: `🔥 AirPods Pro 2 1.1
+
+💰 $60.000
+
+👉 ¿Para qué ciudad sería el envío? 🚚`,
+                media: './src/video/airpodspro2.mp4'
+            }
+        ])
+    }
+)
+
+
+// 🔥 2. CAPTURA CIUDAD + CIERRE
+.addAnswer(
+    null,
+    { capture: true, idle: 0 },
+    async (ctx, { flowDynamic }) => {
+
+        const ciudad = ctx.body.toLowerCase().trim()
+
+        // ❌ SI NO ESCRIBE NADA
+        if (!ciudad) return
+
+        const precio = 60000
+
+        await delay()
+
+        await flowDynamic(`✅ Pedido confirmado
+
+📦 AirPods Pro 2 1.1 con cancelación de ruido
+
+📍 Envío para: ${ciudad}
+
+💸 Precio: $60.000  
+
+🚚 Envío
+Palmira: $4.000 a $7.000  
+Valle: $15.000  
+
+💰 Total aprox:
+👉 Palmira: $${(precio + 5000).toLocaleString('es-CO')}
+👉 Valle: $${(precio + 15000).toLocaleString('es-CO')}
+
+🚀 Para enviártelos hoy mismo necesito:
+
+Nombre:
+Dirección:
+Teléfono:
+
+⚠️ Tengo varias solicitudes hoy, apenas me envíes los datos te los despacho de una`)
+    }
+)
+
 // =====================================================
 // 🚀 INIT
 // =====================================================
