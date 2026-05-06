@@ -797,7 +797,9 @@ const flowPro2 = addKeyword([
 
         await flowDynamic([
             {
-                body: `🔥 AirPods Pro 2 1.1 - con cancelacion de riudo
+                body: `🔥 AirPods Pro 2 - 1.1 - Sonido Súper Nítido 🎧  
+				
+✅ Con cancelación de ruido
 
 💰 $60.000
 
