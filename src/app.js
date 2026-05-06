@@ -641,7 +641,7 @@ const flowguayos = addKeyword([
 
 /// 🔥 KEYWORDS
 const flowZapatillas = addKeyword([
-    'zapatillas','hola tiene zapatillas nike','zapatillas para hombre','que estilos de zapatillas tiene',
+    'zapatillas','Solo manejan esas','modelos','Solo tiene ese modelo','que otros modelos tienes','asi en este modelo','hola tiene zapatillas nike','zapatillas para hombre','que estilos de zapatillas tiene',
 	'me gustaria ver lso estilos de zapatillas que tengan','tiene estas zapatillas'
 ])
 
