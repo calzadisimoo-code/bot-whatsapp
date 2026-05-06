@@ -861,6 +861,7 @@ createBot({
         flowMaletines,
 		flowguayos,
 		flowAf111, 
+		flowPro2, 
 		flowZapatillas,     // af1 1.1
         flowAF1,        // AF1
         flowOzuna,      // chanclas      // fotos
