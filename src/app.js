@@ -196,7 +196,9 @@ const flowAF1 = addKeyword([
 
 ✅ Super comodas y cocidas
 
-🚀 Para enviártelas necesito solo la direccion`)
+🚀 Para enviártelas necesito solo la direccion`, ,
+                media: './src/img/af1.jpeg'
+				)
     }
 )
 
