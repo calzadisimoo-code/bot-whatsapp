@@ -791,7 +791,9 @@ const flowPro2 = addKeyword([
 
 ✅ Con cancelación de ruido, GPS, cable de carga, correa y 3 pares de almohadillas
 
-🚀 Para enviártelos hoy mismo necesito solo tu dirección`,
+🚚 Te los envío HOY mismo contra entrega
+
+📍Envíame tu dirección + barrio para despacharlas ahora`,
     {
         media: './src/video/airpodspro2.mp4'
     }
