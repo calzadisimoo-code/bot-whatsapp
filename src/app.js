@@ -375,9 +375,9 @@ if (total < 20) {
         let mensaje = ''
 
         if (opcion === 'A') {
-            mensaje = `En que producto estas interesado 👇`
+            mensaje = `En que talla?`
         } else {
-            mensaje = `En que ciudad te encuentras?`
+            mensaje = `En que talla?`
         }
         
 		await delay()
