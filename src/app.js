@@ -776,19 +776,21 @@ const flowPro2 = addKeyword([
 
 // 🔥 1. MENSAJE INICIAL
 .addAnswer(
-    `🔥 AirPods Pro 2`,
+    `...`,
     null,
     async (ctx, { flowDynamic }) => {
 
         await flowDynamic([
             {
-                body: `🔥 AirPods Pro 2 - 1.1 - Sonido Súper Nítido 🎧  
-				
-✅ Con cancelación de ruido
+                body: `🔥✅ Pedido confirmado
 
-💰 $60.000
+📦 AirPods Pro 2
 
-👉 ¿Para qué ciudad sería el envío? 🚚`,
+💸 Precio: $60.000  
+
+✅ Con cancelación de ruido, Gps, Cable de carga, correa, 3 pares de almohadillas
+
+🚀 Para enviártelos hoy mismo necesito solo la direccion`,
                 media: './src/video/airpodspro2.mp4'
             }
         ])
