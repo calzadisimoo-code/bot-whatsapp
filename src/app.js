@@ -159,9 +159,7 @@ const flowAF1 = addKeyword([
 
         await flowDynamic([
             {
-                body: `🔥 AIR FORCE 1
-				
-✅ Super comodas y cocidas
+                body: `🔥 AIR FORCE 1 ✅ Super comodas y cocidas
 		
 💰 $50.000
 
@@ -763,60 +761,41 @@ const flowZapatillas = addKeyword([
     }
 )
 
-
 // 🔥 KEYWORDS
 const flowPro2 = addKeyword([
-    'airpods','air pods pro 2','Quiero AirPods Pro 2','airpods pro','audifonos airpods','airpods 1.1','pro 2'
+    'airpods',
+    'air pods pro 2',
+    'Quiero AirPods Pro 2',
+    'airpods pro',
+    'audifonos airpods',
+    'airpods 1.1',
+    'pro 2'
 ])
 
-// 🔥 1. MENSAJE INICIAL
+// 🔥 MENSAJE INICIAL + CAPTURA DIRECCIÓN
 .addAnswer(
     `...`,
-    null,
+    { capture: true, idle: 0 },
     async (ctx, { flowDynamic }) => {
 
         await flowDynamic([
             {
-                body: `🔥✅ Pedido confirmado
+                body: `✅ Pedido confirmado
 
 📦 AirPods Pro 2
 
-💸 Precio: $60.000  
+💸 Precio: $60.000
 
-✅ Con cancelación de ruido, Gps, Cable de carga, correa, 3 pares de almohadillas
+✅ Con cancelación de ruido, GPS, cable de carga, correa y 3 pares de almohadillas
 
-🚀 Para enviártelos hoy mismo necesito solo la direccion`,
+🚀 Para enviártelos hoy mismo necesito solo tu dirección completa + barrio + ciudad`,
                 media: './src/video/airpodspro2.mp4'
             }
         ])
-    }
-)
 
+        const direccion = ctx.body?.trim()
 
-// 🔥 2. CAPTURA CIUDAD + CIERRE
-.addAnswer(
-    null,
-    { capture: true, idle: 0 },
-    async (ctx, { flowDynamic }) => {
-
-        const ciudad = ctx.body.toLowerCase().trim()
-
-        // ❌ SI NO ESCRIBE NADA
-        if (!ciudad) return
-
-        const precio = 60000
-
-        await delay()
-
-        await flowDynamic(`✅ Pedido confirmado
-
-📦 AirPods Pro 2
-
-💸 Precio: $60.000  
-
-✅ Con cancelación de ruido, Gps, Cable de carga, correa, 3 pares de almohadillas
-
-🚀 Para enviártelos hoy mismo necesito solo la direccion`)
+        if (!direccion) return
     }
 )
 
