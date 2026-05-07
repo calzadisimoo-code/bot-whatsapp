@@ -779,7 +779,9 @@ const flowPro2 = addKeyword([
 
 💸 Precio: $60.000
 
-✅ Con cancelación de ruido, GPS, cable de carga, correa y 3 pares de almohadillas`,
+✅ Con cancelación de ruido, GPS, cable de carga, correa y 3 pares de almohadillas
+
+🚀 Para enviártelos hoy mismo necesito solo tu dirección`,
     {
         media: './src/video/airpodspro2.mp4'
     }
