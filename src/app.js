@@ -148,7 +148,10 @@ AHORA 💰 $100.000
 
 // 🔥 KEYWORDS
 const flowAF1 = addKeyword([
-    'af1','quiero las air force 1 blanca','air force barata','air force 1'
+    'af1',
+    'quiero las air force 1 blanca',
+    'air force barata',
+    'air force 1'
 ])
 
 // 🔥 1. MENSAJE INICIAL
@@ -159,11 +162,11 @@ const flowAF1 = addKeyword([
 
         await flowDynamic([
             {
-                body: `🔥 AIR FORCE 1 ✅ Super comodas y cocidas
-		
+                body: `🔥 AIR FORCE 1 ✅ Súper cómodas y cocidas
+
 💰 $50.000
 
-👉 ¿En que talla?`,
+👉 ¿En qué talla las quieres?`,
                 media: './src/img/af1.jpeg'
             }
         ])
@@ -188,17 +191,22 @@ const flowAF1 = addKeyword([
 
         await delay()
 
-        await flowDynamic(`✅ Pedido confirmado
+        await flowDynamic([
+            {
+                body: `✅ Pedido confirmado
 
 📦 Air Force 1 talla ${talla}
 
-💸 Precio: $${precio.toLocaleString('es-CO')}  
+💸 Precio: $${precio.toLocaleString('es-CO')}
 
-✅ Super comodas y cocidas
+✅ Súper cómodas y cocidas
 
-🚀 Para enviártelas necesito solo la direccion`, ,
+🚚 Te las envío HOY mismo contra entrega
+
+📍Envíame tu dirección + barrio para despacharlas ahora`,
                 media: './src/img/af1.jpeg'
-				)
+            }
+        ])
     }
 )
 
