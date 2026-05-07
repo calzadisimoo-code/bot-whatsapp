@@ -760,7 +760,6 @@ const flowZapatillas = addKeyword([
         await flowDynamic(`👉 Dime cual te gusto y la talla?`)
     }
 )
-
 // 🔥 KEYWORDS
 const flowPro2 = addKeyword([
     'airpods',
@@ -772,30 +771,17 @@ const flowPro2 = addKeyword([
     'pro 2'
 ])
 
-// 🔥 MENSAJE INICIAL + CAPTURA DIRECCIÓN
+// 🔥 MENSAJE INICIAL
 .addAnswer(
-    `...`,
-    { capture: true, idle: 0 },
-    async (ctx, { flowDynamic }) => {
-
-        await flowDynamic([
-            {
-                body: `✅ Pedido confirmado
+    `✅ Pedido confirmado
 
 📦 AirPods Pro 2
 
 💸 Precio: $60.000
 
-✅ Con cancelación de ruido, GPS, cable de carga, correa y 3 pares de almohadillas
-
-🚀 Para enviártelos hoy mismo necesito solo tu dirección completa + barrio + ciudad`,
-                media: './src/video/airpodspro2.mp4'
-            }
-        ])
-
-        const direccion = ctx.body?.trim()
-
-        if (!direccion) return
+✅ Con cancelación de ruido, GPS, cable de carga, correa y 3 pares de almohadillas`,
+    {
+        media: './src/video/airpodspro2.mp4'
     }
 )
 
