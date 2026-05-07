@@ -211,6 +211,70 @@ const flowAF1 = addKeyword([
 )
 
 
+const flowAdidascampus = addKeyword([
+    'quiero las campus',
+    'adidas campus',
+    'campus'
+])
+
+// 🔥 1. MENSAJE INICIAL
+.addAnswer(
+    `...`,
+    null,
+    async (ctx, { flowDynamic }) => {
+
+        await flowDynamic([
+            {
+                body: `🔥 Campus ✅ Súper cómodas y cocidas
+
+💰 $50.000
+
+👉 ¿En qué talla las quieres?`,
+                media: './src/img/adidascampus.jpeg'
+            }
+        ])
+    }
+)
+
+
+// 🔥 2. CAPTURA TALLA + CIERRE
+.addAnswer(
+    null,
+    { capture: true, idle: 0 },
+    async (ctx, { flowDynamic }) => {
+
+        const msg = ctx.body.toLowerCase()
+        const numero = msg.match(/\d{2}/)
+
+        // 🔥 SOLO RESPONDE SI HAY TALLA
+        if (!numero) return
+
+        const talla = numero[0]
+        const precio = 50000
+
+        await delay()
+
+        await flowDynamic([
+            {
+                body: `✅ Pedido confirmado
+
+📦 Campus talla ${talla}
+
+💸 Precio: $${precio.toLocaleString('es-CO')}
+
+✅ Súper cómodas y cocidas
+
+🚚 Te las envío HOY mismo contra entrega
+
+📍Envíame tu dirección + barrio para despacharlas ahora`,
+                media: './src/img/adidascampus.jpeg'
+            }
+        ])
+    }
+)
+
+
+
 const flowCatalogo = addKeyword(['catalogo','catálogo','modelo','modelos'])
 .addAnswer(
     `...`,
@@ -793,7 +857,7 @@ const flowPro2 = addKeyword([
 
 🚚 Te los envío HOY mismo contra entrega
 
-📍Envíame tu dirección + barrio para despacharlas ahora`,
+📍Envíame tu dirección + barrio para despacharlos ahora`,
     {
         media: './src/video/airpodspro2.mp4'
     }
@@ -811,6 +875,7 @@ createBot({
 		flowguayos,
 		flowAf111, 
 		flowPro2, 
+		flowAdidascampus,
 		flowZapatillas,     // af1 1.1
         flowAF1,        // AF1
         flowOzuna,      // chanclas      // fotos
