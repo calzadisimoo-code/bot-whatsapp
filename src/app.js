@@ -106,9 +106,10 @@ const flowAf111 = addKeyword([
 				
 ✅ Con su tula y accesorios 
 
-💰 $100.000
+Antes: 128.000
+AHORA 💰 $100.000
 
-👉 ¿Qué talla necesitas?`,
+👉 ¿En que tslls?`,
                 media: './src/img/af111.jpeg'
             }
         ])
@@ -141,13 +142,7 @@ const flowAf111 = addKeyword([
 
 ✅ Con su tula y accesorios 
 
-🚀 Para enviártelas hoy mismo necesito:
-
-Nombre:
-Dirección:
-Teléfono:
-
-⚠️ Tengo varias solicitudes en esa talla, apenas me envíes los datos te las despacho de una`)
+🚀 Para enviártelas hoy mismo necesito solo la direccion`)
     }
 )
 
@@ -203,7 +198,7 @@ const flowAF1 = addKeyword([
 
 ✅ Super comodas y cocidas
 
-🚀 Para enviártelas hoy mismo necesito solo la direccion`)
+🚀 Para enviártelas necesito solo la direccion`)
     }
 )
 
