@@ -103,6 +103,8 @@ const flowAf111 = addKeyword([
         await flowDynamic([
             {
                 body: `🔥 AIR FORCE 1.1 PREMIUM
+				
+✅ Con su tula y accesorios 
 
 💰 $100.000
 
@@ -136,13 +138,8 @@ const flowAf111 = addKeyword([
 📦 Air Force 1.1 talla ${talla}
 
 💸 Precio: $${precio.toLocaleString('es-CO')}  
-🚚 Envío
-Palmira: $4.000 a $7.000  
-Valle: $15.000  
 
-💰 Total aprox:
-👉 Palmira: $${(precio + 5000).toLocaleString('es-CO')}  
-👉 Valle: $${(precio + 15000).toLocaleString('es-CO')}
+✅ Con su tula y accesorios 
 
 🚀 Para enviártelas hoy mismo necesito:
 
@@ -167,11 +164,13 @@ const flowAF1 = addKeyword([
 
         await flowDynamic([
             {
-                body: `🔥 AIR FORCE 1 DOBLE A
-
+                body: `🔥 AIR FORCE 1
+				
+✅ Super comodas y cocidas
+		
 💰 $50.000
 
-👉 ¿Qué talla necesitas?`,
+👉 ¿En que talla?`,
                 media: './src/img/af1.jpeg'
             }
         ])
@@ -201,21 +200,10 @@ const flowAF1 = addKeyword([
 📦 Air Force 1 talla ${talla}
 
 💸 Precio: $${precio.toLocaleString('es-CO')}  
-🚚 Envío:
-Palmira: $4.000 a $7.000  
-Valle: $15.000  
 
-💰 Total aprox:
-👉 Palmira: $${(precio + 5000).toLocaleString('es-CO')}  
-👉 Valle: $${(precio + 15000).toLocaleString('es-CO')}
+✅ Super comodas y cocidas
 
-🚀 Para enviártelas hoy mismo necesito:
-
-Nombre:
-Dirección:
-Teléfono:
-
-⚠️ Tengo varias solicitudes en esa talla, apenas me envíes los datos te las despacho de una`)
+🚀 Para enviártelas hoy mismo necesito solo la direccion`)
     }
 )
 
@@ -418,6 +406,8 @@ const flowOzuna = addKeyword([
         await flowDynamic([
             {
                 body: `🔥 CHANCLAS OZUNA PREMIUM 1.1
+				
+✅ SUper comodas para el dia a dia
 
 💰 $70.000
 
@@ -450,14 +440,9 @@ const flowOzuna = addKeyword([
 
 📦 Chanclas Ozuna talla ${talla}
 
-💸 Precio: $70.000  
-🚚 Envío
-Palmira: $4.000 a $7.000  
-Valle: $15.000  
+✅ SUper comodas para el dia a dia
 
-💰 Total aprox:
-👉 Palmira: $${(precio + 5000).toLocaleString('es-CO')}  
-👉 Valle: $${(precio + 15000).toLocaleString('es-CO')}
+💸 Precio: $70.000  
 
 🚀 Para enviártelas hoy mismo necesito:
 
@@ -828,27 +813,13 @@ const flowPro2 = addKeyword([
 
         await flowDynamic(`✅ Pedido confirmado
 
-📦 AirPods Pro 2 1.1 con cancelación de ruido
-
-📍 Envío para: ${ciudad}
+📦 AirPods Pro 2
 
 💸 Precio: $60.000  
 
-🚚 Envío
-Palmira: $4.000 a $7.000  
-Valle: $15.000  
+✅ Con cancelación de ruido, Gps, Cable de carga, correa, 3 pares de almohadillas
 
-💰 Total aprox:
-👉 Palmira: $${(precio + 5000).toLocaleString('es-CO')}
-👉 Valle: $${(precio + 15000).toLocaleString('es-CO')}
-
-🚀 Para enviártelos hoy mismo necesito:
-
-Nombre:
-Dirección:
-Teléfono:
-
-⚠️ Tengo varias solicitudes hoy, apenas me envíes los datos te los despacho de una`)
+🚀 Para enviártelos hoy mismo necesito solo la direccion`)
     }
 )
 
