@@ -284,14 +284,19 @@ const flowCatalogo = addKeyword(['catalogo','catálogo','modelo','modelos'])
         const nombre = ctx.pushName || 'parcero'
         
 		await delay()
-        await flowDynamic(`📲 Aquí puedes ver el catálogo completo:
-
-👉 https://wa.me/c/573217204017
-
-🔥 Producto más vendido:
-Nike Air Force 1 Blanca
-
-¿Te interesa Nike Air Force 1 Blanca?`)
+        await flowDynamic(`Claro, de que categoria quieres ver el catalogo?
+		
+		zapatillas
+		Chanclas
+		audifonos
+		Cargadores
+		bolsos
+		Jeans
+		Camisetas
+		pantalonetas
+		Tecnologia
+		Electrodomesticos
+		`)
     }
 )
 
@@ -472,13 +477,7 @@ const flowOzuna = addKeyword([
 
         await flowDynamic([
             {
-                body: `🔥 CHANCLAS OZUNA PREMIUM 1.1
-				
-✅ SUper comodas para el dia a dia
-
-💰 $70.000
-
-👉 ¿Qué talla necesitas?`,
+                body: `Hola, en que talla?`,
                 media: './src/img/ozuna.jpg'
             }
         ])
@@ -503,21 +502,7 @@ const flowOzuna = addKeyword([
 
         await delay()
 
-        await flowDynamic(`✅ Pedido confirmado
-
-📦 Chanclas Ozuna talla ${talla}
-
-✅ SUper comodas para el dia a dia
-
-💸 Precio: $70.000  
-
-🚀 Para enviártelas hoy mismo necesito:
-
-Nombre:
-Dirección:
-Teléfono:
-
-⚠️ Tengo varias solicitudes en esa talla, apenas me envíes los datos te las despacho de una`)
+        await flowDynamic(`Si tenemos talla ${talla}, Para enviártelas hoy mismo solo necesito la direccion`)
     }
 )
 
