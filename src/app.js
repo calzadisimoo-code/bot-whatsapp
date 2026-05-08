@@ -102,14 +102,7 @@ const flowAf111 = addKeyword([
 
         await flowDynamic([
             {
-                body: `🔥 AIR FORCE 1.1 PREMIUM
-				
-✅ Con su tula y accesorios 
-
-Antes: 128.000
-AHORA 💰 $100.000
-
-👉 ¿En que tslls?`,
+                body: `Hola, en que talla?`,
                 media: './src/img/af111.jpeg'
             }
         ])
@@ -134,15 +127,7 @@ AHORA 💰 $100.000
 
         await delay()
 
-        await flowDynamic(`✅ Pedido confirmado
-
-📦 Air Force 1.1 talla ${talla}
-
-💸 Precio: $${precio.toLocaleString('es-CO')}  
-
-✅ Con su tula y accesorios 
-
-🚀 Para enviártelas hoy mismo necesito solo la direccion`)
+        await flowDynamic(`Tenemos disponible en talla ${talla}, para enviártelas hoy mismo solo necesito la direccion`)
     }
 )
 
@@ -162,11 +147,7 @@ const flowAF1 = addKeyword([
 
         await flowDynamic([
             {
-                body: `🔥 AIR FORCE 1 ✅ Súper cómodas y cocidas
-
-💰 $50.000
-
-👉 ¿En qué talla las quieres?`,
+                body: `Hola, en que talla?`,
                 media: './src/img/af1.jpeg'
             }
         ])
@@ -466,14 +447,26 @@ CC Villa de las Palmas, Local 291 (Diagonal al banco de Bogota)
 )
 // 🔥 KEYWORDS
 const flowOzuna = addKeyword([
-    'chanclas','chancla','quiero chanclas ozuna','ozuna','chanclas ozuna','ozuna 1.1','sandalias ozuna'
+    'chanclas',
+    'chancla',
+    'quiero chanclas ozuna',
+    'ozuna',
+    'chanclas ozuna',
+    'ozuna 1.1',
+    'sandalias ozuna'
 ])
 
 // 🔥 1. MENSAJE INICIAL
 .addAnswer(
     `...`,
     null,
-    async (ctx, { flowDynamic }) => {
+    async (ctx, { flowDynamic, state }) => {
+
+        // 🔥 GUARDAR ÚLTIMO PRODUCTO
+        await state.update({
+            ultimoProducto: 'flow_ozuna',
+            precio: 70000
+        })
 
         await flowDynamic([
             {
@@ -498,13 +491,40 @@ const flowOzuna = addKeyword([
         if (!numero) return
 
         const talla = numero[0]
-        const precio = 70000
 
         await delay()
 
-        await flowDynamic(`Si tenemos talla ${talla}, Para enviártelas hoy mismo solo necesito la direccion`)
+        await flowDynamic(
+            `Si tenemos talla ${talla}, para enviártelas hoy mismo solo necesito la dirección`
+        )
     }
 )
+
+const flowPrecio = addKeyword([
+    'precio',
+    'que precio',
+    'qué precio',
+    'cuanto valen',
+    'cuánto valen',
+    'cuanto cuestan',
+    'cuánto cuestan',
+    'que valen',
+    'qué valen',
+    'valor',
+    'vale cuanto',
+    'vale cuánto'
+]).addAction(async (ctx, { state, flowDynamic }) => {
+
+    const data = await state.getMyState()
+
+    // 🔥 VALIDAR ÚLTIMO PRODUCTO
+    if (data?.ultimoProducto === 'flow_ozuna') {
+
+        await flowDynamic(
+            `Están en promoción a $${data.precio.toLocaleString()} para qué dirección te separo?`
+        )
+    }
+})
 
 /// 🔥 KEYWORDS
 const flowPantalonetas = addKeyword([
@@ -857,6 +877,7 @@ createBot({
 	flow,      
         flowPantalonetas,
         flowMaletines,
+		flowPrecio,
 		flowguayos,
 		flowAf111, 
 		flowPro2, 
